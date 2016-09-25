@@ -28,7 +28,7 @@ public class ActorList {
 
         while(itr.hasNext() && !flag){
             auxActor=itr.next();
-            if(auxActor.name == actorName){
+            if(auxActor.getName() == actorName){
                 flag = true;
             }
 
@@ -38,7 +38,7 @@ public class ActorList {
     }
 
     public void addActor(Actor auxActor){
-        if (!this.exist(auxActor.name)){
+        if (!this.exist(auxActor.getName())){
             this.actorList.add(auxActor);
         }
     }
@@ -50,7 +50,7 @@ public class ActorList {
 
         while(itr.hasNext() && !flag){
             auxAct = itr.next();
-            if(auxAct.name == actorName){
+            if(auxAct.getName() == actorName){
                 flag = true;
             }
         }

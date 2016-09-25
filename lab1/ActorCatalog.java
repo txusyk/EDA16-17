@@ -29,9 +29,17 @@ public class ActorCatalog {
     }
 
     public void addActor(Actor pActor){
-        if (!this.exist(pActor.name)){
-            this.actorL.put(pActor.name,pActor);
+        if (!this.exist(pActor.getName())){
+            this.actorL.put(pActor.getName(),pActor);
         }
+    }
+    
+    public Actor searchActor(String pName, String pSurname){
+        String actorName = pName+" "+pSurname;
+        if (this.exist(actorName)){
+            return this.actorL.get(actorName);
+        }
+        return null;
     }
 
 }

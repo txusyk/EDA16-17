@@ -5,6 +5,10 @@
  */
 package lab1;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
+
 /**
  *
  * @author Josu
@@ -15,7 +19,16 @@ public class EDA1516 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        JFrame frame = JMenu.getMyJMenu();
+        
+       Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();         //En dim guardamos el tamaño de la pantalla donde se esta ejecutando el programa
+       
+       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //fijamos que la operacion por defecto al cerrar es salir
+       frame.pack();
+       frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);         //Fijamos por defecto que la ventana siempre aparezca en el centro
+       frame.setVisible(true); //hacemos el frame visible
+       frame.setResizable(false);
+        
     }
     
 }

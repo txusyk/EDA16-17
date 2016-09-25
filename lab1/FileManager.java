@@ -71,16 +71,20 @@ public class FileManager {
             this.normalizeString(filmName);
             Film auxFilm = new Film(filmName);
 
+            System.out.println(filmName);
+
             FilmCatalog.getMyFilmCatalog().addFilm(auxFilm);
 
             int i = 0;//i equivale a 1. Entrara en la lista de peliculas. Donde al menos habra 1.
+            int j= 0;
+            int percent = 0;
 
             while (auxLine3.length > i) { // mientras el indice no sea mayor que el tamaño de la lista(indexOutOfBoundException)
 
                 String actorName = this.normalizeString(auxLine3[i]);//Normalizamos el nombre del actor
                 String actorSurname = null;
 
-                if (actorName.indexOf("(") != -1) {//elimina todo el contenido no deseado del nombre
+                if (actorName.indexOf("(") != -1) {
                     auxLine2 = actorName.split("\\s\\(");
                     actorName = auxLine2[0];
                 }
@@ -92,25 +96,27 @@ public class FileManager {
 
                 Actor auxActor = new Actor(actorName, actorSurname);//Creamos la pelicula enviandole el nombre una vez normalizado
 
+                System.out.println("\t" + auxActor.getName() + " " + auxActor.getSurname());
+
                 ActorCatalog.getmyActorCatalog().addActor(auxActor);
+                auxActor.getFilmList().addFilm(auxFilm);
+
 
                 FilmCatalog.getMyFilmCatalog().getFilm(auxFilm.getName()).getActorList().addActor(auxActor);
-                auxActor.filmL.addFilm(auxFilm);
-                
-                final int percent = i;
-                try {
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        JMenu.getMyJMenu().updateBar(percent);}
-                     });
-                    java.lang.Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    ;
-                }
+
 
                 i++;
+                percent++;
 
             }
+            j++;
+            percent+=j;
+
+
+            final int percent1 = percent;
+            JMenu.getMyJMenu().updateBar(percent1);
+
+            j++;
 
         }scanner.close();
     }

@@ -5,14 +5,26 @@ package lab1;
  */
 public class Actor {
 
-    String name;
-    String surname;
-    FilmList filmL;
+    private String name;
+    private String surname;
+    private FilmList filmL;
 
     public Actor(String pName, String pSurname){
         this.name = pName;
         this.surname = pSurname;
+        this.filmL = new FilmList();
     }
-
+    
+    public FilmList getFilmList(){
+        return this.filmL;
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public String getSurname(){
+        return this.surname;
+    }
 
 }

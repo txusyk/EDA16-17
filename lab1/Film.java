@@ -14,6 +14,7 @@ public class Film {
 
     public Film(String pName){
         this.name=pName;
+        this.actorList = new ActorList();
     }
 
     public String getName(){
