@@ -7,7 +7,9 @@ package lab1;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -309,9 +311,12 @@ public class JMenu extends javax.swing.JFrame {
             jProgressBar.setMaximum(FileManager.countLines(auxFile) - (FileManager.countLines(auxFile) / 4));
             FileReader fr = new FileReader(auxFile);
             FileManager.getMyFileManager().readFile(fr);
-        } catch (Exception e1) {
+        } catch (FileNotFoundException e1) {
             System.out.println("File not found. ¿Are you sure that you're opening the correct file?");
+        }catch (IOException e2){
+            System.out.println("IOException when counting lines for the progress bar");
         }
+
     }
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -333,7 +338,12 @@ public class JMenu extends javax.swing.JFrame {
         String[] auxActorArray = auxActorName.split("\\s");
         auxActorName = auxActorArray[0];
         String auxActorSurname = auxActorArray[1];
-        ActorCatalog.getmyActorCatalog().addActor(new Actor(auxActorName, auxActorSurname));
+        Actor auxActor = new Actor(auxActorName,auxActorSurname);
+        if (ActorCatalog.getmyActorCatalog().searchActor(auxActor) != null){
+            System.out.println("Actor already exists");
+        }else{
+            ActorCatalog.getmyActorCatalog().addActor(auxActor);
+        }
     }
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -341,16 +351,23 @@ public class JMenu extends javax.swing.JFrame {
         String[] auxActorArray = auxActorName.split("\\s");
         auxActorName = auxActorArray[0];
         String auxActorSurname = auxActorArray[1];
-        ActorCatalog.getmyActorCatalog().searchActor(new Actor(auxActorName, auxActorSurname)).getFilmList().printFilms();
+        Actor auxActor = new Actor(auxActorName,auxActorSurname);
+        if (ActorCatalog.getmyActorCatalog().searchActor(auxActor) != null) {
+            ActorCatalog.getmyActorCatalog().searchActor(new Actor(auxActorName, auxActorSurname)).getFilmList().printFilms();
+        }else{
+            System.out.println("Not posible to erase. Actor doesn't exist");
+        }
 
     }
 
     private void button5ActionPerformed(java.awt.event.ActionEvent evt) {
         String auxFilmName = button5textField.getText();
-        FilmCatalog.getMyFilmCatalog().getFilm(auxFilmName).getActorList().printActors();
+        if (FilmCatalog.getMyFilmCatalog().getFilm(auxFilmName) != null) {
+            FilmCatalog.getMyFilmCatalog().getFilm(auxFilmName).getActorList().printActors();
+        }
     }
 
-    private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
+    private void button6ActionPerformed(java.awt.event.ActionEvent evt) {
         JTextField filmName = new JTextField(15);
         JTextField moneyQuantity = new JTextField(15);
 
@@ -366,7 +383,7 @@ public class JMenu extends javax.swing.JFrame {
         try {
             FilmCatalog.getMyFilmCatalog().getFilm(filmName.getText()).incrementEarned(Integer.parseInt(moneyQuantity.getText()));
             System.out.println("Total earned by the film: " + FilmCatalog.getMyFilmCatalog().getFilm(filmName.getText()).getEarned());
-        } catch (Exception e1) {
+        } catch (NullPointerException e1) {
             System.out.println("File not found or invalid moneyQuantity");
         }
     }
@@ -378,7 +395,7 @@ public class JMenu extends javax.swing.JFrame {
         String auxActorSurname = auxActorArray[1];
         try {
             ActorCatalog.getmyActorCatalog().removeActor(new Actor(auxActorName, auxActorSurname));
-        } catch (Exception e1) {
+        } catch (NullPointerException e1) {
             System.out.println("Actor not found");
         }
     }
@@ -386,8 +403,8 @@ public class JMenu extends javax.swing.JFrame {
     private void button8ActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             ActorCatalog.getmyActorCatalog().orderList();
-        } catch (Exception e1) {
-            System.out.println("Actor not found");
+        } catch (NullPointerException e1) {
+            System.out.println("Actors not found");
         }
     }
 
@@ -406,7 +423,7 @@ public class JMenu extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -429,5 +446,5 @@ public class JMenu extends javax.swing.JFrame {
                 new JMenu().setVisible(true);
             }
         });
-    }
+    }*/
 }

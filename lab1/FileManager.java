@@ -112,11 +112,10 @@ public class FileManager {
 
     @SuppressWarnings("rawtypes")
     public void exportToFile() {
-        Object[] keys = ActorCatalog.getmyActorCatalog().getActorL().keySet().toArray();
-        Arrays.sort(keys);
+        String[] keys = ActorCatalog.getmyActorCatalog().quickSortList();
 
         FileWriter fichero = null;
-        PrintWriter pw = null;
+        PrintWriter pw;
 
 
         try {
@@ -129,7 +128,6 @@ public class FileManager {
                 pw.println(ActorCatalog.getmyActorCatalog().getActorL().get(key).getName()+ " " + ActorCatalog.getmyActorCatalog().getActorL().get(key).getSurname());
                 Object[] keys2 = ActorCatalog.getmyActorCatalog().getActorL().get(key).getFilmList().getFilmL().keySet().toArray();
                 for(Object auxKey : keys2) {
-                    //pw.print("Film ->");
                     pw.println("\t"+ActorCatalog.getmyActorCatalog().getActorL().get(key).getFilmList().getFilmL().get(auxKey).getName());
                 }
             }
@@ -139,7 +137,7 @@ public class FileManager {
             try {
                 if (null != fichero)
                     fichero.close();
-                System.out.println("File exported to: "+System.getProperty("user.dir"));
+                System.out.println("\nFile exported to: "+System.getProperty("user.dir"));
             } catch (Exception e2) {
                 e2.printStackTrace();
             }

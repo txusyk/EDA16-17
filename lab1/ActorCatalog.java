@@ -68,4 +68,24 @@ public class ActorCatalog {
         }
     }
 
+    public String[] quickSortList(){
+        String[] auxS = new String[actorL.size()];
+        int i=0;
+        for ( String key : actorL.keySet() ) {
+            auxS[i] = key;
+            i++;
+        }
+        StringQuickSort.sort(auxS);
+        System.out.println("\n-------------------------------------------------------------");
+        this.printList(auxS);
+        return auxS;
+    }
+
+    public void printList(String[] auxS){
+        for (String key : auxS){
+            System.out.println(key);
+        }
+    }
+
+
 }
