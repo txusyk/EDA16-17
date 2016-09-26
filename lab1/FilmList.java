@@ -1,54 +1,51 @@
 package lab1;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Josu on 25/09/2016.
  */
 public class FilmList {
 
-    ArrayList<Film> FilmL;
+    private HashMap<String, Film> filmL;
 
     public FilmList(){
-        this.FilmL = new ArrayList<>();
+        this.filmL = new HashMap<>();
     }
 
-    private Iterator<Film> getIterator(){
-        return this.FilmL.iterator();
-    }
+
 
     private boolean exist(String pFilmName){
-        Iterator<Film> itr = this.getIterator();
-        boolean finded = false;
-        while (itr.hasNext() || finded){
-            Film auxFilm = itr.next();
-            if (pFilmName == auxFilm.getName()) {
-                finded = true;
-            }
+        if (this.filmL.get(pFilmName) != null){
+            return true;
         }
-        return finded;
+        return false;
     }
 
     public void addFilm(Film pFilm){
         if (!this.exist(pFilm.getName())){
-            this.FilmL.add(pFilm);
+            this.filmL.put(pFilm.getName(),pFilm);
         }
     }
 
     public Film getFilm(String pFilmName){
-        Film auxFilm = null;
-        if (this.exist(pFilmName)){
-            Iterator<Film> itr = this.getIterator();
-            boolean finded = false;
-            while (itr.hasNext() || finded){
-                auxFilm = itr.next();
-                if (pFilmName == auxFilm.getName()){
-                    finded = true;
-                }
-            }
+        if (this.filmL.get(pFilmName) != null){
+            return this.filmL.get(pFilmName);
         }
-        return auxFilm;
+        return null;
+    }
+
+    public HashMap<String,Film> getFilmL(){
+        return this.filmL;
+    }
+
+    public void printFilms(){
+        System.out.println("These are all the films: ");
+        for (HashMap.Entry<String,Film> entry : filmL.entrySet()) {
+            String key = entry.getKey();
+            System.out.println(key.toString());
+        }
     }
 
 

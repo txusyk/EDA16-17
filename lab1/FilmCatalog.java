@@ -21,7 +21,7 @@ public class FilmCatalog {
         return myFilmCatalog;
     }
 
-    private boolean exist(String pFilmName){
+    public boolean exist(String pFilmName){
         if (filmL.get(pFilmName) != null){
             return true;
         }
@@ -35,7 +35,7 @@ public class FilmCatalog {
     }
 
     public Film getFilm(String pFilmName){
-        if (!this.exist(pFilmName)){
+        if (this.exist(pFilmName)){
             return this.filmL.get(pFilmName);
         }
         return null;

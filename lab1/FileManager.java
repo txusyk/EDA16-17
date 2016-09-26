@@ -47,8 +47,6 @@ public class FileManager {
     public static int countLines2(File pFile) throws IOException{
         LineNumberReader  lnr = new LineNumberReader(new FileReader(pFile));
         lnr.skip(Long.MAX_VALUE);
-        //System.out.println(lnr.getLineNumber() + 1); //Add 1 because line index starts at 0
-        // Finally, the LineNumberReader object should be closed to prevent resource leak
         lnr.close();
         return lnr.getLineNumber()+1;//Add 1 because line index starts at 0
     }
@@ -56,7 +54,7 @@ public class FileManager {
 
     public void readFile(FileReader pFile) {
         Scanner scanner = new Scanner(pFile);
-        String[] auxLine2 = new String[100];
+        String[] auxLine2;
         String line;
 
         while (scanner.hasNext()) {
@@ -71,13 +69,12 @@ public class FileManager {
             this.normalizeString(filmName);
             Film auxFilm = new Film(filmName);
 
-            System.out.println(filmName);
-
             FilmCatalog.getMyFilmCatalog().addFilm(auxFilm);
 
             int i = 0;//i equivale a 1. Entrara en la lista de peliculas. Donde al menos habra 1.
-            int j= 0;
             int percent = 0;
+
+            percent++;
 
             while (auxLine3.length > i) { // mientras el indice no sea mayor que el tamaño de la lista(indexOutOfBoundException)
 
@@ -96,30 +93,59 @@ public class FileManager {
 
                 Actor auxActor = new Actor(actorName, actorSurname);//Creamos la pelicula enviandole el nombre una vez normalizado
 
-                System.out.println("\t" + auxActor.getName() + " " + auxActor.getSurname());
-
-                ActorCatalog.getmyActorCatalog().addActor(auxActor);
                 auxActor.getFilmList().addFilm(auxFilm);
 
-
+                ActorCatalog.getmyActorCatalog().addActor(auxActor);
                 FilmCatalog.getMyFilmCatalog().getFilm(auxFilm.getName()).getActorList().addActor(auxActor);
 
-
                 i++;
-                percent++;
-
+                percent+=i;
             }
-            j++;
-            percent+=j;
-
-
             final int percent1 = percent;
             JMenu.getMyJMenu().updateBar(percent1);
 
-            j++;
 
-        }scanner.close();
+        }
+        System.out.println("-------- File read finished --------");
+        scanner.close();
     }
+
+    @SuppressWarnings("rawtypes")
+    public void exportToFile() {
+        Object[] keys = ActorCatalog.getmyActorCatalog().getActorL().keySet().toArray();
+        Arrays.sort(keys);
+
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+
+
+        try {
+            String directorio = System.getProperty("user.dir");//cogemos variable entorno
+            fichero = new FileWriter(directorio + "/ActorList_ordered.txt");
+            pw = new PrintWriter(fichero);
+
+            for(Object key : keys){
+                pw.print("Actor -> ");
+                pw.println(ActorCatalog.getmyActorCatalog().getActorL().get(key).getName()+ " " + ActorCatalog.getmyActorCatalog().getActorL().get(key).getSurname());
+                Object[] keys2 = ActorCatalog.getmyActorCatalog().getActorL().get(key).getFilmList().getFilmL().keySet().toArray();
+                for(Object auxKey : keys2) {
+                    //pw.print("Film ->");
+                    pw.println("\t"+ActorCatalog.getmyActorCatalog().getActorL().get(key).getFilmList().getFilmL().get(auxKey).getName());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero)
+                    fichero.close();
+                System.out.println("File exported to: "+System.getProperty("user.dir"));
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
+
 
     private String normalizeString(String pWord){
 
@@ -156,6 +182,7 @@ public class FileManager {
         pWord = pWord.replaceAll("Ã™","U");
         pWord = pWord.replaceAll("Ã§","c");
         pWord = pWord.replaceAll("Ã‡","C");
+        pWord = pWord.replaceAll("�","A");
         return pWord;
     }
 

@@ -2,6 +2,7 @@ package lab1;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -9,59 +10,46 @@ import java.util.Iterator;
  */
 public class ActorList {
 
-    private ArrayList<Actor> actorList;
+    private HashMap<String,Actor> actorList;
 
 
     public ActorList(){
-
+        this.actorList = new HashMap<>();
     }
 
-    private Iterator<Actor> getIterator(){
-        return this.actorList.iterator();
-    }
 
-    public boolean exist(String actorName){
-        int i=0;
-        Iterator<Actor> itr = this.getIterator();
-        Actor auxActor;
-        boolean flag=false;
-
-        while(itr.hasNext() && !flag){
-            auxActor=itr.next();
-            if(auxActor.getName() == actorName){
-                flag = true;
-            }
-
+    public boolean exist(String pActorName, String pActorSurname){
+        if (this.actorList.get(pActorName+" "+pActorSurname) != null){
+            return true;
         }
-
-        return flag;
+        return false;
     }
 
     public void addActor(Actor auxActor){
-        if (!this.exist(auxActor.getName())){
-            this.actorList.add(auxActor);
+        if (!this.exist(auxActor.getName(),auxActor.getSurname())){
+            this.actorList.put(auxActor.getName()+" "+auxActor.getSurname(),auxActor);
         }
     }
 
-    public Actor getActor(String actorName){
-        Iterator<Actor> itr = this.getIterator();
-        Actor auxAct=null;
-        boolean flag = false;
-
-        while(itr.hasNext() && !flag){
-            auxAct = itr.next();
-            if(auxAct.getName() == actorName){
-                flag = true;
-            }
+    public Actor getActor(String pActorName, String pActorSurname){
+        if (this.actorList.get(pActorName+" "+pActorSurname) != null){
+            return actorList.get(pActorName);
         }
-        if(!flag){
-            auxAct=null;
-        }
-        return auxAct;
+        return null;
     }
 
-    public void removeActor(Actor actor){
-        this.actorList.remove(actor);
+    public void removeActor(Actor pActor){
+        if (this.actorList.get(pActor.getName()+" "+pActor.getSurname()) != null) {
+            this.actorList.remove(pActor.getName()+" "+pActor.getSurname());
+        }
+    }
+
+    public void printActors(){
+        System.out.println("These are all the actors: ");
+        for (HashMap.Entry<String,Actor> entry : actorList.entrySet()) {
+            String key = entry.getKey();
+            System.out.println(key.toString());
+        }
     }
 
 
