@@ -58,20 +58,20 @@ public class FileManager {
         String line;
 
         while (scanner.hasNext()) {
-            line = scanner.nextLine();
-            auxLine2 = line.split("\\s+\\--->+\\s");
+            line = scanner.nextLine(); //scanner of lines
+            auxLine2 = line.split("\\s+\\--->+\\s"); //we split to get the name of the movie
 
-            String filmName = auxLine2[0];
-            String[] auxLine1 = Arrays.copyOfRange(auxLine2, 1, auxLine2.length);
-            String auxLine1Joined = String.join("", auxLine1);
-            String[] auxLine3 = auxLine1Joined.split("\\s+\\&&&+\\s");
+            String filmName = auxLine2[0]; //here we save the name of the film
+            String[] auxLine1 = Arrays.copyOfRange(auxLine2, 1, auxLine2.length); //array containing the name of the actors
+            String auxLine1Joined = String.join("", auxLine1); //we convert the array to an string
+            String[] auxLine3 = auxLine1Joined.split("\\s+\\&&&+\\s"); //we split the array of actors in
 
-            this.normalizeString(filmName);
-            Film auxFilm = new Film(filmName);
+            this.normalizeString(filmName); //we use the method that we have written
+            Film auxFilm = new Film(filmName); //create a new film
 
-            FilmCatalog.getMyFilmCatalog().addFilm(auxFilm);
+            FilmCatalog.getMyFilmCatalog().addFilm(auxFilm); //we add the film if its not been added before
 
-            int i = 0;//i equivale a 1. Entrara en la lista de peliculas. Donde al menos habra 1.
+            int i = 0;
             int percent = 0;
 
             percent++;
@@ -79,7 +79,7 @@ public class FileManager {
             while (auxLine3.length > i) { // mientras el indice no sea mayor que el tamaño de la lista(indexOutOfBoundException)
 
                 String actorName = this.normalizeString(auxLine3[i]);//Normalizamos el nombre del actor
-                String actorSurname = null;
+                String actorSurname = new String("");
 
                 if (actorName.indexOf("(") != -1) {
                     auxLine2 = actorName.split("\\s\\(");
@@ -87,14 +87,20 @@ public class FileManager {
                 }
                 if (actorName.indexOf(",") != -1) {//convertimos -> Apellido, Nombre --> Nombre, Apellido (como es habitual)
                     auxLine2 = actorName.split(",\\s*");
-                    actorName = auxLine2[1];
-                    actorSurname = auxLine2[0];
+                    try{
+                        if (auxLine2[1].compareToIgnoreCase("null") != 0){
+                            actorSurname = auxLine2[0];
+                            actorName = auxLine2[1];
+                        }else{
+                            actorName = auxLine2[0];
+                        }
+                    }catch (ArrayIndexOutOfBoundsException e1){
+                        e1.printStackTrace();
+                    }
                 }
-
                 Actor auxActor = new Actor(actorName, actorSurname);//Creamos la pelicula enviandole el nombre una vez normalizado
 
                 auxActor.getFilmList().addFilm(auxFilm);
-
                 ActorCatalog.getmyActorCatalog().addActor(auxActor);
                 FilmCatalog.getMyFilmCatalog().getFilm(auxFilm.getName()).getActorList().addActor(auxActor);
 
@@ -117,19 +123,20 @@ public class FileManager {
         FileWriter fichero = null;
         PrintWriter pw;
 
-
         try {
             String directorio = System.getProperty("user.dir");//cogemos variable entorno
             fichero = new FileWriter(directorio + "/ActorList_ordered.txt");
             pw = new PrintWriter(fichero);
 
+            int i = 1;
             for(Object key : keys){
-                pw.print("Actor -> ");
+                pw.print("Actor "+i+" -> ");
                 pw.println(ActorCatalog.getmyActorCatalog().getActorL().get(key).getName()+ " " + ActorCatalog.getmyActorCatalog().getActorL().get(key).getSurname());
                 Object[] keys2 = ActorCatalog.getmyActorCatalog().getActorL().get(key).getFilmList().getFilmL().keySet().toArray();
                 for(Object auxKey : keys2) {
                     pw.println("\t"+ActorCatalog.getmyActorCatalog().getActorL().get(key).getFilmList().getFilmL().get(auxKey).getName());
                 }
+                i++;
             }
         } catch (Exception e) {
             e.printStackTrace();

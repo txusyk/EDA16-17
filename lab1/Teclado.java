@@ -59,7 +59,7 @@ public class Teclado {
 	public String recogerString(){
 		String auxS = null;
 		auxS = scan.nextLine();
-		return auxS.toUpperCase();
+		return auxS;
 	}
 
 	/*

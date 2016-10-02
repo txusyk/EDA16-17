@@ -52,7 +52,7 @@ public class TerminalGUI {
             switch (optMenu) {
                 case 1:
                     try {
-                        File auxFile = new File("/Users/Josu/IdeaProjects/EDA16-17/src/lab1/test500films.txt");
+                        File auxFile = new File("/Users/Josu/IdeaProjects/EDA16-17/src/lab1/testAllActors.txt");
                         FileReader fr = new FileReader(auxFile);
                         FileManager.getMyFileManager().readFile(fr);
                     } catch (FileNotFoundException e1) {

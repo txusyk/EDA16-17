@@ -60,14 +60,6 @@ public class ActorCatalog {
         }
     }
 
-    public void orderList(){
-        Object[] keys = actorL.keySet().toArray();
-        Arrays.sort(keys);
-        for(Object key : keys){
-            System.out.println(actorL.get(key).getName()+" "+actorL.get(key).getSurname());
-        }
-    }
-
     public String[] quickSortList(){
         String[] auxS = new String[actorL.size()];
         int i=0;

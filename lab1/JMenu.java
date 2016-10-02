@@ -401,11 +401,7 @@ public class JMenu extends javax.swing.JFrame {
     }
 
     private void button8ActionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-            ActorCatalog.getmyActorCatalog().orderList();
-        } catch (NullPointerException e1) {
-            System.out.println("Actors not found");
-        }
+            ActorCatalog.getmyActorCatalog().quickSortList();
     }
 
     private void button9ActionPerformed(java.awt.event.ActionEvent evt) {
