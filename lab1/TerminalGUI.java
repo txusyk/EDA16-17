@@ -1,9 +1,6 @@
 package lab1;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -25,7 +22,7 @@ public class TerminalGUI {
         return myTerminalGUI;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main() throws FileNotFoundException {
 
         String[] auxActorArray;
         String auxActorName;
@@ -52,11 +49,15 @@ public class TerminalGUI {
             switch (optMenu) {
                 case 1:
                     try {
-                        File auxFile = new File("/Users/Josu/IdeaProjects/EDA16-17/src/lab1/testAllActors.txt");
-                        FileReader fr = new FileReader(auxFile);
-                        FileManager.getMyFileManager().readFile(fr);
+                        long startTime = System.currentTimeMillis();
+                        FileManager.getMyFileManager().readFile();
+                        long stopTime = System.currentTimeMillis();
+                        long total = stopTime - startTime;
+                        System.out.println("Elapsed time ---> "+total/1000+"s");
                     } catch (FileNotFoundException e1) {
                         System.out.println("File not found. ¿Are you sure that you're opening the correct file?");
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                     break;
                 case 2:

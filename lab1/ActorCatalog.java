@@ -36,13 +36,10 @@ public class ActorCatalog {
     public void addActor(Actor pActor){
         if (!this.exist(pActor.getName(),pActor.getSurname())){
             this.actorL.put(pActor.getName()+" "+pActor.getSurname(),pActor);
-            System.out.println("Actor added: "+pActor.getName()+" "+pActor.getSurname());
         }
-        else{
-            System.out.println("Actor already exists");
-        }
-
     }
+
+
     
     public Actor searchActor(Actor pActor){
         if (this.exist(pActor.getName(),pActor.getSurname())){

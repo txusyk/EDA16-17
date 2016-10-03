@@ -305,12 +305,13 @@ public class JMenu extends javax.swing.JFrame {
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            URL url = getClass().getResource("test500films.txt");
-            File auxFile = new File(url.getPath().replaceAll("%20", " "));
+            //URL url = getClass().getResource("test500films.txt");
+            //File auxFile = new File(url.getPath().replaceAll("%20", " "));
             jProgressBar.setMinimum(0);
-            jProgressBar.setMaximum(FileManager.countLines(auxFile) - (FileManager.countLines(auxFile) / 4));
-            FileReader fr = new FileReader(auxFile);
-            FileManager.getMyFileManager().readFile(fr);
+            jProgressBar.setMaximum(100);
+            //FileReader fr = new FileReader(auxFile);
+            //FileManager.getMyFileManager().readFile(fr);
+            FileManager.getMyFileManager().readFile();
         } catch (FileNotFoundException e1) {
             System.out.println("File not found. ¿Are you sure that you're opening the correct file?");
         }catch (IOException e2){
