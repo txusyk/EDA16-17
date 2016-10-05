@@ -71,6 +71,7 @@ public class FileManager {
             while (scanner.hasNext()) {
                 line = scanner.nextLine(); //scanner of lines
                 auxLine2 = line.split("\\s+\\--->+\\s"); //we split to get the name of the movie
+                NormalizeStrings.getMyNormalizeString().run(auxLine2);
 
                 String filmName = auxLine2[0]; //here we save the name of the film
 
@@ -84,6 +85,8 @@ public class FileManager {
                 FilmCatalog.getMyFilmCatalog().addFilm(auxFilm); //we add the film if its not been added before
 
                 int i = 0;
+
+                NormalizeStrings.getMyNormalizeString().run(auxLine3);
 
                 while (auxLine3.length > i) { // mientras el indice no sea mayor que el tamaño de la lista(indexOutOfBoundException)
 
