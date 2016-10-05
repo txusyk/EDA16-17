@@ -44,7 +44,7 @@ public class NormalizeStrings extends Thread {
         public void run(String[] pLine) {
 
             for (int i = 0; i < pLine.length; i++) {
-                this.waitXseconds(pLine[i].length());
+                this.waitXseconds(0);
                 if (pLine[i].contains("Ã¡")) {
                     pLine[i].replaceAll("Ã¡", "a");
                 }else if (pLine[i].contains("Ã©")) {
@@ -65,6 +65,32 @@ public class NormalizeStrings extends Thread {
                     pLine[i].replaceAll("Ã“", "O");
                 }else if (pLine[i].contains("Ãš")) {
                     pLine[i].replaceAll("Ãš", "U");
+                }else if (pLine[i].contains("Ã§")) {
+                    pLine[i].replaceAll("Ã§", "c");
+                }else if (pLine[i].contains("Ã")) {
+                    pLine[i].replaceAll("Ã", "a");
+                }else if (pLine[i].contains("Ã¨")) {
+                    pLine[i].replaceAll("Ã¨", "e");
+                }else if (pLine[i].contains("Ã¬")) {
+                    pLine[i].replaceAll("Ã¬", "i");
+                }else if (pLine[i].contains("Ã²")) {
+                    pLine[i].replaceAll("Ã²", "o");
+                }else if (pLine[i].contains("Ã¹")) {
+                    pLine[i].replaceAll("Ã¹", "u");
+                }else if (pLine[i].contains("Ã€")) {
+                    pLine[i].replaceAll("Ã€", "A");
+                }else if (pLine[i].contains("Ãˆ")) {
+                    pLine[i].replaceAll("Ãˆ", "E");
+                }else if (pLine[i].contains("ÃŒ")) {
+                    pLine[i].replaceAll("ÃŒ", "I");
+                }else if (pLine[i].contains("Ã’")) {
+                    pLine[i].replaceAll("Ã’", "O");
+                }else if (pLine[i].contains("Ã™")) {
+                    pLine[i].replaceAll("Ã™", "U");
+                }else if (pLine[i].contains("Ã‡")) {
+                    pLine[i].replaceAll("Ã‡", "C");
+                }else if (pLine[i].contains("�")) {
+                    pLine[i].replaceAll("�", "A");
                 }
             }
         }
