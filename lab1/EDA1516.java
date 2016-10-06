@@ -5,13 +5,14 @@
  */
 package lab1;
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.FileNotFoundException;
 import javax.swing.*;
 
 /**
- *
  * @author Josu
  */
 public class EDA1516 {
@@ -23,9 +24,16 @@ public class EDA1516 {
 
         Object[] options = {"GUI based", "Console based"};
 
-        int n = JOptionPane.showOptionDialog(null,"Choose what launcher do you want to use", "EDA16-17 Selection Menu",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[1]);
+        //int n = JOptionPane.showOptionDialog(null,"Choose what launcher do you want to use", "EDA16-17 Selection Menu",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[1])
 
-        if (n == 0) {
+        System.out.println("\t\t***** Welcome to EDA16/17 project *****\n");
+
+        System.out.println("\tSelect (1) for gui based program launch (still in development, less customizable)");
+        System.out.println("\tSelect (2) for terminal based program launch (finished and more customizable experience");
+
+        int n = Teclado.getMiTeclado().recogerInt();
+
+        if (n == 1) {
 
             JFrame frame = JMenu.getMyJMenu();
 
@@ -33,12 +41,13 @@ public class EDA1516 {
 
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //fijamos que la operacion por defecto al cerrar es salir
             frame.pack();
+            frame.isAlwaysOnTop();
             frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);         //Fijamos por defecto que la ventana siempre aparezca en el centro
             frame.setVisible(true); //hacemos el frame visible
             frame.setResizable(false);
-        }else{
+        } else {
             TerminalGUI.main();
         }
     }
-    
+
 }

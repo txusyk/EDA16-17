@@ -24,27 +24,6 @@ public class FileManager {
     }
 
     public static int countLines(File pFile) throws IOException {
-        InputStream is = new BufferedInputStream(new FileInputStream(pFile));
-        try {
-            byte[] c = new byte[1024];
-            int count = 0;
-            int readChars = 0;
-            boolean empty = true;
-            while ((readChars = is.read(c)) != -1) {
-                empty = false;
-                for (int i = 0; i < readChars; ++i) {
-                    if (c[i] == '\n') {
-                        ++count;
-                    }
-                }
-            }
-            return (count == 0 && !empty) ? 1 : count;
-        } finally {
-            is.close();
-        }
-    }
-
-    public static int countLines2(File pFile) throws IOException {
         LineNumberReader lnr = new LineNumberReader(new FileReader(pFile));
         lnr.skip(Long.MAX_VALUE);
         lnr.close();
@@ -52,54 +31,69 @@ public class FileManager {
     }
 
 
-    public void readFile() throws IOException {
+    public void readFile(int pOption) throws IOException {
 
         String[] auxLine2;
         String line;
 
-        FileInputStream inputStream = null;
-        Scanner scanner = null;
+        FileReader in = null;
+        BufferedReader br = null;
 
-        int j=0;
+        long startTime = System.currentTimeMillis();
+
+        int j = 0; //j= counts the actual line of file
+        int total = 0; //total = saves total running time of reading
+        int auxCont = 0;  //auxCount = saves the percentage of reading of file
 
         try {
+            in = new FileReader("/Users/Josu/IdeaProjects/EDA16-17/src/lab1/testAllActors.txt");
+            br = new BufferedReader(in);
+            int contLines = countLines(new File("/Users/Josu/IdeaProjects/EDA16-17/src/lab1/testAllActors.txt"));
 
-            inputStream = new FileInputStream("/Users/Josu/IdeaProjects/EDA16-17/src/lab1/testAllActors.txt");
-            int contLines = countLines2(new File("/Users/Josu/IdeaProjects/EDA16-17/src/lab1/testAllActors.txt"));
-            scanner = new Scanner(inputStream, "UTF-8");
+            String filmName, auxLine1Joined, actorName, actorSurname;
 
-            while (scanner.hasNext()) {
-                line = scanner.nextLine(); //scanner of lines
+            String[] auxLine1, auxLine3;
+
+            Film auxFilm;
+
+            while ((line = br.readLine()) != null) {
+
                 auxLine2 = line.split("\\s+\\--->+\\s"); //we split to get the name of the movie
-                NormalizeStrings.getMyNormalizeString().run(auxLine2);
 
-                String filmName = auxLine2[0]; //here we save the name of the film
+                if (pOption == 1) {
+                    NormalizeStrings.getMyNormalizeString().run(auxLine2);
+                }
 
-                String[] auxLine1 = Arrays.copyOfRange(auxLine2, 1, auxLine2.length); //array containing the name of the actors
-                String auxLine1Joined = String.join("", auxLine1); //we convert the array to an string
+                filmName = auxLine2[0]; //here we save the name of the film
 
-                String[] auxLine3 = auxLine1Joined.split("\\s+\\&&&+\\s"); //we split the array of actors in
+                auxLine1 = Arrays.copyOfRange(auxLine2, 1, auxLine2.length); //array containing the name of the actors
+                auxLine1Joined = String.join("", (CharSequence[]) auxLine1); //we convert the array to an string
 
-                //this.normalizeString(filmName); //we use the method that we have written
-                Film auxFilm = new Film(filmName); //create a new film
-                FilmCatalog.getMyFilmCatalog().addFilm(auxFilm); //we add the film if its not been added before
+                auxLine3 = auxLine1Joined.split("\\s+\\&&&+\\s"); //we split the array of actors in
+
+                auxFilm = new Film(filmName); //create a new film
+
+                if (pOption == 1) {
+                    if (!auxFilm.getName().contains("�")) {
+                        FilmCatalog.getMyFilmCatalog().addFilm(auxFilm); //we add the film if its not been added before
+                    }
+                } else {
+                    FilmCatalog.getMyFilmCatalog().addFilm(auxFilm); //we add the film if its not been added before
+                }
+
 
                 int i = 0;
 
-                NormalizeStrings.getMyNormalizeString().run(auxLine3);
-
                 while (auxLine3.length > i) { // mientras el indice no sea mayor que el tamaño de la lista(indexOutOfBoundException)
 
-                    //String actorName = this.normalizeString(auxLine3[i]);//Normalizamos el nombre del actor
+                    actorSurname = "";
+                    actorName = auxLine3[i];
 
-                    String actorSurname = new String("");
-                    String actorName = auxLine3[i];
-
-                    if (actorName.indexOf("(") != -1) {
+                    if (actorName.contains("(")) {
                         auxLine2 = actorName.split("\\s\\(");
                         actorName = auxLine2[0];
                     }
-                    if (actorName.indexOf(",") != -1) {//convertimos -> Apellido, Nombre --> Nombre, Apellido (como es habitual)
+                    if (actorName.contains(",")) {//convertimos -> Apellido, Nombre --> Nombre, Apellido (como es habitual)
                         auxLine2 = actorName.split(",\\s*");
                         if (auxLine2.length > 1) {
                             if (auxLine2[1].compareToIgnoreCase("null") != 0) {
@@ -112,35 +106,54 @@ public class FileManager {
                     }
                     Actor auxActor = new Actor(actorName, actorSurname);//Creamos la pelicula enviandole el nombre una vez normalizado
 
-                    auxActor.getFilmList().addFilm(auxFilm);
-                    ActorCatalog.getmyActorCatalog().addActor(auxActor);
-                    FilmCatalog.getMyFilmCatalog().getFilm(auxFilm.getName()).getActorList().addActor(auxActor);
+                    if (pOption == 1) {
+                        if (!auxActor.getName().contains("�")) {
+                            if (auxActor.getName().charAt(0) > 'A' && auxActor.getName().charAt(0) < 'Z') {
+                                auxActor.getFilmList().addFilm(auxFilm);
+                                ActorCatalog.getmyActorCatalog().addActor(auxActor);
+                                if (!auxFilm.getName().contains("�")) {
+                                    FilmCatalog.getMyFilmCatalog().getFilm(auxFilm.getName()).getActorList().addActor(auxActor);
+                                }
+                            }
+                        }
+                    } else {
+                        auxActor.getFilmList().addFilm(auxFilm);
+                        ActorCatalog.getmyActorCatalog().addActor(auxActor);
+                        FilmCatalog.getMyFilmCatalog().getFilm(auxFilm.getName()).getActorList().addActor(auxActor);
+                    }
 
                     i++;
 
                 }
-                j++;
-                if (j % 2500 == 0) {
-                    if (((j*100)/contLines) % 10 == 0){
-                        System.out.println((j*100)/contLines);
-                    }else if (((j*100)/contLines) % 5 == 0){
-                        JMenu.getMyJMenu().updateBar((j*100)/contLines);
-                    }
+                if (j == 0) {
+                    System.out.println("\t[*] 0% file readed");
                 }
-                if (scanner.ioException() != null) {
-                    throw scanner.ioException();
+                j++;
+
+                if (((j * 100) / contLines) % 5 == 0) {
+                    if (((j * 100) / contLines) != auxCont) {
+                        auxCont = ((j * 100) / contLines);
+                        long stopTime = System.currentTimeMillis();
+                        total = (int) (stopTime - startTime) / 1000;
+
+                        System.out.println("\t[*] " + auxCont + "% file readed. Time elapsed: " + total + "s");
+                    }
+                } else if (((j * 100) / contLines) % 5 == 0) {
+                    JMenu.getMyJMenu().updateBar((j * 100) / contLines);
                 }
             }
         } finally {
-            if (inputStream != null) {
-                inputStream.close();
+            if (br != null) {
+                br.close();
             }
-            if (scanner != null) {
-                scanner.close();
+            if (in != null) {
+                in.close();
             }
         }
-        System.out.println("-------- File read finished --------");
-        scanner.close();
+        System.out.println("\t-------- File read finished --------\n");
+        System.out.println("\t--- Elapsed time to read the file ---> " + total + "s---");
+        System.out.println("\t--- Total actor/actresses found :"+ActorCatalog.getmyActorCatalog().getActorL().size());
+        System.out.println("\t--- Total films found : "+FilmCatalog.getMyFilmCatalog().getSize());
     }
 
     @SuppressWarnings("rawtypes")
@@ -151,71 +164,45 @@ public class FileManager {
         FileWriter fichero = null;
         PrintWriter pw;
 
+        long timeStart = System.currentTimeMillis();
+
         try {
             String directorio = System.getProperty("user.dir");//cogemos variable entorno
             fichero = new FileWriter(directorio + "/ActorList_ordered.txt");
             pw = new PrintWriter(fichero);
 
             int i = 1;
-            for (Object key : keys) {
+            for (int i1 = 0, keysLength = keys.length; i1 < keysLength; i1++) {
+                Object key = keys[i1];
                 pw.print("Actor " + i + " -> ");
                 pw.println(ActorCatalog.getmyActorCatalog().getActorL().get(key).getName() + " " + ActorCatalog.getmyActorCatalog().getActorL().get(key).getSurname());
-                Object[] keys2 = ActorCatalog.getmyActorCatalog().getActorL().get(key).getFilmList().getFilmL().keySet().toArray();
+                Object[] keys2;
+                keys2 = ActorCatalog.getmyActorCatalog().getActorL().get(key).getFilmList().getFilmL().keySet().toArray();
                 for (Object auxKey : keys2) {
                     pw.println("\t" + ActorCatalog.getmyActorCatalog().getActorL().get(key).getFilmList().getFilmL().get(auxKey).getName());
                 }
                 i++;
+                int percentage = (i * 100) / ActorCatalog.getmyActorCatalog().getActorL().size();
+                if (((i * 100) / ActorCatalog.getmyActorCatalog().getActorL().size()) % 5 == 0) {
+                    if (((i * 100) / ActorCatalog.getmyActorCatalog().getActorL().size()) != percentage) {
+                        System.out.println("\t\t[*] " + percentage + "%");
+                    }
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                if (null != fichero)
+                if (null != fichero) {
                     fichero.close();
-                System.out.println("\nFile exported to: " + System.getProperty("user.dir"));
+                }
+                long timeTotal = (System.currentTimeMillis() - timeStart);
+                System.out.println("\t\t --- Elapsed time to export the file --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
+                System.out.println("\n\tFile exported to: " + System.getProperty("user.dir"));
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
         }
-    }
-
-
-    private String normalizeString(String pWord) {
-
-        pWord = pWord.replaceAll("Ã¡", "a");
-        pWord = pWord.replaceAll("Ã©", "e");
-        pWord = pWord.replaceAll("Ã­", "i");
-        pWord = pWord.replaceAll("Ã³", "o");
-        pWord = pWord.replaceAll("Ãº", "u");
-        pWord = pWord.replaceAll("Ã�", "A");
-        pWord = pWord.replaceAll("Ã‰", "E");
-        pWord = pWord.replaceAll("Ã�", "I");
-        pWord = pWord.replaceAll("Ã“", "O");
-        pWord = pWord.replaceAll("Ãš", "U");
-        pWord = pWord.replaceAll("Ã¤", "a");
-        pWord = pWord.replaceAll("Ã«", "e");
-        pWord = pWord.replaceAll("Ã¯", "i");
-        pWord = pWord.replaceAll("Ã¶", "o");
-        pWord = pWord.replaceAll("Ã¼", "u");
-        pWord = pWord.replaceAll("Ã„", "A");
-        pWord = pWord.replaceAll("Ã‹", "E");
-        pWord = pWord.replaceAll("Ã�", "I");
-        pWord = pWord.replaceAll("Ã–", "O");
-        pWord = pWord.replaceAll("Ãœ", "U");
-        pWord = pWord.replaceAll("Ã§", "c");
-        pWord = pWord.replaceAll("Ã ", "a");
-        pWord = pWord.replaceAll("Ã¨", "e");
-        pWord = pWord.replaceAll("Ã¬", "i");
-        pWord = pWord.replaceAll("Ã²", "o");
-        pWord = pWord.replaceAll("Ã¹", "u");
-        pWord = pWord.replaceAll("Ã€", "A");
-        pWord = pWord.replaceAll("Ãˆ", "E");
-        pWord = pWord.replaceAll("ÃŒ", "I");
-        pWord = pWord.replaceAll("Ã’", "O");
-        pWord = pWord.replaceAll("Ã™", "U");
-        pWord = pWord.replaceAll("Ã§", "c");
-        pWord = pWord.replaceAll("Ã‡", "C");
-        pWord = pWord.replaceAll("�", "A");
-        return pWord;
     }
 }

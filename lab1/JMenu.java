@@ -311,10 +311,10 @@ public class JMenu extends javax.swing.JFrame {
             jProgressBar.setMaximum(100);
             //FileReader fr = new FileReader(auxFile);
             //FileManager.getMyFileManager().readFile(fr);
-            FileManager.getMyFileManager().readFile();
+            FileManager.getMyFileManager().readFile(1);
         } catch (FileNotFoundException e1) {
             System.out.println("File not found. ¿Are you sure that you're opening the correct file?");
-        }catch (IOException e2){
+        } catch (IOException e2) {
             System.out.println("IOException when counting lines for the progress bar");
         }
 
@@ -339,10 +339,10 @@ public class JMenu extends javax.swing.JFrame {
         String[] auxActorArray = auxActorName.split("\\s");
         auxActorName = auxActorArray[0];
         String auxActorSurname = auxActorArray[1];
-        Actor auxActor = new Actor(auxActorName,auxActorSurname);
-        if (ActorCatalog.getmyActorCatalog().searchActor(auxActor) != null){
+        Actor auxActor = new Actor(auxActorName, auxActorSurname);
+        if (ActorCatalog.getmyActorCatalog().searchActor(auxActor) != null) {
             System.out.println("Actor already exists");
-        }else{
+        } else {
             ActorCatalog.getmyActorCatalog().addActor(auxActor);
         }
     }
@@ -352,10 +352,10 @@ public class JMenu extends javax.swing.JFrame {
         String[] auxActorArray = auxActorName.split("\\s");
         auxActorName = auxActorArray[0];
         String auxActorSurname = auxActorArray[1];
-        Actor auxActor = new Actor(auxActorName,auxActorSurname);
+        Actor auxActor = new Actor(auxActorName, auxActorSurname);
         if (ActorCatalog.getmyActorCatalog().searchActor(auxActor) != null) {
             ActorCatalog.getmyActorCatalog().searchActor(new Actor(auxActorName, auxActorSurname)).getFilmList().printFilms();
-        }else{
+        } else {
             System.out.println("Not posible to erase. Actor doesn't exist");
         }
 
@@ -402,7 +402,7 @@ public class JMenu extends javax.swing.JFrame {
     }
 
     private void button8ActionPerformed(java.awt.event.ActionEvent evt) {
-            ActorCatalog.getmyActorCatalog().quickSortList();
+        ActorCatalog.getmyActorCatalog().quickSortList();
     }
 
     private void button9ActionPerformed(java.awt.event.ActionEvent evt) {

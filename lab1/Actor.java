@@ -9,21 +9,21 @@ public class Actor {
     private String surname;
     private FilmList filmL;
 
-    public Actor(String pName, String pSurname){
+    public Actor(String pName, String pSurname) {
         this.name = pName;
         this.surname = pSurname;
         this.filmL = new FilmList();
     }
-    
-    public FilmList getFilmList(){
+
+    public FilmList getFilmList() {
         return this.filmL;
     }
-    
-    public String getName(){
+
+    public String getName() {
         return this.name;
     }
-    
-    public String getSurname(){
+
+    public String getSurname() {
         return this.surname;
     }
 

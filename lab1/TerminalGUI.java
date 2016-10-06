@@ -2,6 +2,7 @@ package lab1;
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.concurrent.SynchronousQueue;
 
 /**
  * Created by Josu on 26/09/2016.
@@ -49,11 +50,21 @@ public class TerminalGUI {
             switch (optMenu) {
                 case 1:
                     try {
-                        long startTime = System.currentTimeMillis();
-                        FileManager.getMyFileManager().readFile();
-                        long stopTime = System.currentTimeMillis();
-                        long total = stopTime - startTime;
-                        System.out.println("Elapsed time ---> "+total/1000+"s");
+                        System.out.println("\tSelect one of options below: ");
+                        System.out.println("\t\t1) Read only the 'readable' actors/films (after trying to rescue some names from the codification, take only the 'full readables') ");
+                        System.out.println("\t\t2) Read the full list of actors/movies (don't care if they're wrong written, after running our conversor");
+                        int optMenu1 = 0;
+                        while (optMenu1 < 1 || optMenu1 > 2) {
+                            optMenu1 = Teclado.getMiTeclado().recogerInt();
+                            if (optMenu1 == 1) {
+                                FileManager.getMyFileManager().readFile(1);
+                            } else if (optMenu1 == 2) {
+                                FileManager.getMyFileManager().readFile(2);
+                            } else {
+                                System.out.println("Invalid option, try again. Select a number between 1-2 range");
+                            }
+                        }
+
                     } catch (FileNotFoundException e1) {
                         System.out.println("File not found. ¿Are you sure that you're opening the correct file?");
                     } catch (IOException e) {
@@ -137,6 +148,6 @@ public class TerminalGUI {
                     FileManager.getMyFileManager().exportToFile();
                     break;
             }
-        }while(1 != 0);
+        } while (1 != 0);
     }
 }

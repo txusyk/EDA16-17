@@ -22,7 +22,7 @@ public class StringQuickSort {
             return;
         }
 
-        sortImpl(array, fromIndex, toIndex,0);
+        sortImpl(array, fromIndex, toIndex, 0);
     }
 
     private static void sortImpl(String[] array,
@@ -49,7 +49,7 @@ public class StringQuickSort {
                     array[index] = tmp;
                     ++finger;
                 }
-            }catch (NullPointerException e1){
+            } catch (NullPointerException e1) {
 
             }
         }
