@@ -62,10 +62,7 @@ public class ActorCatalog {
             auxS[i] = key;
             i++;
         }
-        long timeStart = System.currentTimeMillis();
         StringQuickSort.sort(auxS);
-        long timeTotal = (System.currentTimeMillis() - timeStart);
-        System.out.println("\t\t --- Elapsed time to order the actor list --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
         return auxS;
     }
 

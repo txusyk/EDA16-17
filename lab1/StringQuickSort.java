@@ -1,34 +1,28 @@
 package lab1;
 
-import java.util.Arrays;
-import java.util.Random;
-
 /**
- * This class implements a Quicksort for strings.
- *
- * @author Rodion "rodde" Efremov
- * @version (Dec 17, 2015)
+ * Created by Josu on 25/09/2016.
  */
 public class StringQuickSort {
-
-    private static final int ALPHABET_SIZE = 26;
 
     public static void sort(String[] array) {
         sort(array, 0, array.length);
     }
 
-    public static void sort(String[] array, int fromIndex, int toIndex) {
+    private static void sort(String[] array, int fromIndex, int toIndex) {
         if (toIndex - fromIndex < 2) {
             return;
         }
-
+        long timeStart = System.currentTimeMillis();
         sortImpl(array, fromIndex, toIndex, 0);
+        long timeTotal = (System.currentTimeMillis() - timeStart);
+        System.out.println("\t\t --- Elapsed time to order the actor list --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
     }
 
-    private static void sortImpl(String[] array,
-                                 int fromIndex,
-                                 int toIndex,
-                                 int stringLength) {
+    private static void sortImpl(String[] array, int fromIndex, int toIndex, int stringLength) throws NullPointerException {
+
+
+
         int rangeLength = toIndex - fromIndex;
 
         if (rangeLength < 2) {
@@ -41,16 +35,11 @@ public class StringQuickSort {
         // requested sort range.
         for (int index = fromIndex; index < toIndex; ++index) {
             String current = array[index];
-
-            try {
-                if (current.length() == stringLength) {
-                    String tmp = array[finger];
-                    array[finger] = current;
-                    array[index] = tmp;
-                    ++finger;
-                }
-            } catch (NullPointerException e1) {
-
+            if (current.length() == stringLength) {
+                String tmp = array[finger];
+                array[finger] = current;
+                array[index] = tmp;
+                ++finger;
             }
         }
 
@@ -78,7 +67,6 @@ public class StringQuickSort {
         sortImpl(array, fromIndex, finger, stringLength);
 
         fromIndex = finger;
-        int processed = 0;
 
         for (int index = fromIndex; index < toIndex; ++index) {
             String current = array[index];
@@ -100,14 +88,12 @@ public class StringQuickSort {
             if (c.compareTo(a) <= 0) {
                 return a;
             }
-
             return b.compareTo(c) <= 0 ? b : c;
         }
 
         if (c.compareTo(b) <= 0) {
             return b;
         }
-
         return a.compareTo(c) <= 0 ? a : c;
     }
 

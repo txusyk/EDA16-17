@@ -2,8 +2,6 @@ package lab1;
 
 import java.io.*;
 import java.util.Arrays;
-import java.util.Scanner;
-import javax.swing.SwingUtilities;
 
 /**
  * Created by david on 25/09/2016.
@@ -33,7 +31,7 @@ public class FileManager {
 
     public void readFile(int pOption) throws IOException {
 
-        String[] auxLine2;
+        String[] auxLine1;
         String line;
 
         FileReader in = null;
@@ -50,26 +48,23 @@ public class FileManager {
             br = new BufferedReader(in);
             int contLines = countLines(new File("/Users/Josu/IdeaProjects/EDA16-17/src/lab1/testAllActors.txt"));
 
-            String filmName, auxLine1Joined, actorName, actorSurname;
+            String filmName, actorName, actorSurname;
 
-            String[] auxLine1, auxLine3;
+            String[]  auxLine2;
 
             Film auxFilm;
 
             while ((line = br.readLine()) != null) {
 
-                auxLine2 = line.split("\\s+\\--->+\\s"); //we split to get the name of the movie
+                auxLine1 = line.split("\\s+\\--->+\\s"); //we split to get the name of the movie
 
                 if (pOption == 1) {
-                    NormalizeStrings.getMyNormalizeString().run(auxLine2);
+                    NormalizeStrings.getMyNormalizeString().run(auxLine1);
                 }
 
-                filmName = auxLine2[0]; //here we save the name of the film
+                filmName = auxLine1[0]; //here we save the name of the film
 
-                auxLine1 = Arrays.copyOfRange(auxLine2, 1, auxLine2.length); //array containing the name of the actors
-                auxLine1Joined = String.join("", (CharSequence[]) auxLine1); //we convert the array to an string
-
-                auxLine3 = auxLine1Joined.split("\\s+\\&&&+\\s"); //we split the array of actors in
+                auxLine2 = auxLine1[1].split("\\s+\\&&&+\\s"); //we split the array of actors in
 
                 auxFilm = new Film(filmName); //create a new film
 
@@ -81,26 +76,25 @@ public class FileManager {
                     FilmCatalog.getMyFilmCatalog().addFilm(auxFilm); //we add the film if its not been added before
                 }
 
-
                 int i = 0;
 
-                while (auxLine3.length > i) { // mientras el indice no sea mayor que el tamaño de la lista(indexOutOfBoundException)
+                while (auxLine2.length > i) { // mientras el indice no sea mayor que el tamaño de la lista(indexOutOfBoundException)
 
                     actorSurname = "";
-                    actorName = auxLine3[i];
+                    actorName = auxLine2[i];
 
                     if (actorName.contains("(")) {
-                        auxLine2 = actorName.split("\\s\\(");
-                        actorName = auxLine2[0];
+                        auxLine1 = actorName.split("\\s\\(");
+                        actorName = auxLine1[0];
                     }
                     if (actorName.contains(",")) {//convertimos -> Apellido, Nombre --> Nombre, Apellido (como es habitual)
-                        auxLine2 = actorName.split(",\\s*");
-                        if (auxLine2.length > 1) {
-                            if (auxLine2[1].compareToIgnoreCase("null") != 0) {
-                                actorSurname = auxLine2[0];
-                                actorName = auxLine2[1];
+                        auxLine1 = actorName.split(",\\s*");
+                        if (auxLine1.length > 1) {
+                            if (auxLine1[1].compareToIgnoreCase("null") != 0) {
+                                actorSurname = auxLine1[0];
+                                actorName = auxLine1[1];
                             } else {
-                                actorName = auxLine2[0];
+                                actorName = auxLine1[0];
                             }
                         }
                     }

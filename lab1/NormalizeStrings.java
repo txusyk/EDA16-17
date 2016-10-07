@@ -17,7 +17,6 @@ public class NormalizeStrings extends Thread {
     public void run(String[] pLine) {
 
         for (int i = 0; i < pLine.length; i++) {
-            this.waitXseconds(0);
             if (pLine[i].contains("Ã¡")) {
                 pLine[i].replaceAll("Ã¡", "a");
             } else if (pLine[i].contains("Ã©")) {
@@ -67,12 +66,13 @@ public class NormalizeStrings extends Thread {
             } else if (pLine[i].contains("�s")) {
                 pLine[i].replaceAll("�s", "Os");
             }
+            this.waitXseconds(0.1);
         }
     }
 
-    private void waitXseconds(int segundos) {
+    private void waitXseconds(double ms) {
         try {
-            Thread.sleep(segundos * 1000);
+            Thread.sleep((long)ms * 10);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }

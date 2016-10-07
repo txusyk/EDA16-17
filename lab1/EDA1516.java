@@ -31,7 +31,7 @@ public class EDA1516 {
         System.out.println("\tSelect (1) for gui based program launch (still in development, less customizable)");
         System.out.println("\tSelect (2) for terminal based program launch (finished and more customizable experience");
 
-        int n = Teclado.getMiTeclado().recogerInt();
+        int n = Keyboard.getMyKeyboard().getInt();
 
         if (n == 1) {
 
