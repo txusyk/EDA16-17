@@ -51,8 +51,9 @@
 <h2>
 <a id="indice" class="anchor" href="#indice" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indice</h2>
 
-<p>Mas informacion en la pagina web del proyecto: 
-[TOC]</p>
+<p>Mas informacion en la pagina web del proyecto: <a href="http://txusyk.github.io/EDA16-17/">GITHUB</a>: <a href="http://txusyk.github.io/EDA16-17/">http://txusyk.github.io/EDA16-17/</a></p>
+
+<p>[TOC]</p>
 
 <hr>
 
@@ -603,6 +604,43 @@ En el caso promedio, el orden es *</em><em>O(n·log n)</em> **.</p>
         sortImpl(array, fromIndex, finger, stringLength <span class="pl-k">+</span> <span class="pl-c1">1</span>);
         sortImpl(array, finger, toIndex, stringLength);
     }
+</pre></div>
+
+<h3>
+<a id="46-contlines" class="anchor" href="#46-contlines" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.6 contLines()</h3>
+
+<h3>
+<a id="461-precondiciónpostcondición" class="anchor" href="#461-precondici%C3%B3npostcondici%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.6.1 Precondición/Postcondición</h3>
+
+<ul>
+<li>++Precondición++: Tenemos un fichero.</li>
+<li>++Postcondición++: Nos devolverá la cantidad de lineas que tiene.</li>
+</ul>
+
+<h3>
+<a id="462-explicacion-del-algoritmo" class="anchor" href="#462-explicacion-del-algoritmo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.6.2 Explicacion del algoritmo</h3>
+
+<p>Para evitar sobrecargar la pantalla de la consola, ralentizar la carga de datos y asi mismo hacerla mas trasparente para el usuario, hemos decidido implementar un contador de lineas que combinado con la linea actual y un submetodo que acompaña, imprime por pantalla la información relativa a la carga del fichero en bloques de <code>%5</code>.</p>
+
+<h3>
+<a id="464-código" class="anchor" href="#464-c%C3%B3digo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.6.4 Código</h3>
+
+<p>Metodo que lee todas las lineas y nos devuelve un <em>int</em>, siendo este el numero de lineas totales del fichero a cargar.</p>
+
+<div class="highlight highlight-source-java"><pre> <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">int</span> countLines(<span class="pl-smi">File</span> pFile) throws <span class="pl-smi">IOException</span> {
+        <span class="pl-smi">LineNumberReader</span> lnr <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">LineNumberReader</span>(<span class="pl-k">new</span> <span class="pl-smi">FileReader</span>(pFile));
+        lnr<span class="pl-k">.</span>skip(<span class="pl-smi">Long</span><span class="pl-c1"><span class="pl-k">.</span>MAX_VALUE</span>);
+        lnr<span class="pl-k">.</span>close();
+        <span class="pl-k">return</span> lnr<span class="pl-k">.</span>getLineNumber() <span class="pl-k">+</span> <span class="pl-c1">1</span>;<span class="pl-c">//Add 1 because line index starts at 0</span>
+    }</pre></div>
+
+<p>Este es el submetodo que es llamado en las iteraciones de la carga para mostrar la información por pantalla al usuario (en bloques de <code>5%</code>)</p>
+
+<div class="highlight highlight-source-java"><pre>    <span class="pl-k">if</span> (((i <span class="pl-k">*</span> <span class="pl-c1">100</span>) <span class="pl-k">/</span> <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getActorL()<span class="pl-k">.</span>size()) <span class="pl-k">%</span> <span class="pl-c1">5</span> <span class="pl-k">==</span> <span class="pl-c1">0</span>) {
+        <span class="pl-k">if</span> (((i <span class="pl-k">*</span> <span class="pl-c1">100</span>) <span class="pl-k">/</span> <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getActorL()<span class="pl-k">.</span>size()) <span class="pl-k">!=</span> percentage) {
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>[*] <span class="pl-pds">"</span></span> <span class="pl-k">+</span> percentage <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>%<span class="pl-pds">"</span></span>);
+          }
+    }    
 </pre></div>
 
 <h2>
