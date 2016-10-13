@@ -821,7 +821,12 @@ public class TerminalUI {
                     }
                     break;
                 case 8:
-                    ActorCatalog.getmyActorCatalog().quickSortList();
+                    System.out.println("Do you want to print (console) the ordered list of actors?");
+                    if (Keyboard.getMyKeyboard().getString().equalsIgnoreCase("y")){
+                        ActorCatalog.getmyActorCatalog().printList(ActorCatalog.getmyActorCatalog().quickSortList());
+                    break;
+                    }
+                        ActorCatalog.getmyActorCatalog().quickSortList();
                     break;
                 case 9:
                     FileManager.getMyFileManager().exportToFile();
