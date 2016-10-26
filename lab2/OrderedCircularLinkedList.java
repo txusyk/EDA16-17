@@ -677,17 +677,56 @@
 
 package lab2;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 public class OrderedCircularLinkedList<T> extends CircularLinkedList<T> implements OrderedListADT<T> {
 	
 	public void add(T elem){
 		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
 
+		Node<T> auxNode = new Node<T>(elem);
+		Node<T> act = first;
 
 
-
-
-
+		if(first == null){ //Comprobamos el caso de lista vacia
+			first = auxNode;
+			auxNode.next = auxNode;
+            last=auxNode;
+			count ++;
+        }
+		else{
+			if(((Comparable)elem).compareTo((Comparable)first.data)<0){ //Comprobamos el caso de ser menor que el primer elemento
+				auxNode.next = first;
+				first = auxNode;
+				count++;
+            }
+			else if(((Comparable)elem).compareTo((Comparable)last.data) > 0){ //Comprobamos el caso en que se tenga que colocar al final
+				last.next = auxNode;
+				auxNode.next = first;
+				last = auxNode;
+				count++;
+            }
+			else if (((Comparable)elem).compareTo((Comparable)act.next.data) < 0){ //Comprobar si va entre el primero y el segundo
+				first.next = act;
+				act.next = first.next;
+				count++;
+            }
+			else{
+				boolean enc = false;
+				act = act.next;
+				while(act != first && !enc){
+					if (((Comparable)elem).compareTo((Comparable)act.next.data) < 0){
+                        enc = true;
+						auxNode.next = act.next;
+						act.next = auxNode;
+						count++;
+                    }
+					else{
+						act = act.next;
+					}
+				}
+			}
+		}
 	}
-
 
 }
