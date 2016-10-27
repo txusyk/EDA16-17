@@ -735,7 +735,10 @@ public class ActorCatalog {
             auxS[i] = key;
             i++;
         }
-        StringQuickSort.sort(auxS);
+        StringQuickSort.quickSort(auxS);
+        /*for(String auxName : auxS){
+            System.out.println(auxName + "\r");
+        }*/
         return auxS;
     }
 

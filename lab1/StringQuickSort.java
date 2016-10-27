@@ -681,11 +681,13 @@ package lab1;
  */
 public class StringQuickSort {
 
-    public static void sort(String[] array) {
+    /*public static void sort(String[] array) {
         sort(array, 0, array.length);
     }
 
     private static void sort(String[] array, int fromIndex, int toIndex) {
+        String ans;
+
         if (toIndex - fromIndex < 2) {
             return;
         }
@@ -693,6 +695,7 @@ public class StringQuickSort {
         sortImpl(array, fromIndex, toIndex, 0);
         long timeTotal = (System.currentTimeMillis() - timeStart);
         System.out.println("\t\t --- Elapsed time to order the actor list --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
+
     }
 
     private static void sortImpl(String[] array, int fromIndex, int toIndex, int stringLength) throws NullPointerException {
@@ -771,6 +774,46 @@ public class StringQuickSort {
             return b;
         }
         return a.compareTo(c) <= 0 ? a : c;
+    }*/
+
+
+    public static void quickSort(String[] table){
+        quickSort(table, 0, table.length-1);
     }
 
+    private static void quickSort(String[] table, int start, int end){
+        if(end-start > 0){
+            int partitionIndex = partition(table, start, end);
+            quickSort(table, start, partitionIndex-1);
+            quickSort(table, partitionIndex + 1, end);
+        }
+    }
+
+    private static int partition(String[] table, int s, int e){
+        String pivote = table[s];
+        int left = s;
+        int right = e;
+
+        while(left < right){
+            while(table[left].compareTo(pivote) <= 0 && left<right){
+                left++;
+            }
+            while(table[right].compareTo(pivote) > 0){
+                right--;
+            }
+            if(left < right){
+                swap(table, left, right);
+            }
+        }
+        table[s]=table[right];
+        table[right] = pivote;
+
+        return right;
+    }
+
+    public static void swap(String[] table, int l, int r){
+        String temp = table[l];
+        table[l] = table[r];
+        table[r] = temp;
+    }
 }
