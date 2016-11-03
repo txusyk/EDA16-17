@@ -677,62 +677,62 @@
 
 package lab2;
 
+
+import java.util.Iterator;
+
 /**
- * @author Josu on 27/10/2016
+ * Created by david on 25/09/2016.
  */
-public class UnorderedCircularLinkedList<T> extends CircularLinkedList<T> implements UnorderedListADT<T> {
+public class ActorList {
 
-    /*Pre: We have a list, empty or not
-    * Post: We have added the element to the first position of the list*/
-	public void addToFront(T elem){
-        //System.out.println("AÑADIMOS el elemento "+elem+" a la PRIMERA POSICION de la lista");
+    private UnorderedCircularLinkedList<Actor> actorList;
 
-        Node<T> newNode = new Node<T>(elem);
-		if(isEmpty()){
-			last = newNode;
-            last.next = last;
-		}
-		else{
-			newNode.next = last.next;
-			last.next = newNode;
-		}
-		count++;
-	}
 
-    /* Pre: We have a list, empty or not
-    *  Post: We've added the element to the last position*/
-	public void addToRear(T elem) {
-        //System.out.println("AÑADIMOS el elemento "+elem+" a la ULTIMA POSICION de la lista");
+    public ActorList() {
+        this.actorList = new UnorderedCircularLinkedList<>();
+    }
 
-		Node<T> newNode = new Node<T>(elem);
-		if(isEmpty()){
-			last = newNode;
-			last.next = last;
-		}else{
-			newNode.next = last.next; //the next of 'our' rear points firts
-			last.next = newNode; //the next of the previous last points our 'rear' node
-			last = newNode;
-		}
-		count++;
-	}
-	/* Pre: We have a list, we must have at least one element. We receive the element that we want to add and the target to add after
-	 * Post: We have added our element after the target element of the list */
-	public void addAfter(T elem, T target) {
 
-        //System.out.println("Añadimos el elemento "+elem+" tras el elemento "+target+"\n");
+    public boolean exist(String pActorName, String pActorSurname) {
+        return this.actorList.contains(new Actor(pActorName, pActorSurname));
+    }
 
-        Node<T> newNode = new Node<T>(elem);
-		Node<T> current = last;
+    public void addActor(Actor auxActor) {
+        if (!this.exist(auxActor.getName(), auxActor.getSurname())) {
+            this.actorList.addToRear(auxActor);
+        }
+    }
 
-		while(!current.data.equals(target)){
-			current = current.next;
-		}
+    public Actor getActor(String pActorName, String pActorSurname) {
+        if (this.exist(pActorName , pActorSurname)) {
+            return actorList.find(new Actor(pActorName,pActorSurname));
+        }
+        return null;
+    }
 
-		newNode.next = current.next;
-		current.next = newNode;
+    public void removeActor(Actor pActor) {
+        if (this.exist(pActor.getName(), pActor.getSurname())) {
+            this.actorList.remove(new Actor(pActor.getName() , pActor.getSurname()));
+        }
+    }
 
-		count++;
+    public void printActors() {
+        System.out.println("These are all the actors: ");
+        Iterator<Actor> itr = this.actorList.iterator();
 
-	}
+        if (this.actorList.isEmpty()) {
+            System.err.println(" No consta ningun actor");
+        } else {
+            while (itr.hasNext()) {
+                Actor act = itr.next();
+                System.out.println(act.getName()+" "+act.getSurname());
+            }
+        }
+    }
+
+    public int getActorsNumber(){
+        return this.actorList.count;
+    }
+
 
 }

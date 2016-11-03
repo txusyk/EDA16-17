@@ -677,62 +677,206 @@
 
 package lab2;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
- * @author Josu on 27/10/2016
+ * Created by david on 25/09/2016.
  */
-public class UnorderedCircularLinkedList<T> extends CircularLinkedList<T> implements UnorderedListADT<T> {
+public class FileManager {
 
-    /*Pre: We have a list, empty or not
-    * Post: We have added the element to the first position of the list*/
-	public void addToFront(T elem){
-        //System.out.println("AÑADIMOS el elemento "+elem+" a la PRIMERA POSICION de la lista");
+    private static FileManager myFileManager;
 
-        Node<T> newNode = new Node<T>(elem);
-		if(isEmpty()){
-			last = newNode;
-            last.next = last;
-		}
-		else{
-			newNode.next = last.next;
-			last.next = newNode;
-		}
-		count++;
-	}
+    private FileManager() {
+    }
 
-    /* Pre: We have a list, empty or not
-    *  Post: We've added the element to the last position*/
-	public void addToRear(T elem) {
-        //System.out.println("AÑADIMOS el elemento "+elem+" a la ULTIMA POSICION de la lista");
+    public static FileManager getMyFileManager() {
+        if (myFileManager == null) {
+            myFileManager = new FileManager();
+        }
+        return myFileManager;
+    }
 
-		Node<T> newNode = new Node<T>(elem);
-		if(isEmpty()){
-			last = newNode;
-			last.next = last;
-		}else{
-			newNode.next = last.next; //the next of 'our' rear points firts
-			last.next = newNode; //the next of the previous last points our 'rear' node
-			last = newNode;
-		}
-		count++;
-	}
-	/* Pre: We have a list, we must have at least one element. We receive the element that we want to add and the target to add after
-	 * Post: We have added our element after the target element of the list */
-	public void addAfter(T elem, T target) {
+    public static int countLines(File pFile) throws IOException {
+        LineNumberReader lnr = new LineNumberReader(new FileReader(pFile));
+        lnr.skip(Long.MAX_VALUE);
+        lnr.close();
+        return lnr.getLineNumber() + 1;//Add 1 because line index starts at 0
+    }
 
-        //System.out.println("Añadimos el elemento "+elem+" tras el elemento "+target+"\n");
 
-        Node<T> newNode = new Node<T>(elem);
-		Node<T> current = last;
+    public void readFile(int pOption) throws IOException {
 
-		while(!current.data.equals(target)){
-			current = current.next;
-		}
+        String[] auxLine1;
 
-		newNode.next = current.next;
-		current.next = newNode;
+        long startTime = System.currentTimeMillis();
 
-		count++;
+        int j = 0; //j= counts the actual line of file
+        int total = 0; //total = saves total running time of reading
+        int auxCont = 0;  //auxCount = saves the percentage of reading of file
 
-	}
+        try (InputStream resource = FileManager.class.getResourceAsStream("testAllActors.txt")) {
 
+            int contLines = countLines(new File("/Users/Josu/IdeaProjects/EDA16-17/src/lab2/testAllActors.txt"));
+
+            String filmName, actorName, actorSurname;
+
+            String[] auxLine2;
+
+            Film auxFilm;
+
+            List<String> lines = new BufferedReader(new InputStreamReader(resource, StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
+
+            for (String line : lines) {
+
+                auxLine1 = line.split("\\s+\\--->+\\s"); //we split to get the name of the movie
+
+                if (pOption == 1) {
+                    NormalizeStrings.getMyNormalizeString().run(auxLine1);
+                }
+
+                filmName = auxLine1[0]; //here we save the name of the film
+
+                auxLine2 = auxLine1[1].split("\\s+\\&&&+\\s"); //we split the array of actors in
+
+                auxFilm = new Film(filmName); //create a new film
+
+                if (pOption == 1) {
+                    if (!auxFilm.getName().contains("�")) {
+                        FilmCatalog.getMyFilmCatalog().addFilm(auxFilm); //we add the film if its not been added before
+                    }
+                } else {
+                    FilmCatalog.getMyFilmCatalog().addFilm(auxFilm); //we add the film if its not been added before
+                }
+
+                int i = 0;
+
+                while (auxLine2.length > i) { // mientras el indice no sea mayor que el tamaño de la lista(indexOutOfBoundException)
+
+                    actorSurname = "";
+                    actorName = auxLine2[i];
+
+                    if (actorName.contains("(")) {
+                        auxLine1 = actorName.split("\\s\\(");
+                        actorName = auxLine1[0];
+                    }
+                    if (actorName.contains(",")) {//convertimos -> Apellido, Nombre --> Nombre, Apellido (como es habitual)
+                        auxLine1 = actorName.split(",\\s*");
+                        if (auxLine1.length > 1) {
+                            if (auxLine1[1].compareToIgnoreCase("null") != 0) {
+                                actorSurname = auxLine1[0];
+                                actorName = auxLine1[1];
+                            } else {
+                                actorName = auxLine1[0];
+                            }
+                        }
+                    }
+                    Actor auxActor = new Actor(actorName, actorSurname);//Creamos la pelicula enviandole el nombre una vez normalizado
+
+                    if (pOption == 1) {
+                        if (!auxActor.getName().contains("�")) {
+                            if (auxActor.getName().charAt(0) > 'A' && auxActor.getName().charAt(0) < 'Z') {
+                                auxActor.getFilmList().addFilm(auxFilm);
+                                ActorCatalog.getmyActorCatalog().addActor(auxActor);
+                                if (!auxFilm.getName().contains("�")) {
+                                    FilmCatalog.getMyFilmCatalog().getFilm(auxFilm.getName()).getActorList().addActor(auxActor);
+                                }
+                            }
+                        }
+                    } else {
+                        auxActor.getFilmList().addFilm(auxFilm);
+                        ActorCatalog.getmyActorCatalog().addActor(auxActor);
+                        FilmCatalog.getMyFilmCatalog().getFilm(auxFilm.getName()).getActorList().addActor(auxActor);
+                    }
+
+                    i++;
+
+                }
+                if (j == 0) {
+                    System.out.println("\t[*] 0% file readed");
+                }
+                j++;
+
+                if (((j * 100) / contLines) % 5 == 0) {
+                    if (((j * 100) / contLines) != auxCont) {
+                        auxCont = ((j * 100) / contLines);
+                        long stopTime = System.currentTimeMillis();
+                        total = (int) (stopTime - startTime) / 1000;
+
+                        System.out.println("\t[*] " + auxCont + "% file readed. Time elapsed: " + total + "s");
+                    }
+                } else if (((j * 100) / contLines) % 5 == 0) {
+                    SwingGUI.getMyJMenu().updateBar((j * 100) / contLines);
+                }
+            }
+            System.out.println("\t[*] 100% file readed. Time elapsed: " + total + "s");
+        }
+        System.out.println("\t-------- File read finished --------\n");
+        System.out.println("\t--- Elapsed time to read the file ---> " + total + "s---");
+
+        System.out.println("\t--- Total actor/actresses found :" + ActorCatalog.getmyActorCatalog().getActorL().size()+" ---");
+        System.out.println("\t--- Total films found : " + FilmCatalog.getMyFilmCatalog().getSize()+" ---");
+
+        float avActorsFilm = (float)FilmCatalog.getMyFilmCatalog().getTotalActors()/(float)FilmCatalog.getMyFilmCatalog().getSize();
+        System.out.printf("\t--- Average actors per film: %.2f",avActorsFilm);
+        double avFilmsActor = (double)ActorCatalog.getmyActorCatalog().getTotalFilms()/(double)ActorCatalog.getmyActorCatalog().getSize();
+        System.out.print("---\n");
+        System.out.printf("\t--- Average films per actor: %.2f", avFilmsActor);
+        System.out.print("---\n");
+
+    }
+
+   @SuppressWarnings("rawtypes")
+    public void exportToFile() {
+
+        String[] keys = ActorCatalog.getmyActorCatalog().quickSortList();
+
+        FileWriter fichero = null;
+        PrintWriter pw;
+
+        long timeStart = System.currentTimeMillis();
+
+        try {
+            String directorio = System.getProperty("user.dir");//cogemos variable entorno
+            fichero = new FileWriter(directorio + "/ActorList_ordered.txt");
+            pw = new PrintWriter(fichero);
+
+            int i = 1;
+            for (int i1 = 0, keysLength = keys.length; i1 < keysLength; i1++) {
+                Object key = keys[i1];
+                pw.print("Actor " + i + " -> ");
+                pw.println(ActorCatalog.getmyActorCatalog().getActorL().get(key).getName() + " " + ActorCatalog.getmyActorCatalog().getActorL().get(key).getSurname());
+                Object[] keys2;
+                Iterator<Film> itr = ActorCatalog.getmyActorCatalog().getActorL().get(key).getFilmList().getIterator();
+                while (itr.hasNext()) {
+                    Film auxFilm = itr.next();
+                    pw.println("\t" + ActorCatalog.getmyActorCatalog().getActorL().get(key).getFilmList().getFilmL().find(auxFilm).getName());
+                }
+                i++;
+                int percentage = (i * 100) / ActorCatalog.getmyActorCatalog().getActorL().size();
+                if (((i * 100) / ActorCatalog.getmyActorCatalog().getActorL().size()) % 5 == 0) {
+                    if (((i * 100) / ActorCatalog.getmyActorCatalog().getActorL().size()) != percentage) {
+                        System.out.println("\t\t[*] " + percentage + "%");
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+                long timeTotal = (System.currentTimeMillis() - timeStart);
+                System.out.println("\t\t --- Elapsed time to export the file --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
+                System.out.println("\n\tFile exported to: " + System.getProperty("user.dir"));
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
 }

@@ -678,61 +678,38 @@
 package lab2;
 
 /**
- * @author Josu on 27/10/2016
+ * Created by david on 25/09/2016.
  */
-public class UnorderedCircularLinkedList<T> extends CircularLinkedList<T> implements UnorderedListADT<T> {
+public class Film implements Comparable<Film> {
 
-    /*Pre: We have a list, empty or not
-    * Post: We have added the element to the first position of the list*/
-	public void addToFront(T elem){
-        //System.out.println("AÑADIMOS el elemento "+elem+" a la PRIMERA POSICION de la lista");
+    private String name;
+    private int earned = 0;
+    private ActorList actorList;
 
-        Node<T> newNode = new Node<T>(elem);
-		if(isEmpty()){
-			last = newNode;
-            last.next = last;
-		}
-		else{
-			newNode.next = last.next;
-			last.next = newNode;
-		}
-		count++;
-	}
+    public Film(String pName) {
+        this.name = pName;
+        this.actorList = new ActorList();
+    }
 
-    /* Pre: We have a list, empty or not
-    *  Post: We've added the element to the last position*/
-	public void addToRear(T elem) {
-        //System.out.println("AÑADIMOS el elemento "+elem+" a la ULTIMA POSICION de la lista");
+    public String getName() {
+        return this.name;
+    }
 
-		Node<T> newNode = new Node<T>(elem);
-		if(isEmpty()){
-			last = newNode;
-			last.next = last;
-		}else{
-			newNode.next = last.next; //the next of 'our' rear points firts
-			last.next = newNode; //the next of the previous last points our 'rear' node
-			last = newNode;
-		}
-		count++;
-	}
-	/* Pre: We have a list, we must have at least one element. We receive the element that we want to add and the target to add after
-	 * Post: We have added our element after the target element of the list */
-	public void addAfter(T elem, T target) {
+    public int getEarned() {
+        return this.earned;
+    }
 
-        //System.out.println("Añadimos el elemento "+elem+" tras el elemento "+target+"\n");
+    public void incrementEarned(int auxEarned) {
+        this.earned += auxEarned;
+    }
 
-        Node<T> newNode = new Node<T>(elem);
-		Node<T> current = last;
+    public ActorList getActorList() {
+        return this.actorList;
+    }
 
-		while(!current.data.equals(target)){
-			current = current.next;
-		}
 
-		newNode.next = current.next;
-		current.next = newNode;
-
-		count++;
-
-	}
-
+    @Override
+    public int compareTo(Film pFilm) {
+        return this.getName().compareToIgnoreCase(pFilm.getName());
+    }
 }

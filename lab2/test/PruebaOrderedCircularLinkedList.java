@@ -675,64 +675,100 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package lab2;
+package lab2.test;
 
-/**
- * @author Josu on 27/10/2016
- */
-public class UnorderedCircularLinkedList<T> extends CircularLinkedList<T> implements UnorderedListADT<T> {
+import lab2.OrderedCircularLinkedList;
+import lab2.Persona;
+import org.junit.Test;
 
-    /*Pre: We have a list, empty or not
-    * Post: We have added the element to the first position of the list*/
-	public void addToFront(T elem){
-        //System.out.println("AÑADIMOS el elemento "+elem+" a la PRIMERA POSICION de la lista");
+import java.util.Iterator;
 
-        Node<T> newNode = new Node<T>(elem);
-		if(isEmpty()){
-			last = newNode;
-            last.next = last;
-		}
-		else{
-			newNode.next = last.next;
-			last.next = newNode;
-		}
-		count++;
-	}
+public class PruebaOrderedCircularLinkedList {
 
-    /* Pre: We have a list, empty or not
-    *  Post: We've added the element to the last position*/
-	public void addToRear(T elem) {
-        //System.out.println("AÑADIMOS el elemento "+elem+" a la ULTIMA POSICION de la lista");
+    public static void visualizarNodosInt(OrderedCircularLinkedList<Integer> l) throws NullPointerException {
+        Iterator<Integer> it = l.iterator();
+        System.out.println();
+        while (it.hasNext()) {
+            Integer num = it.next();
+            if (it.hasNext()) {
+                System.out.print(num + ",");
+            } else {
+                System.out.print(num);
+            }
+        }
+        System.out.println();
+    }
 
-		Node<T> newNode = new Node<T>(elem);
-		if(isEmpty()){
-			last = newNode;
-			last.next = last;
-		}else{
-			newNode.next = last.next; //the next of 'our' rear points firts
-			last.next = newNode; //the next of the previous last points our 'rear' node
-			last = newNode;
-		}
-		count++;
-	}
-	/* Pre: We have a list, we must have at least one element. We receive the element that we want to add and the target to add after
-	 * Post: We have added our element after the target element of the list */
-	public void addAfter(T elem, T target) {
+    public static void visualizarNodosString(OrderedCircularLinkedList<Persona> l) throws NullPointerException {
+        Iterator<Persona> it = l.iterator();
+        System.out.println();
+        System.out.print("[");
+        while (it.hasNext()) {
+            Persona psr = it.next();
+            if (it.hasNext()) {
+                System.out.print("["+psr.getName() + ","+psr.getDni()+"],");
+            } else {
+                System.out.print("["+psr.getName()+ ","+psr.getDni()+"]]");
+            }
+        }
+        System.out.println();
+    }
 
-        //System.out.println("Añadimos el elemento "+elem+" tras el elemento "+target+"\n");
+    @Test
+    public void main() {
 
-        Node<T> newNode = new Node<T>(elem);
-		Node<T> current = last;
 
-		while(!current.data.equals(target)){
-			current = current.next;
-		}
+        System.out.println("\n\t******************** PruebaOrderedCircularLinkedList ********************");
+        System.out.println("\t*************************************************************************\n\n");
+        System.out.println("***** Creamos una lista añadiendo los elementos [1,3,6,7,9,0,20]. El resultado es: *****");
+        OrderedCircularLinkedList<Integer> l = new OrderedCircularLinkedList<Integer>();
+        l.add(1);
+        l.add(3);
+        l.add(6);
+        l.add(7);
+        l.add(9);
+        l.add(0);
+        l.add(20);
+        visualizarNodosInt(l);
+        System.out.print("---> Num elementos: " + l.size()+"\n");
 
-		newNode.next = current.next;
-		current.next = newNode;
 
-		count++;
+        System.out.println("\n***** Eliminamos el elemento 7 de la lista *****");
+        l.remove(new Integer(7));
+        visualizarNodosInt(l);
+        System.out.println("Num elementos: " + l.size()+"\n");
 
-	}
+        System.out.println("***** Prueba del metodo find *****\n");
+        System.out.println("Numero: 20. -->  " + l.find(20));
+        System.out.println("Numero: 9. -->  " + l.find(9));
+        System.out.println("Numero: 0. -->  " + l.find(0));
+        System.out.println("Numero: 7. -->  " + l.find(7)+"\n");
 
+
+        System.out.println("***** Creamos una lista añadiendo los elementos [[jon, 1111],[ana, 7777],[amaia, 3333],[unai, 8888],[pedro, 2222],[olatz, 5555]]. El resultado es: ***** ");
+
+        OrderedCircularLinkedList<Persona> l2 = new OrderedCircularLinkedList<Persona>();
+
+        l2.add(new Persona("jon", "1111"));
+        l2.add(new Persona("ana", "7777"));
+        l2.add(new Persona("amaia", "3333"));
+        l2.add(new Persona("unai", "8888"));
+        l2.add(new Persona("pedro", "2222"));
+        l2.add(new Persona("olatz", "5555"));
+        visualizarNodosString(l2);
+        System.out.println("\n***** Eliminamos [ , 8888]*****");
+        l2.remove(new Persona("", "8888"));
+        visualizarNodosString(l2);
+
+        System.out.println("\n Num elementos: " + l2.size()+"\n");
+
+
+        System.out.println("***** Prueba Find *****\n");
+        System.out.println("2222? -->  " + l2.find(new Persona("", "2222")));
+        System.out.println("5555? -->  " + l2.find(new Persona("", "5555")));
+        System.out.println("7777? -->  " + l2.find(new Persona("", "7777")));
+        System.out.println("8888? -->  " + l2.find(new Persona("", "8888")));
+
+
+    }
 }

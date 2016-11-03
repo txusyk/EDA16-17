@@ -679,6 +679,9 @@ package lab2;
 
 import java.util.Iterator;
 
+/**
+ * @author Josu on 27/10/2016
+ */
 public class CircularLinkedList<T> implements ListADT<T> {
 
     // Atributos
@@ -740,9 +743,11 @@ public class CircularLinkedList<T> implements ListADT<T> {
         return pLast.data;
     }
 
-
+    /*
+    pre: tenemos una lista de elementos. es posible que la lista es vacia.
+    post: tenemos una lista de elementos a la que le hemos eliminado el elemento que recibimos en caso de que este eista previamente
+     */
     public T remove(T elem) {
-        System.out.println("ELIMINAMOS el elemento "+elem);
         Node<T> current = last;
         int i = 0;
         T returnNum;
@@ -754,7 +759,7 @@ public class CircularLinkedList<T> implements ListADT<T> {
                 i++;
             }
             if (i==count){//if the elemente isn't finded
-                System.out.println("El elemento no ha sido encontrado en la lista");
+                System.out.println("The element isn't finded");
                 return null;
             }else{//we find it. we have to remove currents pointing node
                 if (count == 1){//if we only have one element
@@ -769,6 +774,7 @@ public class CircularLinkedList<T> implements ListADT<T> {
                     current.next = current.next.next;
                 }
                 count--;
+                System.out.println("\n ->  "+elem+" it's been deleted");
                 return returnNum;
             }
         }
@@ -869,7 +875,6 @@ public class CircularLinkedList<T> implements ListADT<T> {
         }
 
     }
-
 
     public void visualizarNodos() {
         System.out.print(this.toString()+" ");
