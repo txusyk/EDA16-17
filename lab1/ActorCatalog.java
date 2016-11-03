@@ -736,9 +736,6 @@ public class ActorCatalog {
             i++;
         }
         StringQuickSort.quickSort(auxS);
-        /*for(String auxName : auxS){
-            System.out.println(auxName + "\r");
-        }*/
         return auxS;
     }
 
@@ -748,5 +745,15 @@ public class ActorCatalog {
         }
     }
 
+    public int getTotalFilms(){
+        int cont = 0;
+        for(String key : this.actorL.keySet()){
+            cont += this.actorL.get(key).getFilmList().getTotalFilms();
+        }
+        return cont;
+    }
 
+    public int getSize(){
+        return this.actorL.size();
+    }
 }

@@ -719,4 +719,12 @@ public class FilmCatalog {
         return this.filmL.size();
     }
 
+    public int getTotalActors(){
+        int cont = 0;
+        for(String key : this.filmL.keySet()){
+            cont += this.filmL.get(key).getActorList().getTotalActors();
+        }
+        return cont;
+    }
+
 }

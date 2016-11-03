@@ -678,9 +678,6 @@ Public License instead of this License.  But first, please read
 package lab1;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by david on 25/09/2016.
@@ -711,6 +708,10 @@ public class FileManager {
     public void readFile(int pOption) throws IOException {
 
         String[] auxLine1;
+        String line;
+
+        FileReader in = null;
+        BufferedReader br = null;
 
         long startTime = System.currentTimeMillis();
 
@@ -718,19 +719,18 @@ public class FileManager {
         int total = 0; //total = saves total running time of reading
         int auxCont = 0;  //auxCount = saves the percentage of reading of file
 
-        try (InputStream resource = FileManager.class.getResourceAsStream("testAllActors.txt")) {
-
-            int contLines = countLines(new File("/Users/Josu/IdeaProjects/EDA16-17/src/lab1/testAllActors.txt"));
+        try {
+            in = new FileReader("D:/ProjectosJava/EDA16-17/src/lab1/test80000lines.txt");
+            br = new BufferedReader(in);
+            int contLines = countLines(new File("D:/ProjectosJava/EDA16-17/src/lab1/test80000lines.txt"));
 
             String filmName, actorName, actorSurname;
 
-            String[] auxLine2;
+            String[]  auxLine2;
 
             Film auxFilm;
 
-            List<String> lines = new BufferedReader(new InputStreamReader(resource, StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
-
-            for (String line : lines) {
+            while ((line = br.readLine()) != null) {
 
                 auxLine1 = line.split("\\s+\\--->+\\s"); //we split to get the name of the movie
 
@@ -812,11 +812,25 @@ public class FileManager {
                     SwingGUI.getMyJMenu().updateBar((j * 100) / contLines);
                 }
             }
+        } finally {
+            if (br != null) {
+                br.close();
+            }
+            if (in != null) {
+                in.close();
+            }
         }
         System.out.println("\t-------- File read finished --------\n");
         System.out.println("\t--- Elapsed time to read the file ---> " + total + "s---");
-        System.out.println("\t--- Total actor/actresses found :" + ActorCatalog.getmyActorCatalog().getActorL().size());
-        System.out.println("\t--- Total films found : " + FilmCatalog.getMyFilmCatalog().getSize());
+
+        System.out.println("\t--- Total actor/actresses found :"+ActorCatalog.getmyActorCatalog().getActorL().size());
+        System.out.println("\t--- Total films found : "+FilmCatalog.getMyFilmCatalog().getSize());
+
+        int avActorsFilms = FilmCatalog.getMyFilmCatalog().getTotalActors()/FilmCatalog.getMyFilmCatalog().getSize();
+        System.out.println("\t-- Average actors per film: "+avActorsFilms);
+        int avFilmsActors = ActorCatalog.getmyActorCatalog().getTotalFilms()/ActorCatalog.getmyActorCatalog().getSize();
+        System.out.println("\t-- Average films per actor: "+avFilmsActors);
+
     }
 
     @SuppressWarnings("rawtypes")

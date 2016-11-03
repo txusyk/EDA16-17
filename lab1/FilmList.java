@@ -721,5 +721,8 @@ public class FilmList {
         }
     }
 
+    public int getTotalFilms(){
+        return this.filmL.size();
+    }
 
 }
