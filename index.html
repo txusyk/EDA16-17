@@ -1,35 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
     <title>Eda16-17 by txusyk</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/txusyk/EDA16-17">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/txusyk/EDA16-17/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/txusyk/EDA16-17/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <header>
-      <div class="container">
-        <h1>Eda16-17</h1>
-        <h2>Contains all practical course deliveries for the subject &quot;Estructuras de Datos y Algoritmos&quot; from the college &quot;UPV/EHU EUITI Bilbao&quot;</h2>
+    <div class="wrapper">
 
-        <section id="downloads">
-          <a href="https://github.com/txusyk/EDA16-17/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/txusyk/EDA16-17/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/txusyk/EDA16-17" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+      <section>
+        <div id="title">
+          <h1>Eda16-17</h1>
+          <p>Contains all practical course deliveries for the subject &quot;Estructuras de Datos y Algoritmos&quot; from the college &quot;UPV/EHU EUITI Bilbao&quot;</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/txusyk">txusyk</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-    <div class="container">
-      <section id="main_content">
         <h1>
-<a id="practica-actividad-1" class="anchor" href="#practica-actividad-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Practica. Actividad 1.</h1>
+<a id="practica-actividad-2" class="anchor" href="#practica-actividad-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Practica. Actividad 2.</h1>
 
 <pre><code>            UPV-EHU 2016/2017
 
@@ -53,12 +63,14 @@
 
 <p>Mas informacion en la pagina web del proyecto: <a href="http://txusyk.github.io/EDA16-17/">GITHUB</a>: <a href="http://txusyk.github.io/EDA16-17/">http://txusyk.github.io/EDA16-17/</a></p>
 
-<p>[TOC]</p>
-
 <hr>
 
 <h2>
 <a id="1-introducción" class="anchor" href="#1-introducci%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. Introducción</h2>
+
+<p><strong>Siguiendo las indicaciones que nos dejaste en la evaluación de la primera actividad, hemos implementado una versión del algoritmo de ordenacion</strong> (<em>QuickSort</em>) <strong>mas simplificada y menos confusa</strong>.</p>
+
+<p><strong>Se han completado y probado todas las clases</strong> que entregaste y los test, respectivamente. ** Hemos implementado la parte opcional del <em>OrderedCircularLinkedList</em> <strong>(FilmList) y <em>UnorderedCircularLinkedList</em> (ActorList). Hemos decidido añadirlas a dichas clases dado que **si sustituiamos el HashMap&lt; String, T &gt; que tenemos para los catálogos de actores y peliculas el coste del programa se nos disparaba</strong>. Por lo tanto, <strong>desde la perspectiva de la eficiencia, hemos decidido que</strong> dichas estructuras de datos <strong>manejen menos volumen de información.</strong></p>
 
 <p><strong>Dado un fichero de datos</strong> que contiene actores y actrices de Internet Movie DataBase (IMDB), con una estructura efinida ('nombrePelicula' ---&gt; 'nombreActor1' &amp;&amp;&amp; 'nombreActor2'...) . <strong>Se ha de implementar un programa que cargue el fichero de datos y extraiga del mismo los nombres de los actores y las peliculas que contiene</strong>.</p>
 
@@ -100,12 +112,1966 @@
 
 <p>Este es el diseño final del programa, los diseños iniciales y la evolución de los mismos hasta llegar a esta se encuentran en nuestro GitHub.</p>
 
-<p><img src="/Users/Josu/IdeaProjects/EDA16-17/src/lab1/diagram.png" alt=""></p>
+<p><img src="/Users/Josu/Desktop/uml2.png" alt=""></p>
 
 <hr>
 
 <h2>
 <a id="3-descripción-de-las-estructuras-de-datos-principales" class="anchor" href="#3-descripci%C3%B3n-de-las-estructuras-de-datos-principales" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. Descripción de las estructuras de datos principales</h2>
+
+<p>Como comentábamos en la introducción del documento, <strong>la parte más importante</strong> del documento recae en los métodos que realizan <strong>las búsquedas</strong>. Dado que <strong>son necesarios para trabajar la información, añadir y eliminarla</strong>.</p>
+
+<p>Tal como comentamos en la primera actividad, hicimos diferentes pruebas: búsqueda lineal y dicotómica. <strong>Finalmente, vimos que podriamos tratar las búsquedas casi como un coste constante</strong> si utilizabamos alguna estructura de datos de la familia <strong>'Map'</strong>. Por eso, replanteamos el diseño del programa e *<em>hicimos que todas las estructuras de datos con las que trabajamos sean *HashMap &lt; String, T &gt;</em> ** donde 'T' es cualquier objeto que necesitemos almacenar (peliculas, actores...).</p>
+
+<p>Teniendo en cuenta lo que se pedía para cumplimentar la segunda actividad. Hemos decidido implementar:</p>
+
+<ul>
+<li>** <em>OrderedCircularLinkedList</em> ** en la clase ActorList (que contendrá el reparto de cada una de las peliculas).</li>
+<li>** <em>UnorderedCircularLinkedList</em> ** en la clase FilmList (que contendrá la filmografia de cada actor)</li>
+</ul>
+
+<p>Como <strong>algoritmo de ordenación</strong>, utilizábamos BubbleSort. Decidimos hacer modificaciones debido a que su coste era demasiado alto para lo que buscábamos (<em>O(n2)</em>). Hicimos distintas pruebas con MergeSort, aunque <strong>finalmente optamos como algoritmo por el QuickSort reduciendo así el coste hasta O(n* log n)</strong>.
+Para realizar <strong>la operación de ordenación</strong>, previamente <strong>volcamos las claves de nuestro HashMap</strong> (que son los nombres de los actores) <strong>en un Array[] de String y procedemos a ordenarlo</strong>. <strong>Tras esto, recibiremos una lista de claves ordenadas</strong>, que en caso de querer mostrar unicamente los nombres de los actores cumple al 100% la función y en caso de querer mostrar mas información, lo recorreremos en orden y accederemos con cada clave a la información de nuestro catálogo (HashMap).
+*<em>Tal y como comentábamos en la introducción del documento, hemos simplificado nuestra versión del *QuickSort</em> ** y ahora es mucho mas sencilla.</p>
+
+<h2>
+<a id="4-diseño-e-implementacion-de-los-metodos-principales" class="anchor" href="#4-dise%C3%B1o-e-implementacion-de-los-metodos-principales" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4. Diseño e implementacion de los metodos principales</h2>
+
+<p>Este apartado lo dedicaremos a explicar el funcionamiento de los diferentes métodos principales de las clases a implementar en este laboratorio.</p>
+
+<h3>
+<a id="41-circularlinkedlist" class="anchor" href="#41-circularlinkedlist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1. CircularLinkedList:</h3>
+
+<h4>
+<a id="411-removefirst" class="anchor" href="#411-removefirst" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.1 removeFirst()</h4>
+
+<h5>
+<a id="4111-precondicionpostcondicion" class="anchor" href="#4111-precondicionpostcondicion" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.1.1 Precondicion/Postcondicion</h5>
+
+<p>++Precondicion:++ Tendremos una lista de punteros
+++Postcondicion:++ Tendremos la lista, sin el primer elemento.</p>
+
+<h5>
+<a id="4112-casos-de-prueba" class="anchor" href="#4112-casos-de-prueba" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.1.2 Casos de prueba</h5>
+
+<ul>
+<li>Lista null</li>
+</ul>
+
+<h5>
+<a id="4113-coste" class="anchor" href="#4113-coste" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.1.3 Coste</h5>
+
+<p>El coste de esta operacion sera constante **<em>O(1)</em> **, ya que las operaciones que se harían son de coste constante, y las haremos sobre el primer el elemento al que accedemos.</p>
+
+<h5>
+<a id="4114-pseudo-algoritmo" class="anchor" href="#4114-pseudo-algoritmo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.1.4 Pseudo-algoritmo</h5>
+
+<pre><code>    Nodo &lt;T&gt; primero = ultimo.sig;
+    si(tamaño() == 1){
+        ultimo = null;
+    }
+    sino{
+        ultimo.sig = ultimo.sig.sig;
+    }
+    count--;
+    return primero.info;
+</code></pre>
+
+<h4>
+<a id="4115-método-final" class="anchor" href="#4115-m%C3%A9todo-final" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.1.5 Método final</h4>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">public</span> <span class="pl-smi">T</span> removeFirst() {
+        <span class="pl-c">// Elimina el primer elemento de la lista</span>
+        <span class="pl-c">// Precondici�n: la lista tiene al menos un elemento</span>
+        <span class="pl-c">// COMPLETAR EL CODIGO Y CALCULAR EL COSTE</span>
+
+        <span class="pl-c">// Elimina el primer elemento de la lista</span>
+        <span class="pl-c">// Precondici�n: la lista tiene al menos un elemento</span>
+        <span class="pl-c">// COMPLETAR EL CODIGO Y CALCULAR EL COSTE</span>
+
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> first <span class="pl-k">=</span> last<span class="pl-k">.</span>next;
+        <span class="pl-k">if</span> (size() <span class="pl-k">==</span> <span class="pl-c1">1</span>) {
+            last <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+        } <span class="pl-k">else</span> {
+            last<span class="pl-k">.</span>next <span class="pl-k">=</span> last<span class="pl-k">.</span>next<span class="pl-k">.</span>next;
+        }
+        count<span class="pl-k">--</span>;
+        <span class="pl-k">return</span> first<span class="pl-k">.</span>data;
+    }</pre></div>
+
+<h4>
+<a id="412-removelast" class="anchor" href="#412-removelast" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.2 removeLast()</h4>
+
+<h5>
+<a id="4121-precondiciónpostcondición" class="anchor" href="#4121-precondici%C3%B3npostcondici%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.2.1 Precondición/Postcondición</h5>
+
+<ul>
+<li>++Pre:++ Tendremos una lista de punteros.</li>
+<li>++Post:++ Tendremos la lista sin el ultimo elemento.</li>
+</ul>
+
+<h5>
+<a id="4122-casos-de-prueba" class="anchor" href="#4122-casos-de-prueba" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.2.2 Casos de prueba</h5>
+
+<ul>
+<li>Lista null</li>
+</ul>
+
+<h5>
+<a id="4123-coste" class="anchor" href="#4123-coste" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.2.3 Coste</h5>
+
+<p>El coste de este método será lineal **<em>O(n)</em> **, ya que tendremos que recorrer la lista entera antes de colocarnos delante del ultimo elemento para proceder a eliminarlo.</p>
+
+<h5>
+<a id="4124-pseudo-algoritmo" class="anchor" href="#4124-pseudo-algoritmo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.2.4 Pseudo-algoritmo</h5>
+
+<pre><code>    si(tamaño() == 1){
+        last = null;
+    }
+    sino{
+        Nodo &lt;T&gt; actual = ultimo.sig;
+        mientras(actual.sig != ultimo){
+            actual = actual.sig;
+        }
+        ultimo = actual;
+        ultimo.sig = ultimo.sig.sig;
+    }
+    cont --;
+    return last.data;
+
+</code></pre>
+
+<h5>
+<a id="4125-metodo-final-código" class="anchor" href="#4125-metodo-final-c%C3%B3digo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.2.5 Metodo final (código)</h5>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">public</span> <span class="pl-smi">T</span> removeLast() {
+        <span class="pl-c">// Elimina el �ltimo elemento de la lista</span>
+        <span class="pl-c">// Precondici�n: la lista tiene al menos un elemento</span>
+        <span class="pl-c">// COMPLETAR EL CODIGO Y CALCULAR EL COSTE</span>
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> pLast <span class="pl-k">=</span> last;
+        <span class="pl-k">if</span> (size() <span class="pl-k">==</span> <span class="pl-c1">1</span>) {
+            last <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+        } <span class="pl-k">else</span> {
+            <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current <span class="pl-k">=</span> last<span class="pl-k">.</span>next;
+            <span class="pl-k">while</span> (current<span class="pl-k">.</span>next <span class="pl-k">!=</span> last) {
+                current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+            }
+            last <span class="pl-k">=</span> current;
+            last<span class="pl-k">.</span>next <span class="pl-k">=</span> last<span class="pl-k">.</span>next<span class="pl-k">.</span>next;
+        }
+        count<span class="pl-k">--</span>;
+        <span class="pl-k">return</span> pLast<span class="pl-k">.</span>data;
+    }
+</pre></div>
+
+<hr>
+
+<h4>
+<a id="413-remove" class="anchor" href="#413-remove" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.3 remove()</h4>
+
+<h5>
+<a id="4131-precondicionpostcondicion" class="anchor" href="#4131-precondicionpostcondicion" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.3.1 Precondicion/Postcondicion</h5>
+
+<ul>
+<li>++Precondicion:++ Tendremos un elemento de una lista.</li>
+<li>++Postcondicion:++ Tendremos la lista sin el elemento.</li>
+</ul>
+
+<h5>
+<a id="4132-casos-de-prueba" class="anchor" href="#4132-casos-de-prueba" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.3.2 Casos de prueba</h5>
+
+<ul>
+<li>Lista null</li>
+<li>Elemento no existente en la lista.</li>
+<li>El elemento a añadir es nulo.</li>
+</ul>
+
+<h4>
+<a id="4133-coste" class="anchor" href="#4133-coste" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.3.3 Coste</h4>
+
+<p>Este algoritmo tendra un coste de **<em>O(n)</em> ** en el peor de los casos, ya que suponiendo que el ultimo elemento sea el que queremos eliminar, tendremos que recorrer la lista entera.
+Pero en caso de que sea el primer elemento el que queremos eliminar, el coste del algoritmo sería constante **<em>O(1)</em> ** ya que nos valdria con acceder al primer elemento mediante el puntero 'first'.</p>
+
+<h4>
+<a id="4134-pseudo-algoritmo" class="anchor" href="#4134-pseudo-algoritmo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.3.4 Pseudo-algoritmo</h4>
+
+<pre><code>public T remove(T elem) {
+    Nodo &lt;T&gt; actual = primero;
+    int i = 0;
+    T numReturn;
+
+    si(this.vacio()){
+        return null;
+    }
+    sino{
+        mientras(!actual.sig.info.igual(elem)){
+            actual = actual.sig;
+            i++;
+        }
+        si(i==cont){
+            System.out.println("El elemento no esta");
+            return null;
+        }
+        sino{
+            si(cont == 1){
+                numReturn = last.data;
+                last=null;
+            }
+            else{
+                numReturn = actual.next.data;
+
+                si(actual.sig == ultimo){
+                    ultimo = actual;
+                }
+                actual.sig = actual.sig.sig;
+            }
+            cont--;
+            System.out.println("\n -&gt; "+elem+" no ha sido eliminado);
+            return numReturn
+        }
+    }
+</code></pre>
+
+<h4>
+<a id="4135-método-final" class="anchor" href="#4135-m%C3%A9todo-final" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.3.5 Método final</h4>
+
+<div class="highlight highlight-source-java"><pre> <span class="pl-k">public</span> <span class="pl-smi">T</span> remove(<span class="pl-smi">T</span> elem) {
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current <span class="pl-k">=</span> last;
+        <span class="pl-k">int</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+        <span class="pl-smi">T</span> returnNum;
+
+        <span class="pl-k">if</span> (<span class="pl-v">this</span><span class="pl-k">.</span>isEmpty()){ <span class="pl-k">return</span> <span class="pl-c1">null</span>;} <span class="pl-c">//if its empty we return null</span>
+        <span class="pl-k">else</span>{<span class="pl-c">//if not null</span>
+            <span class="pl-k">while</span>(<span class="pl-k">!</span>current<span class="pl-k">.</span>next<span class="pl-k">.</span>data<span class="pl-k">.</span>equals(elem) <span class="pl-k">&amp;&amp;</span> i<span class="pl-k">!=</span>size()){<span class="pl-c">//goes out when finds the element or overpass the size</span>
+                current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+                i<span class="pl-k">++</span>;
+            }
+            <span class="pl-k">if</span> (i<span class="pl-k">==</span>count){<span class="pl-c">//if the elemente isn't finded</span>
+                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>The element isn't finded<span class="pl-pds">"</span></span>);
+                <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+            }<span class="pl-k">else</span>{<span class="pl-c">//we find it. we have to remove currents pointing node</span>
+                <span class="pl-k">if</span> (count <span class="pl-k">==</span> <span class="pl-c1">1</span>){<span class="pl-c">//if we only have one element</span>
+                    returnNum <span class="pl-k">=</span> last<span class="pl-k">.</span>data;
+                    last <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+                }<span class="pl-k">else</span>{<span class="pl-c">//if are more elements than 1</span>
+                    returnNum <span class="pl-k">=</span> current<span class="pl-k">.</span>next<span class="pl-k">.</span>data;
+
+                    <span class="pl-k">if</span> (current<span class="pl-k">.</span>next <span class="pl-k">==</span> last) {
+                        last <span class="pl-k">=</span> current;<span class="pl-c">//if the element is the last we dont lose the pointer, we give it to the previous item</span>
+                    }
+                    current<span class="pl-k">.</span>next <span class="pl-k">=</span> current<span class="pl-k">.</span>next<span class="pl-k">.</span>next;
+                }
+                count<span class="pl-k">--</span>;
+                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span> -&gt;  <span class="pl-pds">"</span></span><span class="pl-k">+</span>elem<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> it's been deleted<span class="pl-pds">"</span></span>);
+                <span class="pl-k">return</span> returnNum;
+            }
+        }
+    }
+</pre></div>
+
+<h4>
+<a id="415-find" class="anchor" href="#415-find" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.5 find()</h4>
+
+<h5>
+<a id="4151-precondicionpostcondicion" class="anchor" href="#4151-precondicionpostcondicion" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.5.1 Precondicion/PostCondicion</h5>
+
+<ul>
+<li>++Precondición++: El programa recibe un elemento</li>
+<li>++Postcondición++: Nos devolvera el numero si lo ha encontrado, y null si no existe.</li>
+</ul>
+
+<h5>
+<a id="4152-casos-de-prueba" class="anchor" href="#4152-casos-de-prueba" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.5.2 Casos de prueba</h5>
+
+<ul>
+<li>Lista vacía</li>
+<li>El elemento a añadir es nulo.</li>
+</ul>
+
+<h5>
+<a id="4153-coste" class="anchor" href="#4153-coste" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.5.3 Coste</h5>
+
+<p>El coste de este algoritmo será en el peor de los casos **<em>O(n)</em> ** ya que tendremos que recorrer la lista hasta su ultimo elemento para eliminarlo.
+Pero en el mejor de los casos el coste sería costante **<em>O(1)</em> **, ya que nos valdría el puntero first para acceder al primer elemento.</p>
+
+<h5>
+<a id="4154-pseudo-algoritmo" class="anchor" href="#4154-pseudo-algoritmo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.5.4 Pseudo-algoritmo</h5>
+
+<pre><code>public T find(T elem) {
+    //Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no est�
+    // COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+    Integer i = 0;
+    T numReturn;
+    Nodo&lt;T&gt; actual = ultimo;
+
+    si(this.esVacio()){
+        return null;
+    }
+    sino{
+        mientras(!actual.data.igual(elem) &amp;&amp; i!=tamaño()){
+            actual = actual.next;
+            i++;
+        }
+        if(i==cont){
+            return null;
+        }
+        sino{
+            numReturn = actual.data;
+            return numReturn;
+        }
+    }
+}
+</code></pre>
+
+<h5>
+<a id="4155-método-final" class="anchor" href="#4155-m%C3%A9todo-final" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.1.5.5 Método final</h5>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">public</span> <span class="pl-smi">T</span> find(<span class="pl-smi">T</span> elem) {
+        <span class="pl-c">//Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no está</span>
+        <span class="pl-c">// COMPLETAR EL CODIGO Y CALCULAR EL COSTE</span>
+        <span class="pl-smi">Integer</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+        <span class="pl-smi">T</span> returnNum;
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current <span class="pl-k">=</span> last;
+
+        <span class="pl-k">if</span>(<span class="pl-v">this</span><span class="pl-k">.</span>isEmpty()){
+            <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+        }
+        <span class="pl-k">else</span>{<span class="pl-c">//si hay elementos, buscamos nuestro elemento</span>
+            <span class="pl-k">while</span>(<span class="pl-k">!</span>current<span class="pl-k">.</span>data<span class="pl-k">.</span>equals(elem) <span class="pl-k">&amp;&amp;</span> i<span class="pl-k">!=</span>size()){<span class="pl-c">//tiene que salir si recorre todos los elementos</span>
+                current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+                i<span class="pl-k">++</span>;
+            }
+            <span class="pl-k">if</span>(i<span class="pl-k">==</span>count){<span class="pl-c">//no lo ha encontrado</span>
+                <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+            }
+            <span class="pl-k">else</span>{<span class="pl-c">//lo a encontrado</span>
+                returnNum <span class="pl-k">=</span> current<span class="pl-k">.</span>data;
+                <span class="pl-k">return</span> returnNum;
+            }
+
+        }
+    }</pre></div>
+
+<h3>
+<a id="42-unorderedcircularlinkedlist" class="anchor" href="#42-unorderedcircularlinkedlist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2 UnorderedCircularLinkedList</h3>
+
+<h4>
+<a id="421-addtofront" class="anchor" href="#421-addtofront" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.1 addToFront()</h4>
+
+<h5>
+<a id="4211-precondicionpostcondicion" class="anchor" href="#4211-precondicionpostcondicion" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.1.1 Precondicion/Postcondicion</h5>
+
+<ul>
+<li>++Precondicion:++ El programa recibira un elemento.</li>
+<li>++Postcondicion:++ El elemento esta añadido en la primera posición de la lista.</li>
+</ul>
+
+<h5>
+<a id="4212-casos-de-prueba" class="anchor" href="#4212-casos-de-prueba" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.1.2 Casos de prueba</h5>
+
+<ul>
+<li>La lista es nula.</li>
+<li>El elemento a añadir es nulo.</li>
+</ul>
+
+<h5>
+<a id="4213-coste" class="anchor" href="#4213-coste" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.1.3 Coste</h5>
+
+<p>El coste de este algoritmo sera constante **<em>O(1)</em> ** ya que el elemento se añadira a la primera posición de la lista, posición a la cual accederemos directamente mediante el puntero 'first'.</p>
+
+<h5>
+<a id="4214-pseudo-algoritmo" class="anchor" href="#4214-pseudo-algoritmo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.1.4 Pseudo-algoritmo</h5>
+
+<pre><code>public void addToFront(T elem){
+    Nodo&lt;T&gt; auxN = nuevo Nodo&lt;T&gt;(elem);
+    si(esVacia()){
+        ultimo = auxN;
+    }
+    sino{
+        auxN.sig = ultimo.sig;
+        ultimo.sig = auxN;
+    }
+    cont++;
+}
+</code></pre>
+
+<h5>
+<a id="4215-método-final" class="anchor" href="#4215-m%C3%A9todo-final" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.1.5 Método final</h5>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">public</span> <span class="pl-k">void</span> addToFront(<span class="pl-smi">T</span> elem){
+
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> newNode <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span>(elem);
+        <span class="pl-k">if</span>(isEmpty()){
+            last <span class="pl-k">=</span> newNode;
+            last<span class="pl-k">.</span>next <span class="pl-k">=</span> last;
+        }
+        <span class="pl-k">else</span>{
+            newNode<span class="pl-k">.</span>next <span class="pl-k">=</span> last<span class="pl-k">.</span>next;
+            last<span class="pl-k">.</span>next <span class="pl-k">=</span> newNode;
+        }
+        count<span class="pl-k">++</span>;
+    }
+</pre></div>
+
+<h4>
+<a id="422-addtorear" class="anchor" href="#422-addtorear" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.2 addToRear()</h4>
+
+<h5>
+<a id="4221-precondiciónpostcondición" class="anchor" href="#4221-precondici%C3%B3npostcondici%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.2.1 Precondición/Postcondición</h5>
+
+<ul>
+<li>++Precondición:++ El programa recibe un elemento.</li>
+<li>++Postcondición:++ El programa habra añadido ese elemento al final de la lista.</li>
+</ul>
+
+<h5>
+<a id="4232-casos-de-prueba" class="anchor" href="#4232-casos-de-prueba" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.3.2 Casos de prueba</h5>
+
+<ul>
+<li>La lista es nula.</li>
+<li>El elemento a añadir es nulo.</li>
+</ul>
+
+<h5>
+<a id="4233-coste" class="anchor" href="#4233-coste" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.3.3 Coste</h5>
+
+<p>El coste de este algoritmo será constante ** <em>O(1)</em> **, ya que gracias al puntero 'last' accederemos a la ultima posición directamente, y así podremos añadir en un solo paso el elemento al final de la lista.</p>
+
+<h5>
+<a id="4233-pseudo-algoritmo" class="anchor" href="#4233-pseudo-algoritmo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.3.3 Pseudo-algoritmo</h5>
+
+<pre><code>public void addToRear(T elem) {
+    Nodo &lt;T&gt; auxN = nuevo Nodo&lt;T&gt;(elem);
+    si(esVacia()){
+        ultimo = auxN;
+        ultimo.sig = ultimo;
+    }
+    sino{
+        auxN.sig = ultimo.sig;
+        ultimo.sig = auxN;
+        ultimo = auxN;
+    }
+    cont++;
+}
+</code></pre>
+
+<h4>
+<a id="423-addafter" class="anchor" href="#423-addafter" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.3 addAfter()</h4>
+
+<h5>
+<a id="4231-precodiciónpostcondición" class="anchor" href="#4231-precodici%C3%B3npostcondici%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.3.1 Precodición/Postcondición</h5>
+
+<ul>
+<li>++Precondición:++ Recibiremos 2 elementos, el primero será el que tendremos que añadir a la lista, y el segundo sera el objetivo detras del cual deberemos añadir el elemento.</li>
+<li>++Postcondición:++ El primer elemento se habra colocado detras del segundo.</li>
+</ul>
+
+<h5>
+<a id="4232-casos-de-prueba-1" class="anchor" href="#4232-casos-de-prueba-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.3.2 Casos de prueba</h5>
+
+<ul>
+<li>Lista nula.</li>
+<li>Elemento a añadir nulo.</li>
+<li>Elemento objetivo nulo.</li>
+</ul>
+
+<h5>
+<a id="4233-coste-1" class="anchor" href="#4233-coste-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.3.3 Coste</h5>
+
+<p>El coste de este algoritmo en el peor de los casos será **<em>O(n)</em> ** ya que tendremos que recorrer la lista elemento tras elemento hasta encontrar el objetivo. Pero en caso de que el objetivo sea el ultimo elemento, el coste sera constante **<em>O(1)</em> ** ya que empezaremos a recorrer la lista desde el último elemento.</p>
+
+<h5>
+<a id="4234-pseudo-algoritmo" class="anchor" href="#4234-pseudo-algoritmo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.3.4 Pseudo-algoritmo</h5>
+
+<pre><code>public void addAfter(T elem, T objetivo) {
+    Nodo&lt;T&gt; auxN = nuevo Nodo&lt;T&gt;(elem);
+    Nodo&lt;T&gt; actual = ultimo;
+
+    mientras(!actual.info.igual(objetivo)){
+        actual = actual.sig;
+    }
+    auxN.sig = actual.sig;
+    actual.sig = auxN;
+    cont++;
+}
+</code></pre>
+
+<h5>
+<a id="4235-método-final" class="anchor" href="#4235-m%C3%A9todo-final" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.2.3.5 Método final</h5>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">public</span> <span class="pl-k">void</span> addAfter(<span class="pl-smi">T</span> elem, <span class="pl-smi">T</span> target) {
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> newNode <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span>(elem);
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current <span class="pl-k">=</span> last;
+
+        <span class="pl-k">while</span>(<span class="pl-k">!</span>current<span class="pl-k">.</span>data<span class="pl-k">.</span>equals(target)){
+            current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+        }
+        newNode<span class="pl-k">.</span>next <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+        current<span class="pl-k">.</span>next <span class="pl-k">=</span> newNode;
+        count<span class="pl-k">++</span>;
+}
+</pre></div>
+
+<h3>
+<a id="43-orderedcircularlikedlist" class="anchor" href="#43-orderedcircularlikedlist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.3 OrderedCircularLikedList</h3>
+
+<h4>
+<a id="431-add" class="anchor" href="#431-add" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.3.1 add()</h4>
+
+<h5>
+<a id="4311-precondiciónpostcondición" class="anchor" href="#4311-precondici%C3%B3npostcondici%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.3.1.1 Precondición/Postcondición</h5>
+
+<ul>
+<li>++Precondición:++ El programa recibirá un elemento a añadir.</li>
+<li>++Postcondición:++ El programa habrá añadido el elemento ordenadamente.</li>
+</ul>
+
+<h5>
+<a id="4312-casos-de-prueba" class="anchor" href="#4312-casos-de-prueba" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.3.1.2 Casos de prueba</h5>
+
+<ul>
+<li>Lista nula.</li>
+<li>El elemento a añadir es nulo.</li>
+</ul>
+
+<h5>
+<a id="4313-coste" class="anchor" href="#4313-coste" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.3.1.3 Coste</h5>
+
+<p>El coste de este algoritmo será **<em>O(n)</em> ** ya que tendremos que recorrer la lista elemeento tras elemento hasta encontrar la posicion en la que debemos insertar el dato en cuestión.</p>
+
+<h5>
+<a id="4314-pseudo-algoritmo" class="anchor" href="#4314-pseudo-algoritmo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.3.1.4 Pseudo-algoritmo</h5>
+
+<pre><code>public void add(T elem) {
+    Nodo&lt;T&gt; actual;
+    Nodo&lt;T&gt; auxN = nuevo Nodo&lt;T&gt;(elem);
+    booleano enc = false;
+
+    si (cont == 0 ? true : false){
+        ultimo = auxN;
+        auxN.sig = auxN;
+    }
+    sino{
+        actual = ultimo.sig;
+        si(actual.info.compararCon(elem)){
+            auxN.sig = ultimo.sig;
+            ultimo.sig = auxN;
+        }
+        sino si(ultimo.info.compararCon(elem)&lt;0){
+            auxN.sig = ultimo.sig;
+            ultimo.sig = auxN;
+            ultimo = auxN
+        }
+        sino{
+            mientras(!enc){
+                if(current.info.compararCon(elem)&lt;0 &amp;&amp; actual.sig.info.compararCon(elem) &gt; 0){
+                    auxN.sig = actual.sig;
+                    actual.sig = auxM;
+                    enc = true;
+                }
+            }
+        }
+    }
+    cont++;
+}
+</code></pre>
+
+<h5>
+<a id="4315-método-final" class="anchor" href="#4315-m%C3%A9todo-final" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.3.1.5 Método final</h5>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">public</span> <span class="pl-k">void</span> add(<span class="pl-smi">T</span> elem) {
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current;    <span class="pl-c">//pointer</span>
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> auxNode <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span>(elem); <span class="pl-c">//auxiliar pointer</span>
+        <span class="pl-k">boolean</span> finded <span class="pl-k">=</span> <span class="pl-c1">false</span>; <span class="pl-c">//flag for while</span>
+
+        <span class="pl-k">if</span> (count <span class="pl-k">==</span> <span class="pl-c1">0</span> <span class="pl-k">?</span> <span class="pl-c1">true</span> <span class="pl-k">:</span> <span class="pl-c1">false</span>) {<span class="pl-c">//if it's empty</span>
+            last <span class="pl-k">=</span> auxNode;
+            auxNode<span class="pl-k">.</span>next <span class="pl-k">=</span> auxNode;
+        } <span class="pl-k">else</span> {
+            current <span class="pl-k">=</span> last<span class="pl-k">.</span>next;<span class="pl-c">//first element</span>
+            <span class="pl-k">if</span> (current<span class="pl-k">.</span>data<span class="pl-k">.</span>compareTo(elem) <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>) {<span class="pl-c">//if the first is &gt; elem</span>
+                auxNode<span class="pl-k">.</span>next <span class="pl-k">=</span> last<span class="pl-k">.</span>next;
+                last<span class="pl-k">.</span>next <span class="pl-k">=</span> auxNode;
+
+            } <span class="pl-k">else</span> <span class="pl-k">if</span> (last<span class="pl-k">.</span>data<span class="pl-k">.</span>compareTo(elem) <span class="pl-k">&lt;</span> <span class="pl-c1">0</span>) {<span class="pl-c">//if the last &lt; auxNode</span>
+                auxNode<span class="pl-k">.</span>next <span class="pl-k">=</span> last<span class="pl-k">.</span>next;
+                last<span class="pl-k">.</span>next <span class="pl-k">=</span> auxNode;
+                last <span class="pl-k">=</span> auxNode;
+            } <span class="pl-k">else</span> { <span class="pl-c">//between two elements</span>
+                <span class="pl-k">while</span> (<span class="pl-k">!</span>finded) {
+                    <span class="pl-k">if</span> (current<span class="pl-k">.</span>data<span class="pl-k">.</span>compareTo(elem) <span class="pl-k">&lt;</span> <span class="pl-c1">0</span> <span class="pl-k">&amp;&amp;</span> current<span class="pl-k">.</span>next<span class="pl-k">.</span>data<span class="pl-k">.</span>compareTo(elem) <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>) { <span class="pl-c">//if whe've finded where to insert</span>
+                        auxNode<span class="pl-k">.</span>next <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+                        current<span class="pl-k">.</span>next <span class="pl-k">=</span> auxNode;
+                        finded <span class="pl-k">=</span> <span class="pl-c1">true</span>;
+                    }
+                    current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+                }
+            }
+        }
+        count<span class="pl-k">++</span>;
+    }</pre></div>
+
+<h3>
+<a id="44-stringquicksort-nueva-implementación" class="anchor" href="#44-stringquicksort-nueva-implementaci%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.4. StringQuickSort (Nueva implementación)</h3>
+
+<h4>
+<a id="441-quicksort-nueva-implementación" class="anchor" href="#441-quicksort-nueva-implementaci%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.4.1 QuickSort (Nueva implementación)</h4>
+
+<h5>
+<a id="4411-precondiciónpostcondición" class="anchor" href="#4411-precondici%C3%B3npostcondici%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.4.1.1 Precondición/Postcondición</h5>
+
+<ul>
+<li>++Pre++: Tenemos una lista que queremos ordenar (en ocasiones puede estar casi ordenada o puede llamarse de nuevo a la función de ordenación y por lo tanto estar totalmente ordenada)</li>
+<li>++Post++: Devolveremos la lista que recibimos como parámetro una vez ordenada por (Nombre, Apellido)</li>
+</ul>
+
+<h5>
+<a id="4412-casos-de-prueba" class="anchor" href="#4412-casos-de-prueba" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.4.1.2 Casos de prueba</h5>
+
+<ul>
+<li>Lista vacía</li>
+<li>Lista no vacía</li>
+</ul>
+
+<h5>
+<a id="4413-coste" class="anchor" href="#4413-coste" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.4.1.3 Coste</h5>
+
+<p>En el mejor caso, el pivote termina en el centro de la lista, dividiéndola en dos sublistas de igual tamaño. En este caso, el orden de complejidad del algoritmo es O(n·log n) .
+En el peor caso, el pivote termina en un extremo de la lista. El orden de complejidad del algoritmo es entonces de O(n²) . El peor caso dependerá de la implementación del algoritmo, aunque habitualmente ocurre en listas que se encuentran ordenadas, o casi ordenadas.
+En el caso promedio, el orden es O(n·log n) .</p>
+
+<h5>
+<a id="4414-pseudo-algoritmo" class="anchor" href="#4414-pseudo-algoritmo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.4.1.4 Pseudo algoritmo</h5>
+
+<pre><code>public void quickSort(T[] laTabla){
+    quickSort(laTabla, 0, laTabla.length-1);
+}
+
+private void quickSort(T[] tabla, int inicio, int fin){
+    if ( fin - inicio &gt; 0 ) { // hay más de un elemento en la tabla
+    int indiceParticion = particion(tabla, inicio, fin);
+    quickSort(tabla, inicio, indiceParticion - 1);
+    quickSort(tabla, indiceParticion + 1, fin);
+}
+
+private int particion(T[] tabla, int i, int f){
+    T pivote = tabla[i];
+    int izq = i;
+    int der = f;
+    while ( izq &lt; der ){
+        while ( tabla[izq].compareTo(pivote) &lt;= 0 &amp;&amp; izq &lt; der)
+            izq++;
+        }
+        while ( tabla[der].compareTo(pivote) &gt; 0 )
+            der--;
+        }
+        if ( izq &lt; der ){
+            swap(tabla, izq, der);
+        }
+    }
+    tabla[i] = tabla[der];
+    tabla[der] = pivote;
+    return der;
+}
+</code></pre>
+
+<h5>
+<a id="4415-método-final" class="anchor" href="#4415-m%C3%A9todo-final" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.4.1.5 Método final</h5>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> quickSort(<span class="pl-k">String</span>[] table){
+        quickSort(table, <span class="pl-c1">0</span>, table<span class="pl-k">.</span>length<span class="pl-k">-</span><span class="pl-c1">1</span>);
+    }
+
+    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> quickSort(<span class="pl-k">String</span>[] table, <span class="pl-k">int</span> start, <span class="pl-k">int</span> end){
+        <span class="pl-k">if</span>(end<span class="pl-k">-</span>start <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>){
+            <span class="pl-k">int</span> partitionIndex <span class="pl-k">=</span> partition(table, start, end);
+            quickSort(table, start, partitionIndex<span class="pl-k">-</span><span class="pl-c1">1</span>);
+            quickSort(table, partitionIndex <span class="pl-k">+</span> <span class="pl-c1">1</span>, end);
+        }
+    }
+
+    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">int</span> partition(<span class="pl-k">String</span>[] table, <span class="pl-k">int</span> s, <span class="pl-k">int</span> e){
+        <span class="pl-smi">String</span> pivote <span class="pl-k">=</span> table[s];
+        <span class="pl-k">int</span> left <span class="pl-k">=</span> s;
+        <span class="pl-k">int</span> right <span class="pl-k">=</span> e;
+
+        <span class="pl-k">while</span>(left <span class="pl-k">&lt;</span> right){
+            <span class="pl-k">while</span>(table[left]<span class="pl-k">.</span>compareTo(pivote) <span class="pl-k">&lt;=</span> <span class="pl-c1">0</span> <span class="pl-k">&amp;&amp;</span> left<span class="pl-k">&lt;</span>right){
+                left<span class="pl-k">++</span>;
+            }
+            <span class="pl-k">while</span>(table[right]<span class="pl-k">.</span>compareTo(pivote) <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>){
+                right<span class="pl-k">--</span>;
+            }
+            <span class="pl-k">if</span>(left <span class="pl-k">&lt;</span> right){
+                swap(table, left, right);
+            }
+        }
+        table[s]<span class="pl-k">=</span>table[right];
+        table[right] <span class="pl-k">=</span> pivote;
+
+        <span class="pl-k">return</span> right;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> swap(<span class="pl-k">String</span>[] table, <span class="pl-k">int</span> l, <span class="pl-k">int</span> r){
+        <span class="pl-smi">String</span> temp <span class="pl-k">=</span> table[l];
+        table[l] <span class="pl-k">=</span> table[r];
+        table[r] <span class="pl-k">=</span> temp;</pre></div>
+
+<h2>
+<a id="5-código" class="anchor" href="#5-c%C3%B3digo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5. Código</h2>
+
+<p>El resto de las clases se entregan en una carpeta que contiene las clases necesarias de la primera actividad anexas a las de la segunda y junto a todas, se encuentra una carpeta con los test que entregaste modificados por nosotros para hacerlos más personales.</p>
+
+<h3>
+<a id="51-clase-actor" class="anchor" href="#51-clase-actor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.1 Clase Actor</h3>
+
+<div class="highlight highlight-source-java"><pre>
+<span class="pl-k">package</span> <span class="pl-smi">lab2</span>;
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Created by Josu on 25/09/2016.</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Actor</span> {
+
+    <span class="pl-k">private</span> <span class="pl-smi">String</span> name;
+    <span class="pl-k">private</span> <span class="pl-smi">String</span> surname;
+    <span class="pl-k">private</span> <span class="pl-smi">FilmList</span> filmL;
+
+    <span class="pl-k">public</span> <span class="pl-en">Actor</span>(<span class="pl-smi">String</span> <span class="pl-v">pName</span>, <span class="pl-smi">String</span> <span class="pl-v">pSurname</span>) {
+        <span class="pl-v">this</span><span class="pl-k">.</span>name <span class="pl-k">=</span> pName;
+        <span class="pl-v">this</span><span class="pl-k">.</span>surname <span class="pl-k">=</span> pSurname;
+        <span class="pl-v">this</span><span class="pl-k">.</span>filmL <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">FilmList</span>();
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">FilmList</span> <span class="pl-en">getFilmList</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>filmL;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">getName</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>name;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">getSurname</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>surname;
+    }
+}
+</pre></div>
+
+<h3>
+<a id="52-clase-actorcatalog" class="anchor" href="#52-clase-actorcatalog" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.2 Clase ActorCatalog</h3>
+
+<div class="highlight highlight-source-java"><pre>
+<span class="pl-k">package</span> <span class="pl-smi">lab2</span>;
+
+<span class="pl-k">import</span> <span class="pl-smi">java.util.HashMap</span>;
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Created by Josu on 25/09/2016.</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ActorCatalog</span> {
+
+    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-smi">ActorCatalog</span> myActorCatalog;
+    <span class="pl-k">private</span> <span class="pl-k">HashMap&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Actor</span>&gt;</span> actorL;
+
+    <span class="pl-k">private</span> <span class="pl-en">ActorCatalog</span>() {
+        <span class="pl-v">this</span><span class="pl-k">.</span>actorL <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">HashMap&lt;&gt;</span>();
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-smi">ActorCatalog</span> <span class="pl-en">getmyActorCatalog</span>() {
+        <span class="pl-k">if</span> (myActorCatalog <span class="pl-k">==</span> <span class="pl-c1">null</span>) {
+            myActorCatalog <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">ActorCatalog</span>();
+        }
+        <span class="pl-k">return</span> myActorCatalog;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">HashMap&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Actor</span>&gt;</span> <span class="pl-en">getActorL</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>actorL;
+    }
+
+    <span class="pl-k">private</span> <span class="pl-k">boolean</span> <span class="pl-en">exist</span>(<span class="pl-smi">String</span> <span class="pl-v">pActorName</span>, <span class="pl-smi">String</span> <span class="pl-v">pActorSurname</span>) {
+        <span class="pl-k">return</span> actorL<span class="pl-k">.</span>get(pActorName <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span> <span class="pl-k">+</span> pActorSurname) <span class="pl-k">!=</span> <span class="pl-c1">null</span>;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">addActor</span>(<span class="pl-smi">Actor</span> <span class="pl-v">pActor</span>) {
+        <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-v">this</span><span class="pl-k">.</span>exist(pActor<span class="pl-k">.</span>getName(), pActor<span class="pl-k">.</span>getSurname())) {
+            <span class="pl-v">this</span><span class="pl-k">.</span>actorL<span class="pl-k">.</span>put(pActor<span class="pl-k">.</span>getName() <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span> <span class="pl-k">+</span> pActor<span class="pl-k">.</span>getSurname(), pActor);
+        }
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">Actor</span> <span class="pl-en">searchActor</span>(<span class="pl-smi">Actor</span> <span class="pl-v">pActor</span>) {
+        <span class="pl-k">if</span> (<span class="pl-v">this</span><span class="pl-k">.</span>exist(pActor<span class="pl-k">.</span>getName(), pActor<span class="pl-k">.</span>getSurname())) {
+            <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>actorL<span class="pl-k">.</span>get(pActor<span class="pl-k">.</span>getName() <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span> <span class="pl-k">+</span> pActor<span class="pl-k">.</span>getSurname());
+        }
+        <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">removeActor</span>(<span class="pl-smi">Actor</span> <span class="pl-v">pActor</span>) {
+        <span class="pl-k">if</span> (<span class="pl-v">this</span><span class="pl-k">.</span>exist(pActor<span class="pl-k">.</span>getName(), pActor<span class="pl-k">.</span>getSurname())) {
+            <span class="pl-v">this</span><span class="pl-k">.</span>actorL<span class="pl-k">.</span>remove(pActor<span class="pl-k">.</span>getName() <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span> <span class="pl-k">+</span> pActor<span class="pl-k">.</span>getSurname());
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Actor erased<span class="pl-pds">"</span></span>);
+        } <span class="pl-k">else</span> {
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Actor not found<span class="pl-pds">"</span></span>);
+        }
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">String</span>[] <span class="pl-en">quickSortList</span>() {
+        <span class="pl-k">String</span>[] auxS <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">String</span>[actorL<span class="pl-k">.</span>size()];
+        <span class="pl-k">int</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+        <span class="pl-k">for</span> (<span class="pl-smi">String</span> key <span class="pl-k">:</span> actorL<span class="pl-k">.</span>keySet()) {
+            auxS[i] <span class="pl-k">=</span> key;
+            i<span class="pl-k">++</span>;
+        }
+        <span class="pl-smi">StringQuickSort</span><span class="pl-k">.</span>sort(auxS);
+        <span class="pl-k">return</span> auxS;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">printList</span>(<span class="pl-k">String</span>[] <span class="pl-v">auxS</span>) {
+        <span class="pl-k">for</span> (<span class="pl-smi">String</span> key <span class="pl-k">:</span> auxS) {
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(key);
+        }
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">int</span> <span class="pl-en">getSize</span>(){
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>actorL<span class="pl-k">.</span>size();
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">int</span> <span class="pl-en">getTotalFilms</span>(){
+        <span class="pl-k">int</span> cont <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+        <span class="pl-k">for</span> (<span class="pl-smi">String</span> key <span class="pl-k">:</span> <span class="pl-v">this</span><span class="pl-k">.</span>actorL<span class="pl-k">.</span>keySet()){
+            cont <span class="pl-k">+=</span> <span class="pl-v">this</span><span class="pl-k">.</span>actorL<span class="pl-k">.</span>get(key)<span class="pl-k">.</span>getFilmList()<span class="pl-k">.</span>getTotalFilms();
+        }
+        <span class="pl-k">return</span> cont;
+    }
+}
+</pre></div>
+
+<h3>
+<a id="53-clase-actorlist-implementación-de-unorderedcircularlinkedlist" class="anchor" href="#53-clase-actorlist-implementaci%C3%B3n-de-unorderedcircularlinkedlist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.3 Clase ActorList (Implementación de UnorderedCircularLinkedList)</h3>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">package</span> <span class="pl-smi">lab2</span>;
+
+
+<span class="pl-k">import</span> <span class="pl-smi">java.util.Iterator</span>;
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Created by david on 25/09/2016.</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ActorList</span> {
+
+    <span class="pl-k">private</span> <span class="pl-k">UnorderedCircularLinkedList&lt;<span class="pl-smi">Actor</span>&gt;</span> actorList;
+
+
+    <span class="pl-k">public</span> <span class="pl-en">ActorList</span>() {
+        <span class="pl-v">this</span><span class="pl-k">.</span>actorList <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">UnorderedCircularLinkedList&lt;&gt;</span>();
+    }
+
+
+    <span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">exist</span>(<span class="pl-smi">String</span> <span class="pl-v">pActorName</span>, <span class="pl-smi">String</span> <span class="pl-v">pActorSurname</span>) {
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>actorList<span class="pl-k">.</span>contains(<span class="pl-k">new</span> <span class="pl-smi">Actor</span>(pActorName, pActorSurname));
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">addActor</span>(<span class="pl-smi">Actor</span> <span class="pl-v">auxActor</span>) {
+        <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-v">this</span><span class="pl-k">.</span>exist(auxActor<span class="pl-k">.</span>getName(), auxActor<span class="pl-k">.</span>getSurname())) {
+            <span class="pl-v">this</span><span class="pl-k">.</span>actorList<span class="pl-k">.</span>addToRear(auxActor);
+        }
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">Actor</span> <span class="pl-en">getActor</span>(<span class="pl-smi">String</span> <span class="pl-v">pActorName</span>, <span class="pl-smi">String</span> <span class="pl-v">pActorSurname</span>) {
+        <span class="pl-k">if</span> (<span class="pl-v">this</span><span class="pl-k">.</span>exist(pActorName , pActorSurname)) {
+            <span class="pl-k">return</span> actorList<span class="pl-k">.</span>find(<span class="pl-k">new</span> <span class="pl-smi">Actor</span>(pActorName,pActorSurname));
+        }
+        <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">removeActor</span>(<span class="pl-smi">Actor</span> <span class="pl-v">pActor</span>) {
+        <span class="pl-k">if</span> (<span class="pl-v">this</span><span class="pl-k">.</span>exist(pActor<span class="pl-k">.</span>getName(), pActor<span class="pl-k">.</span>getSurname())) {
+            <span class="pl-v">this</span><span class="pl-k">.</span>actorList<span class="pl-k">.</span>remove(<span class="pl-k">new</span> <span class="pl-smi">Actor</span>(pActor<span class="pl-k">.</span>getName() , pActor<span class="pl-k">.</span>getSurname()));
+        }
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">printActors</span>() {
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>These are all the actors: <span class="pl-pds">"</span></span>);
+        <span class="pl-k">Iterator&lt;<span class="pl-smi">Actor</span>&gt;</span> itr <span class="pl-k">=</span> <span class="pl-v">this</span><span class="pl-k">.</span>actorList<span class="pl-k">.</span>iterator();
+
+        <span class="pl-k">if</span> (<span class="pl-v">this</span><span class="pl-k">.</span>actorList<span class="pl-k">.</span>isEmpty()) {
+            <span class="pl-smi">System</span><span class="pl-k">.</span>err<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span> No consta ningun actor<span class="pl-pds">"</span></span>);
+        } <span class="pl-k">else</span> {
+            <span class="pl-k">while</span> (itr<span class="pl-k">.</span>hasNext()) {
+                <span class="pl-smi">Actor</span> act <span class="pl-k">=</span> itr<span class="pl-k">.</span>next();
+                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(act<span class="pl-k">.</span>getName()<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span><span class="pl-k">+</span>act<span class="pl-k">.</span>getSurname());
+            }
+        }
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">int</span> <span class="pl-en">getActorsNumber</span>(){
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>actorList<span class="pl-k">.</span>count;
+    }
+
+
+}</pre></div>
+
+<h3>
+<a id="54-clase-circularlinkedlist" class="anchor" href="#54-clase-circularlinkedlist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.4 Clase CircularLinkedList</h3>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">package</span> <span class="pl-smi">lab2</span>;
+
+<span class="pl-k">import</span> <span class="pl-smi">java.util.Iterator</span>;
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * @author Josu on 27/10/2016</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">CircularLinkedList</span>&lt;T&gt; <span class="pl-k">implements</span> <span class="pl-e">ListADT&lt;<span class="pl-smi">T</span>&gt;</span> {
+
+    <span class="pl-c">// Atributos</span>
+    <span class="pl-k">protected</span> <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> first;
+    <span class="pl-k">protected</span> <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> last; <span class="pl-c">// apuntador al ultimo</span>
+    <span class="pl-k">protected</span> <span class="pl-smi">String</span> descr;  <span class="pl-c">// descripci�n</span>
+    <span class="pl-k">protected</span> <span class="pl-k">int</span> count;
+
+    <span class="pl-c">// Constructor</span>
+    <span class="pl-k">public</span> <span class="pl-en">CircularLinkedList</span>() {
+        last <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+        descr <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>;
+        count <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">setDescr</span>(<span class="pl-smi">String</span> <span class="pl-v">nom</span>) {
+        descr <span class="pl-k">=</span> nom;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">getDescr</span>() {
+        <span class="pl-k">return</span> descr;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">T</span> <span class="pl-en">removeFirst</span>() {
+        <span class="pl-c">// Elimina el primer elemento de la lista</span>
+        <span class="pl-c">// Precondici�n: la lista tiene al menos un elemento</span>
+        <span class="pl-c">// COMPLETAR EL CODIGO Y CALCULAR EL COSTE</span>
+
+        <span class="pl-c">// Elimina el primer elemento de la lista</span>
+        <span class="pl-c">// Precondici�n: la lista tiene al menos un elemento</span>
+        <span class="pl-c">// COMPLETAR EL CODIGO Y CALCULAR EL COSTE</span>
+
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> first <span class="pl-k">=</span> last<span class="pl-k">.</span>next;
+        <span class="pl-k">if</span> (size() <span class="pl-k">==</span> <span class="pl-c1">1</span>) {
+            last <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+        } <span class="pl-k">else</span> {
+            last<span class="pl-k">.</span>next <span class="pl-k">=</span> last<span class="pl-k">.</span>next<span class="pl-k">.</span>next;
+        }
+        count<span class="pl-k">--</span>;
+        <span class="pl-k">return</span> first<span class="pl-k">.</span>data;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">T</span> <span class="pl-en">removeLast</span>() {
+        <span class="pl-c">// Elimina el �ltimo elemento de la lista</span>
+        <span class="pl-c">// Precondici�n: la lista tiene al menos un elemento</span>
+        <span class="pl-c">// COMPLETAR EL CODIGO Y CALCULAR EL COSTE</span>
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> pLast <span class="pl-k">=</span> last;
+        <span class="pl-k">if</span> (size() <span class="pl-k">==</span> <span class="pl-c1">1</span>) {
+            last <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+        } <span class="pl-k">else</span> {
+            <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current <span class="pl-k">=</span> last<span class="pl-k">.</span>next;
+            <span class="pl-k">while</span> (current<span class="pl-k">.</span>next <span class="pl-k">!=</span> last) {
+                current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+            }
+            last <span class="pl-k">=</span> current;
+            last<span class="pl-k">.</span>next <span class="pl-k">=</span> last<span class="pl-k">.</span>next<span class="pl-k">.</span>next;
+        }
+        count<span class="pl-k">--</span>;
+        <span class="pl-k">return</span> pLast<span class="pl-k">.</span>data;
+    }
+
+    <span class="pl-c">/*</span>
+<span class="pl-c">    pre: tenemos una lista de elementos. es posible que la lista es vacia.</span>
+<span class="pl-c">    post: tenemos una lista de elementos a la que le hemos eliminado el elemento que recibimos en caso de que este eista previamente</span>
+<span class="pl-c">     */</span>
+    <span class="pl-k">public</span> <span class="pl-smi">T</span> <span class="pl-en">remove</span>(<span class="pl-smi">T</span> <span class="pl-v">elem</span>) {
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current <span class="pl-k">=</span> last;
+        <span class="pl-k">int</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+        <span class="pl-smi">T</span> returnNum;
+
+        <span class="pl-k">if</span> (<span class="pl-v">this</span><span class="pl-k">.</span>isEmpty()){ <span class="pl-k">return</span> <span class="pl-c1">null</span>;} <span class="pl-c">//if its empty we return null</span>
+        <span class="pl-k">else</span>{<span class="pl-c">//if not null</span>
+            <span class="pl-k">while</span>(<span class="pl-k">!</span>current<span class="pl-k">.</span>next<span class="pl-k">.</span>data<span class="pl-k">.</span>equals(elem) <span class="pl-k">&amp;&amp;</span> i<span class="pl-k">!=</span>size()){<span class="pl-c">//goes out when finds the element or overpass the size</span>
+                current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+                i<span class="pl-k">++</span>;
+            }
+            <span class="pl-k">if</span> (i<span class="pl-k">==</span>count){<span class="pl-c">//if the elemente isn't finded</span>
+                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>The element isn't finded<span class="pl-pds">"</span></span>);
+                <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+            }<span class="pl-k">else</span>{<span class="pl-c">//we find it. we have to remove currents pointing node</span>
+                <span class="pl-k">if</span> (count <span class="pl-k">==</span> <span class="pl-c1">1</span>){<span class="pl-c">//if we only have one element</span>
+                    returnNum <span class="pl-k">=</span> last<span class="pl-k">.</span>data;
+                    last <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+                }<span class="pl-k">else</span>{<span class="pl-c">//if are more elements than 1</span>
+                    returnNum <span class="pl-k">=</span> current<span class="pl-k">.</span>next<span class="pl-k">.</span>data;
+
+                    <span class="pl-k">if</span> (current<span class="pl-k">.</span>next <span class="pl-k">==</span> last) {
+                        last <span class="pl-k">=</span> current;<span class="pl-c">//if the element is the last we dont lose the pointer, we give it to the previous item</span>
+                    }
+                    current<span class="pl-k">.</span>next <span class="pl-k">=</span> current<span class="pl-k">.</span>next<span class="pl-k">.</span>next;
+                }
+                count<span class="pl-k">--</span>;
+                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span> -&gt;  <span class="pl-pds">"</span></span><span class="pl-k">+</span>elem<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> it's been deleted<span class="pl-pds">"</span></span>);
+                <span class="pl-k">return</span> returnNum;
+            }
+        }
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">T</span> <span class="pl-en">first</span>() {
+        <span class="pl-c">//Da acceso al primer elemento de la lista</span>
+        <span class="pl-k">if</span> (isEmpty())
+            <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+        <span class="pl-k">else</span> <span class="pl-k">return</span> last<span class="pl-k">.</span>next<span class="pl-k">.</span>data;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">T</span> <span class="pl-en">last</span>() {
+        <span class="pl-c">//Da acceso al �ltimo elemento de la lista</span>
+        <span class="pl-k">if</span> (isEmpty())
+            <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+        <span class="pl-k">else</span> <span class="pl-k">return</span> last<span class="pl-k">.</span>data;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">contains</span>(<span class="pl-smi">T</span> <span class="pl-v">elem</span>) {
+        <span class="pl-k">if</span> (isEmpty()) {
+            <span class="pl-k">return</span> <span class="pl-c1">false</span>;
+        }
+
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current <span class="pl-k">=</span> last<span class="pl-k">.</span>next; <span class="pl-c">// Empieza con el primer elemento</span>
+
+        <span class="pl-k">while</span> ((current <span class="pl-k">!=</span> last) <span class="pl-k">&amp;&amp;</span> <span class="pl-k">!</span>elem<span class="pl-k">.</span>equals(current<span class="pl-k">.</span>data))
+            current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+        <span class="pl-k">return</span> elem<span class="pl-k">.</span>equals(current<span class="pl-k">.</span>data);
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">T</span> <span class="pl-en">find</span>(<span class="pl-smi">T</span> <span class="pl-v">elem</span>) {
+        <span class="pl-c">//Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no est�</span>
+        <span class="pl-c">// COMPLETAR EL CODIGO Y CALCULAR EL COSTE</span>
+        <span class="pl-smi">Integer</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+        <span class="pl-smi">T</span> returnNum;
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current <span class="pl-k">=</span> last;
+
+        <span class="pl-k">if</span>(<span class="pl-v">this</span><span class="pl-k">.</span>isEmpty()){
+            <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+        }
+        <span class="pl-k">else</span>{<span class="pl-c">//si hay elementos, buscamos nuestro elemento</span>
+            <span class="pl-k">while</span>(<span class="pl-k">!</span>current<span class="pl-k">.</span>data<span class="pl-k">.</span>equals(elem) <span class="pl-k">&amp;&amp;</span> i<span class="pl-k">!=</span>size()){<span class="pl-c">//tiene que salir si recorre todos los elementos</span>
+                current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+                i<span class="pl-k">++</span>;
+            }
+            <span class="pl-k">if</span>(i<span class="pl-k">==</span>count){<span class="pl-c">//no lo ha encontrado</span>
+                <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+            }
+            <span class="pl-k">else</span>{<span class="pl-c">//lo a encontrado</span>
+                returnNum <span class="pl-k">=</span> current<span class="pl-k">.</span>data;
+                <span class="pl-k">return</span> returnNum;
+            }
+
+        }
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">isEmpty</span>() {
+        <span class="pl-k">return</span> last <span class="pl-k">==</span> <span class="pl-c1">null</span>;
+    }
+
+    <span class="pl-c">//Determina el n�mero de elementos de la lista</span>
+    <span class="pl-k">public</span> <span class="pl-k">int</span> <span class="pl-en">size</span>() {
+        <span class="pl-k">return</span> count;
+    }
+
+    <span class="pl-c">/**</span>
+<span class="pl-c">     * Return an iterator to the stack that iterates through the items .</span>
+<span class="pl-c">     */</span>
+    <span class="pl-k">public</span> <span class="pl-k">Iterator&lt;<span class="pl-smi">T</span>&gt;</span> <span class="pl-en">iterator</span>() {
+        <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-smi">ListIterator</span>();
+    }
+
+    <span class="pl-c">// an iterator, doesn't implement remove() since it's optional</span>
+    <span class="pl-k">private</span> <span class="pl-k">class</span> <span class="pl-en">ListIterator</span> <span class="pl-k">implements</span> <span class="pl-e">Iterator&lt;<span class="pl-smi">T</span>&gt;</span> {
+
+        <span class="pl-k">private</span> <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current;
+        <span class="pl-k">private</span> <span class="pl-k">int</span> cont;
+
+        <span class="pl-k">public</span> <span class="pl-en">ListIterator</span>(){
+            current <span class="pl-k">=</span> last<span class="pl-k">.</span>next;
+            cont <span class="pl-k">=</span> count;
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">hasNext</span>(){
+            <span class="pl-k">boolean</span> a <span class="pl-k">=</span> cont<span class="pl-k">==</span><span class="pl-c1">0</span><span class="pl-k">?</span><span class="pl-c1">false</span><span class="pl-k">:</span><span class="pl-c1">true</span>;
+            <span class="pl-k">return</span> a;
+        }
+
+        <span class="pl-k">public</span> <span class="pl-smi">T</span> <span class="pl-en">next</span>(){
+            <span class="pl-smi">T</span> content <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+            <span class="pl-k">if</span> (current <span class="pl-k">!=</span> <span class="pl-c1">null</span>) {
+                content <span class="pl-k">=</span> current<span class="pl-k">.</span>data;
+                current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+                cont<span class="pl-k">--</span>; <span class="pl-c">//mover al metdo next</span>
+            }
+            <span class="pl-k">return</span> content;
+        }
+
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">visualizarNodos</span>() {
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>print(<span class="pl-v">this</span><span class="pl-k">.</span>toString()<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span>);
+    }
+
+    <span class="pl-k">@Override</span>
+    <span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">toString</span>() {
+        <span class="pl-smi">String</span> result <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">String</span>();
+        <span class="pl-k">Iterator&lt;<span class="pl-smi">T</span>&gt;</span> it <span class="pl-k">=</span> iterator();
+        <span class="pl-k">while</span> (it<span class="pl-k">.</span>hasNext()) {
+            <span class="pl-smi">T</span> elem <span class="pl-k">=</span> it<span class="pl-k">.</span>next();
+            result <span class="pl-k">=</span> result <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>[<span class="pl-pds">"</span></span> <span class="pl-k">+</span> elem<span class="pl-k">.</span>toString() <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>] <span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;
+        }
+        <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">"</span>SimpleLinkedList <span class="pl-pds">"</span></span> <span class="pl-k">+</span> result <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>]<span class="pl-pds">"</span></span>;
+    }
+}</pre></div>
+
+<h3>
+<a id="55-clase-filemanager-el-método-de-exportación-ha-sufrido-cambios" class="anchor" href="#55-clase-filemanager-el-m%C3%A9todo-de-exportaci%C3%B3n-ha-sufrido-cambios" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.5 Clase FileManager (El método de exportación ha sufrido cambios)</h3>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">package</span> <span class="pl-smi">lab2</span>;
+
+<span class="pl-k">import</span> <span class="pl-smi">java.io.*</span>;
+<span class="pl-k">import</span> <span class="pl-smi">java.nio.charset.StandardCharsets</span>;
+<span class="pl-k">import</span> <span class="pl-smi">java.util.Iterator</span>;
+<span class="pl-k">import</span> <span class="pl-smi">java.util.List</span>;
+<span class="pl-k">import</span> <span class="pl-smi">java.util.stream.Collectors</span>;
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Created by david on 25/09/2016.</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">FileManager</span> {
+
+    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-smi">FileManager</span> myFileManager;
+
+    <span class="pl-k">private</span> <span class="pl-en">FileManager</span>() {
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-smi">FileManager</span> <span class="pl-en">getMyFileManager</span>() {
+        <span class="pl-k">if</span> (myFileManager <span class="pl-k">==</span> <span class="pl-c1">null</span>) {
+            myFileManager <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">FileManager</span>();
+        }
+        <span class="pl-k">return</span> myFileManager;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">int</span> <span class="pl-en">countLines</span>(<span class="pl-smi">File</span> <span class="pl-v">pFile</span>) <span class="pl-k">throws</span> <span class="pl-smi">IOException</span> {
+        <span class="pl-smi">LineNumberReader</span> lnr <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">LineNumberReader</span>(<span class="pl-k">new</span> <span class="pl-smi">FileReader</span>(pFile));
+        lnr<span class="pl-k">.</span>skip(<span class="pl-smi">Long</span><span class="pl-c1"><span class="pl-k">.</span>MAX_VALUE</span>);
+        lnr<span class="pl-k">.</span>close();
+        <span class="pl-k">return</span> lnr<span class="pl-k">.</span>getLineNumber() <span class="pl-k">+</span> <span class="pl-c1">1</span>;<span class="pl-c">//Add 1 because line index starts at 0</span>
+    }
+
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">readFile</span>(<span class="pl-k">int</span> <span class="pl-v">pOption</span>) <span class="pl-k">throws</span> <span class="pl-smi">IOException</span> {
+
+        <span class="pl-k">String</span>[] auxLine1;
+
+        <span class="pl-k">long</span> startTime <span class="pl-k">=</span> <span class="pl-smi">System</span><span class="pl-k">.</span>currentTimeMillis();
+
+        <span class="pl-k">int</span> j <span class="pl-k">=</span> <span class="pl-c1">0</span>; <span class="pl-c">//j= counts the actual line of file</span>
+        <span class="pl-k">int</span> total <span class="pl-k">=</span> <span class="pl-c1">0</span>; <span class="pl-c">//total = saves total running time of reading</span>
+        <span class="pl-k">int</span> auxCont <span class="pl-k">=</span> <span class="pl-c1">0</span>;  <span class="pl-c">//auxCount = saves the percentage of reading of file</span>
+
+        <span class="pl-k">try</span> (<span class="pl-smi">InputStream</span> resource <span class="pl-k">=</span> <span class="pl-smi">FileManager</span><span class="pl-k">.</span>class<span class="pl-k">.</span>getResourceAsStream(<span class="pl-s"><span class="pl-pds">"</span>testAllActors.txt<span class="pl-pds">"</span></span>)) {
+
+            <span class="pl-k">int</span> contLines <span class="pl-k">=</span> countLines(<span class="pl-k">new</span> <span class="pl-smi">File</span>(<span class="pl-s"><span class="pl-pds">"</span>/Users/Josu/IdeaProjects/EDA16-17/src/lab2/testAllActors.txt<span class="pl-pds">"</span></span>));
+
+            <span class="pl-smi">String</span> filmName, actorName, actorSurname;
+
+            <span class="pl-k">String</span>[] auxLine2;
+
+            <span class="pl-smi">Film</span> auxFilm;
+
+            <span class="pl-k">List&lt;<span class="pl-smi">String</span>&gt;</span> lines <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">BufferedReader</span>(<span class="pl-k">new</span> <span class="pl-smi">InputStreamReader</span>(resource, <span class="pl-smi">StandardCharsets</span><span class="pl-c1"><span class="pl-k">.</span>UTF_8</span>))<span class="pl-k">.</span>lines()<span class="pl-k">.</span>collect(<span class="pl-smi">Collectors</span><span class="pl-k">.</span>toList());
+
+            <span class="pl-k">for</span> (<span class="pl-smi">String</span> line <span class="pl-k">:</span> lines) {
+
+                auxLine1 <span class="pl-k">=</span> line<span class="pl-k">.</span>split(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>s+<span class="pl-cce">\\</span>---&gt;+<span class="pl-cce">\\</span>s<span class="pl-pds">"</span></span>); <span class="pl-c">//we split to get the name of the movie</span>
+
+                <span class="pl-k">if</span> (pOption <span class="pl-k">==</span> <span class="pl-c1">1</span>) {
+                    <span class="pl-smi">NormalizeStrings</span><span class="pl-k">.</span>getMyNormalizeString()<span class="pl-k">.</span>run(auxLine1);
+                }
+
+                filmName <span class="pl-k">=</span> auxLine1[<span class="pl-c1">0</span>]; <span class="pl-c">//here we save the name of the film</span>
+
+                auxLine2 <span class="pl-k">=</span> auxLine1[<span class="pl-c1">1</span>]<span class="pl-k">.</span>split(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>s+<span class="pl-cce">\\</span>&amp;&amp;&amp;+<span class="pl-cce">\\</span>s<span class="pl-pds">"</span></span>); <span class="pl-c">//we split the array of actors in</span>
+
+                auxFilm <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Film</span>(filmName); <span class="pl-c">//create a new film</span>
+
+                <span class="pl-k">if</span> (pOption <span class="pl-k">==</span> <span class="pl-c1">1</span>) {
+                    <span class="pl-k">if</span> (<span class="pl-k">!</span>auxFilm<span class="pl-k">.</span>getName()<span class="pl-k">.</span>contains(<span class="pl-s"><span class="pl-pds">"</span>�<span class="pl-pds">"</span></span>)) {
+                        <span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>addFilm(auxFilm); <span class="pl-c">//we add the film if its not been added before</span>
+                    }
+                } <span class="pl-k">else</span> {
+                    <span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>addFilm(auxFilm); <span class="pl-c">//we add the film if its not been added before</span>
+                }
+
+                <span class="pl-k">int</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+
+                <span class="pl-k">while</span> (auxLine2<span class="pl-k">.</span>length <span class="pl-k">&gt;</span> i) { <span class="pl-c">// mientras el indice no sea mayor que el tamaño de la lista(indexOutOfBoundException)</span>
+
+                    actorSurname <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>;
+                    actorName <span class="pl-k">=</span> auxLine2[i];
+
+                    <span class="pl-k">if</span> (actorName<span class="pl-k">.</span>contains(<span class="pl-s"><span class="pl-pds">"</span>(<span class="pl-pds">"</span></span>)) {
+                        auxLine1 <span class="pl-k">=</span> actorName<span class="pl-k">.</span>split(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>s<span class="pl-cce">\\</span>(<span class="pl-pds">"</span></span>);
+                        actorName <span class="pl-k">=</span> auxLine1[<span class="pl-c1">0</span>];
+                    }
+                    <span class="pl-k">if</span> (actorName<span class="pl-k">.</span>contains(<span class="pl-s"><span class="pl-pds">"</span>,<span class="pl-pds">"</span></span>)) {<span class="pl-c">//convertimos -&gt; Apellido, Nombre --&gt; Nombre, Apellido (como es habitual)</span>
+                        auxLine1 <span class="pl-k">=</span> actorName<span class="pl-k">.</span>split(<span class="pl-s"><span class="pl-pds">"</span>,<span class="pl-cce">\\</span>s*<span class="pl-pds">"</span></span>);
+                        <span class="pl-k">if</span> (auxLine1<span class="pl-k">.</span>length <span class="pl-k">&gt;</span> <span class="pl-c1">1</span>) {
+                            <span class="pl-k">if</span> (auxLine1[<span class="pl-c1">1</span>]<span class="pl-k">.</span>compareToIgnoreCase(<span class="pl-s"><span class="pl-pds">"</span>null<span class="pl-pds">"</span></span>) <span class="pl-k">!=</span> <span class="pl-c1">0</span>) {
+                                actorSurname <span class="pl-k">=</span> auxLine1[<span class="pl-c1">0</span>];
+                                actorName <span class="pl-k">=</span> auxLine1[<span class="pl-c1">1</span>];
+                            } <span class="pl-k">else</span> {
+                                actorName <span class="pl-k">=</span> auxLine1[<span class="pl-c1">0</span>];
+                            }
+                        }
+                    }
+                    <span class="pl-smi">Actor</span> auxActor <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Actor</span>(actorName, actorSurname);<span class="pl-c">//Creamos la pelicula enviandole el nombre una vez normalizado</span>
+
+                    <span class="pl-k">if</span> (pOption <span class="pl-k">==</span> <span class="pl-c1">1</span>) {
+                        <span class="pl-k">if</span> (<span class="pl-k">!</span>auxActor<span class="pl-k">.</span>getName()<span class="pl-k">.</span>contains(<span class="pl-s"><span class="pl-pds">"</span>�<span class="pl-pds">"</span></span>)) {
+                            <span class="pl-k">if</span> (auxActor<span class="pl-k">.</span>getName()<span class="pl-k">.</span>charAt(<span class="pl-c1">0</span>) <span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>A<span class="pl-pds">'</span></span> <span class="pl-k">&amp;&amp;</span> auxActor<span class="pl-k">.</span>getName()<span class="pl-k">.</span>charAt(<span class="pl-c1">0</span>) <span class="pl-k">&lt;</span> <span class="pl-s"><span class="pl-pds">'</span>Z<span class="pl-pds">'</span></span>) {
+                                auxActor<span class="pl-k">.</span>getFilmList()<span class="pl-k">.</span>addFilm(auxFilm);
+                                <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>addActor(auxActor);
+                                <span class="pl-k">if</span> (<span class="pl-k">!</span>auxFilm<span class="pl-k">.</span>getName()<span class="pl-k">.</span>contains(<span class="pl-s"><span class="pl-pds">"</span>�<span class="pl-pds">"</span></span>)) {
+                                    <span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>getFilm(auxFilm<span class="pl-k">.</span>getName())<span class="pl-k">.</span>getActorList()<span class="pl-k">.</span>addActor(auxActor);
+                                }
+                            }
+                        }
+                    } <span class="pl-k">else</span> {
+                        auxActor<span class="pl-k">.</span>getFilmList()<span class="pl-k">.</span>addFilm(auxFilm);
+                        <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>addActor(auxActor);
+                        <span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>getFilm(auxFilm<span class="pl-k">.</span>getName())<span class="pl-k">.</span>getActorList()<span class="pl-k">.</span>addActor(auxActor);
+                    }
+
+                    i<span class="pl-k">++</span>;
+
+                }
+                <span class="pl-k">if</span> (j <span class="pl-k">==</span> <span class="pl-c1">0</span>) {
+                    <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span>[*] 0% file readed<span class="pl-pds">"</span></span>);
+                }
+                j<span class="pl-k">++</span>;
+
+                <span class="pl-k">if</span> (((j <span class="pl-k">*</span> <span class="pl-c1">100</span>) <span class="pl-k">/</span> contLines) <span class="pl-k">%</span> <span class="pl-c1">5</span> <span class="pl-k">==</span> <span class="pl-c1">0</span>) {
+                    <span class="pl-k">if</span> (((j <span class="pl-k">*</span> <span class="pl-c1">100</span>) <span class="pl-k">/</span> contLines) <span class="pl-k">!=</span> auxCont) {
+                        auxCont <span class="pl-k">=</span> ((j <span class="pl-k">*</span> <span class="pl-c1">100</span>) <span class="pl-k">/</span> contLines);
+                        <span class="pl-k">long</span> stopTime <span class="pl-k">=</span> <span class="pl-smi">System</span><span class="pl-k">.</span>currentTimeMillis();
+                        total <span class="pl-k">=</span> (<span class="pl-k">int</span>) (stopTime <span class="pl-k">-</span> startTime) <span class="pl-k">/</span> <span class="pl-c1">1000</span>;
+
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span>[*] <span class="pl-pds">"</span></span> <span class="pl-k">+</span> auxCont <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>% file readed. Time elapsed: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> total <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>s<span class="pl-pds">"</span></span>);
+                    }
+                } <span class="pl-k">else</span> <span class="pl-k">if</span> (((j <span class="pl-k">*</span> <span class="pl-c1">100</span>) <span class="pl-k">/</span> contLines) <span class="pl-k">%</span> <span class="pl-c1">5</span> <span class="pl-k">==</span> <span class="pl-c1">0</span>) {
+                    <span class="pl-smi">SwingGUI</span><span class="pl-k">.</span>getMyJMenu()<span class="pl-k">.</span>updateBar((j <span class="pl-k">*</span> <span class="pl-c1">100</span>) <span class="pl-k">/</span> contLines);
+                }
+            }
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span>[*] 100% file readed. Time elapsed: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> total <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>s<span class="pl-pds">"</span></span>);
+        }
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span>-------- File read finished --------<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>);
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span>--- Elapsed time to read the file ---&gt; <span class="pl-pds">"</span></span> <span class="pl-k">+</span> total <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>s---<span class="pl-pds">"</span></span>);
+
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span>--- Total actor/actresses found :<span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getActorL()<span class="pl-k">.</span>size()<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> ---<span class="pl-pds">"</span></span>);
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span>--- Total films found : <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>getSize()<span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">"</span> ---<span class="pl-pds">"</span></span>);
+
+        <span class="pl-k">float</span> avActorsFilm <span class="pl-k">=</span> (<span class="pl-k">float</span>)<span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>getTotalActors()<span class="pl-k">/</span>(<span class="pl-k">float</span>)<span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>getSize();
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>printf(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span>--- Average actors per film: %.2f<span class="pl-pds">"</span></span>,avActorsFilm);
+        <span class="pl-k">double</span> avFilmsActor <span class="pl-k">=</span> (<span class="pl-k">double</span>)<span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getTotalFilms()<span class="pl-k">/</span>(<span class="pl-k">double</span>)<span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getSize();
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>print(<span class="pl-s"><span class="pl-pds">"</span>---<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>);
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>printf(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span>--- Average films per actor: %.2f<span class="pl-pds">"</span></span>, avFilmsActor);
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>print(<span class="pl-s"><span class="pl-pds">"</span>---<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>);
+
+    }
+
+   <span class="pl-k">@SuppressWarnings</span>(<span class="pl-s"><span class="pl-pds">"</span>rawtypes<span class="pl-pds">"</span></span>)
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">exportToFile</span>() {
+
+        <span class="pl-k">String</span>[] keys <span class="pl-k">=</span> <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>quickSortList();
+
+        <span class="pl-smi">FileWriter</span> fichero <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+        <span class="pl-smi">PrintWriter</span> pw;
+
+        <span class="pl-k">long</span> timeStart <span class="pl-k">=</span> <span class="pl-smi">System</span><span class="pl-k">.</span>currentTimeMillis();
+
+        <span class="pl-k">try</span> {
+            <span class="pl-smi">String</span> directorio <span class="pl-k">=</span> <span class="pl-smi">System</span><span class="pl-k">.</span>getProperty(<span class="pl-s"><span class="pl-pds">"</span>user.dir<span class="pl-pds">"</span></span>);<span class="pl-c">//cogemos variable entorno</span>
+            fichero <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">FileWriter</span>(directorio <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>/ActorList_ordered.txt<span class="pl-pds">"</span></span>);
+            pw <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">PrintWriter</span>(fichero);
+
+            <span class="pl-k">int</span> i <span class="pl-k">=</span> <span class="pl-c1">1</span>;
+            <span class="pl-k">for</span> (<span class="pl-k">int</span> i1 <span class="pl-k">=</span> <span class="pl-c1">0</span>, keysLength <span class="pl-k">=</span> keys<span class="pl-k">.</span>length; i1 <span class="pl-k">&lt;</span> keysLength; i1<span class="pl-k">++</span>) {
+                <span class="pl-smi">Object</span> key <span class="pl-k">=</span> keys[i1];
+                pw<span class="pl-k">.</span>print(<span class="pl-s"><span class="pl-pds">"</span>Actor <span class="pl-pds">"</span></span> <span class="pl-k">+</span> i <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> -&gt; <span class="pl-pds">"</span></span>);
+                pw<span class="pl-k">.</span>println(<span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getActorL()<span class="pl-k">.</span>get(key)<span class="pl-k">.</span>getName() <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getActorL()<span class="pl-k">.</span>get(key)<span class="pl-k">.</span>getSurname());
+                <span class="pl-k">Object</span>[] keys2;
+                <span class="pl-k">Iterator&lt;<span class="pl-smi">Film</span>&gt;</span> itr <span class="pl-k">=</span> <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getActorL()<span class="pl-k">.</span>get(key)<span class="pl-k">.</span>getFilmList()<span class="pl-k">.</span>getIterator();
+                <span class="pl-k">while</span> (itr<span class="pl-k">.</span>hasNext()) {
+                    <span class="pl-smi">Film</span> auxFilm <span class="pl-k">=</span> itr<span class="pl-k">.</span>next();
+                    pw<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span><span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getActorL()<span class="pl-k">.</span>get(key)<span class="pl-k">.</span>getFilmList()<span class="pl-k">.</span>getFilmL()<span class="pl-k">.</span>find(auxFilm)<span class="pl-k">.</span>getName());
+                }
+                i<span class="pl-k">++</span>;
+                <span class="pl-k">int</span> percentage <span class="pl-k">=</span> (i <span class="pl-k">*</span> <span class="pl-c1">100</span>) <span class="pl-k">/</span> <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getActorL()<span class="pl-k">.</span>size();
+                <span class="pl-k">if</span> (((i <span class="pl-k">*</span> <span class="pl-c1">100</span>) <span class="pl-k">/</span> <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getActorL()<span class="pl-k">.</span>size()) <span class="pl-k">%</span> <span class="pl-c1">5</span> <span class="pl-k">==</span> <span class="pl-c1">0</span>) {
+                    <span class="pl-k">if</span> (((i <span class="pl-k">*</span> <span class="pl-c1">100</span>) <span class="pl-k">/</span> <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>getActorL()<span class="pl-k">.</span>size()) <span class="pl-k">!=</span> percentage) {
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>[*] <span class="pl-pds">"</span></span> <span class="pl-k">+</span> percentage <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>%<span class="pl-pds">"</span></span>);
+                    }
+                }
+
+            }
+        } <span class="pl-k">catch</span> (<span class="pl-smi">Exception</span> e) {
+            e<span class="pl-k">.</span>printStackTrace();
+        } <span class="pl-k">finally</span> {
+            <span class="pl-k">try</span> {
+                <span class="pl-k">if</span> (<span class="pl-c1">null</span> <span class="pl-k">!=</span> fichero) {
+                    fichero<span class="pl-k">.</span>close();
+                }
+                <span class="pl-k">long</span> timeTotal <span class="pl-k">=</span> (<span class="pl-smi">System</span><span class="pl-k">.</span>currentTimeMillis() <span class="pl-k">-</span> timeStart);
+                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span> --- Elapsed time to export the file --- : <span class="pl-pds">"</span></span> <span class="pl-k">+</span> (<span class="pl-k">int</span>) timeTotal <span class="pl-k">/</span> <span class="pl-c1">1000</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>sec, <span class="pl-pds">"</span></span> <span class="pl-k">+</span> timeTotal <span class="pl-k">*</span> <span class="pl-c1">1000</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>ms<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>);
+                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n\t</span>File exported to: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">System</span><span class="pl-k">.</span>getProperty(<span class="pl-s"><span class="pl-pds">"</span>user.dir<span class="pl-pds">"</span></span>));
+            } <span class="pl-k">catch</span> (<span class="pl-smi">Exception</span> e2) {
+                e2<span class="pl-k">.</span>printStackTrace();
+            }
+        }
+    }
+}</pre></div>
+
+<h3>
+<a id="56-clase-film-implementada-interfaz-comparable" class="anchor" href="#56-clase-film-implementada-interfaz-comparable" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.6 Clase Film (implementada interfaz Comparable)</h3>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">package</span> <span class="pl-smi">lab2</span>;
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Created by david on 25/09/2016.</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Film</span> <span class="pl-k">implements</span> <span class="pl-e">Comparable&lt;<span class="pl-smi">Film</span>&gt;</span> {
+
+    <span class="pl-k">private</span> <span class="pl-smi">String</span> name;
+    <span class="pl-k">private</span> <span class="pl-k">int</span> earned <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+    <span class="pl-k">private</span> <span class="pl-smi">ActorList</span> actorList;
+
+    <span class="pl-k">public</span> <span class="pl-en">Film</span>(<span class="pl-smi">String</span> <span class="pl-v">pName</span>) {
+        <span class="pl-v">this</span><span class="pl-k">.</span>name <span class="pl-k">=</span> pName;
+        <span class="pl-v">this</span><span class="pl-k">.</span>actorList <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">ActorList</span>();
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">getName</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>name;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">int</span> <span class="pl-en">getEarned</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>earned;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">incrementEarned</span>(<span class="pl-k">int</span> <span class="pl-v">auxEarned</span>) {
+        <span class="pl-v">this</span><span class="pl-k">.</span>earned <span class="pl-k">+=</span> auxEarned;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">ActorList</span> <span class="pl-en">getActorList</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>actorList;
+    }
+
+
+    <span class="pl-k">@Override</span>
+    <span class="pl-k">public</span> <span class="pl-k">int</span> <span class="pl-en">compareTo</span>(<span class="pl-smi">Film</span> <span class="pl-v">pFilm</span>) {
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>getName()<span class="pl-k">.</span>compareToIgnoreCase(pFilm<span class="pl-k">.</span>getName());
+    }
+}</pre></div>
+
+<h3>
+<a id="57-clase-filmcatalog" class="anchor" href="#57-clase-filmcatalog" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.7 Clase FilmCatalog</h3>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">package</span> <span class="pl-smi">lab2</span>;
+
+<span class="pl-k">import</span> <span class="pl-smi">java.util.HashMap</span>;
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Created by Josu on 25/09/2016.</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">FilmCatalog</span> {
+
+    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-smi">FilmCatalog</span> myFilmCatalog;
+    <span class="pl-k">private</span> <span class="pl-k">HashMap&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Film</span>&gt;</span> filmL;
+
+    <span class="pl-k">private</span> <span class="pl-en">FilmCatalog</span>() {
+        <span class="pl-v">this</span><span class="pl-k">.</span>filmL <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">HashMap&lt;&gt;</span>();
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-smi">FilmCatalog</span> <span class="pl-en">getMyFilmCatalog</span>() {
+        <span class="pl-k">if</span> (myFilmCatalog <span class="pl-k">==</span> <span class="pl-c1">null</span>) {
+            myFilmCatalog <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">FilmCatalog</span>();
+        }
+        <span class="pl-k">return</span> myFilmCatalog;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">exist</span>(<span class="pl-smi">String</span> <span class="pl-v">pFilmName</span>) {
+        <span class="pl-k">return</span> filmL<span class="pl-k">.</span>get(pFilmName) <span class="pl-k">!=</span> <span class="pl-c1">null</span>;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">addFilm</span>(<span class="pl-smi">Film</span> <span class="pl-v">pFilm</span>) {
+        <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-v">this</span><span class="pl-k">.</span>exist(pFilm<span class="pl-k">.</span>getName())) {
+            <span class="pl-v">this</span><span class="pl-k">.</span>filmL<span class="pl-k">.</span>put(pFilm<span class="pl-k">.</span>getName(), pFilm);
+        }
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">Film</span> <span class="pl-en">getFilm</span>(<span class="pl-smi">String</span> <span class="pl-v">pFilmName</span>) {
+        <span class="pl-k">if</span> (<span class="pl-v">this</span><span class="pl-k">.</span>exist(pFilmName)) {
+            <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>filmL<span class="pl-k">.</span>get(pFilmName);
+        }
+        <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">int</span> <span class="pl-en">getSize</span>(){
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>filmL<span class="pl-k">.</span>size();
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">int</span> <span class="pl-en">getTotalActors</span>(){
+        <span class="pl-k">int</span> cont <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+        <span class="pl-k">for</span> (<span class="pl-smi">String</span> key <span class="pl-k">:</span> filmL<span class="pl-k">.</span>keySet()){
+            cont <span class="pl-k">+=</span> <span class="pl-v">this</span><span class="pl-k">.</span>filmL<span class="pl-k">.</span>get(key)<span class="pl-k">.</span>getActorList()<span class="pl-k">.</span>getActorsNumber();
+        }
+        <span class="pl-k">return</span> cont;
+    }
+
+}</pre></div>
+
+<h3>
+<a id="58-clase-filmlist-implementación-de-orderedcircularlinkedlist" class="anchor" href="#58-clase-filmlist-implementaci%C3%B3n-de-orderedcircularlinkedlist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.8 Clase FilmList (Implementación de OrderedCircularLinkedList)</h3>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">package</span> <span class="pl-smi">lab2</span>;
+
+<span class="pl-k">import</span> <span class="pl-smi">java.util.Iterator</span>;
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Created by Josu on 25/09/2016.</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">FilmList</span> {
+
+    <span class="pl-k">private</span> <span class="pl-k">OrderedCircularLinkedList&lt;<span class="pl-smi">Film</span>&gt;</span> filmL;
+
+    <span class="pl-k">public</span> <span class="pl-en">FilmList</span>() {
+        <span class="pl-v">this</span><span class="pl-k">.</span>filmL <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">OrderedCircularLinkedList&lt;&gt;</span>();
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">Iterator&lt;<span class="pl-smi">Film</span>&gt;</span> <span class="pl-en">getIterator</span>(){ <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>filmL<span class="pl-k">.</span>iterator();}
+
+    <span class="pl-k">private</span> <span class="pl-k">boolean</span> <span class="pl-en">exist</span>(<span class="pl-smi">String</span> <span class="pl-v">pFilmName</span>) {
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>filmL<span class="pl-k">.</span>contains(<span class="pl-k">new</span> <span class="pl-smi">Film</span>(pFilmName));
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">addFilm</span>(<span class="pl-smi">Film</span> <span class="pl-v">pFilm</span>) {
+        <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-v">this</span><span class="pl-k">.</span>exist(pFilm<span class="pl-k">.</span>getName())) {
+            <span class="pl-v">this</span><span class="pl-k">.</span>filmL<span class="pl-k">.</span>add(pFilm);
+        }
+    }
+
+    <span class="pl-k">public</span> <span class="pl-smi">Film</span> <span class="pl-en">getFilm</span>(<span class="pl-smi">String</span> <span class="pl-v">pFilmName</span>) {
+        <span class="pl-k">if</span> (<span class="pl-v">this</span><span class="pl-k">.</span>exist(pFilmName)) {
+            <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>filmL<span class="pl-k">.</span>find(<span class="pl-k">new</span> <span class="pl-smi">Film</span>(pFilmName));
+        }
+        <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">OrderedCircularLinkedList&lt;<span class="pl-smi">Film</span>&gt;</span> <span class="pl-en">getFilmL</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>filmL;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">printFilms</span>() {
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>These are all the films: <span class="pl-pds">"</span></span>);
+        <span class="pl-k">Iterator&lt;<span class="pl-smi">Film</span>&gt;</span> itr <span class="pl-k">=</span> <span class="pl-v">this</span><span class="pl-k">.</span>filmL<span class="pl-k">.</span>iterator();
+
+        <span class="pl-k">if</span> (<span class="pl-v">this</span><span class="pl-k">.</span>filmL<span class="pl-k">.</span>isEmpty()) {
+            <span class="pl-smi">System</span><span class="pl-k">.</span>err<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span> No consta ningun actor para esta pelicula<span class="pl-pds">"</span></span>);
+        } <span class="pl-k">else</span> {
+            <span class="pl-k">while</span> (itr<span class="pl-k">.</span>hasNext()) {
+                <span class="pl-smi">Film</span> film <span class="pl-k">=</span> itr<span class="pl-k">.</span>next();
+                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(film<span class="pl-k">.</span>getName());
+            }
+        }
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">int</span> <span class="pl-en">getTotalFilms</span>(){
+        <span class="pl-k">return</span> <span class="pl-v">this</span><span class="pl-k">.</span>filmL<span class="pl-k">.</span>count;
+    }
+}</pre></div>
+
+<h3>
+<a id="59-clase-orderedcircularlinkedlist" class="anchor" href="#59-clase-orderedcircularlinkedlist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.9 Clase OrderedCircularLinkedList</h3>
+
+<div class="highlight highlight-source-java"><pre>
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Created by Josu on 24/10/2016.</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">package</span> <span class="pl-smi">lab2</span>;
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">OrderedCircularLinkedList</span>&lt;T <span class="pl-k">extends</span> <span class="pl-e">Comparable&lt;<span class="pl-smi">T</span>&gt;</span>&gt; extends <span class="pl-e">CircularLinkedList&lt;<span class="pl-smi">T</span>&gt;</span> <span class="pl-k">implements</span> <span class="pl-e">OrderedListADT&lt;<span class="pl-smi">T</span>&gt;</span> {
+
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">add</span>(<span class="pl-smi">T</span> <span class="pl-v">elem</span>) {
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current;    <span class="pl-c">//pointer</span>
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> auxNode <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span>(elem); <span class="pl-c">//auxiliar pointer</span>
+        <span class="pl-k">boolean</span> finded <span class="pl-k">=</span> <span class="pl-c1">false</span>; <span class="pl-c">//flag for while</span>
+
+        <span class="pl-k">if</span> (count <span class="pl-k">==</span> <span class="pl-c1">0</span> <span class="pl-k">?</span> <span class="pl-c1">true</span> <span class="pl-k">:</span> <span class="pl-c1">false</span>) {<span class="pl-c">//if it's empty</span>
+            last <span class="pl-k">=</span> auxNode;
+            auxNode<span class="pl-k">.</span>next <span class="pl-k">=</span> auxNode;
+        } <span class="pl-k">else</span> {
+            current <span class="pl-k">=</span> last<span class="pl-k">.</span>next;<span class="pl-c">//first element</span>
+            <span class="pl-k">if</span> (current<span class="pl-k">.</span>data<span class="pl-k">.</span>compareTo(elem) <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>) {<span class="pl-c">//if the first is &gt; elem</span>
+                auxNode<span class="pl-k">.</span>next <span class="pl-k">=</span> last<span class="pl-k">.</span>next;
+                last<span class="pl-k">.</span>next <span class="pl-k">=</span> auxNode;
+
+            } <span class="pl-k">else</span> <span class="pl-k">if</span> (last<span class="pl-k">.</span>data<span class="pl-k">.</span>compareTo(elem) <span class="pl-k">&lt;</span> <span class="pl-c1">0</span>) {<span class="pl-c">//if the last &lt; auxNode</span>
+                auxNode<span class="pl-k">.</span>next <span class="pl-k">=</span> last<span class="pl-k">.</span>next;
+                last<span class="pl-k">.</span>next <span class="pl-k">=</span> auxNode;
+                last <span class="pl-k">=</span> auxNode;
+            } <span class="pl-k">else</span> { <span class="pl-c">//between two elements</span>
+                <span class="pl-k">while</span> (<span class="pl-k">!</span>finded) {
+                    <span class="pl-k">if</span> (current<span class="pl-k">.</span>data<span class="pl-k">.</span>compareTo(elem) <span class="pl-k">&lt;</span> <span class="pl-c1">0</span> <span class="pl-k">&amp;&amp;</span> current<span class="pl-k">.</span>next<span class="pl-k">.</span>data<span class="pl-k">.</span>compareTo(elem) <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>) { <span class="pl-c">//if whe've finded where to insert</span>
+                        auxNode<span class="pl-k">.</span>next <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+                        current<span class="pl-k">.</span>next <span class="pl-k">=</span> auxNode;
+                        finded <span class="pl-k">=</span> <span class="pl-c1">true</span>;
+                    }
+                    current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+                }
+            }
+        }
+        count<span class="pl-k">++</span>;
+    }
+}</pre></div>
+
+<h3>
+<a id="510-clase-stringquicksort" class="anchor" href="#510-clase-stringquicksort" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.10 Clase StringQuickSort</h3>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">package</span> <span class="pl-smi">lab1</span>;
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Created by David on 24/10/2016.</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">StringQuickSort</span> {
+
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">quickSort</span>(<span class="pl-k">String</span>[] <span class="pl-v">table</span>){
+        quickSort(table, <span class="pl-c1">0</span>, table<span class="pl-k">.</span>length<span class="pl-k">-</span><span class="pl-c1">1</span>);
+    }
+
+    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">quickSort</span>(<span class="pl-k">String</span>[] <span class="pl-v">table</span>, <span class="pl-k">int</span> <span class="pl-v">start</span>, <span class="pl-k">int</span> <span class="pl-v">end</span>){
+        <span class="pl-k">if</span>(end<span class="pl-k">-</span>start <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>){
+            <span class="pl-k">int</span> partitionIndex <span class="pl-k">=</span> partition(table, start, end);
+            quickSort(table, start, partitionIndex<span class="pl-k">-</span><span class="pl-c1">1</span>);
+            quickSort(table, partitionIndex <span class="pl-k">+</span> <span class="pl-c1">1</span>, end);
+        }
+    }
+
+    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">int</span> <span class="pl-en">partition</span>(<span class="pl-k">String</span>[] <span class="pl-v">table</span>, <span class="pl-k">int</span> <span class="pl-v">s</span>, <span class="pl-k">int</span> <span class="pl-v">e</span>){
+        <span class="pl-smi">String</span> pivote <span class="pl-k">=</span> table[s];
+        <span class="pl-k">int</span> left <span class="pl-k">=</span> s;
+        <span class="pl-k">int</span> right <span class="pl-k">=</span> e;
+
+        <span class="pl-k">while</span>(left <span class="pl-k">&lt;</span> right){
+            <span class="pl-k">while</span>(table[left]<span class="pl-k">.</span>compareTo(pivote) <span class="pl-k">&lt;=</span> <span class="pl-c1">0</span> <span class="pl-k">&amp;&amp;</span>  left<span class="pl-k">&lt;</span>right){
+                left<span class="pl-k">++</span>;
+            }
+            <span class="pl-k">while</span>(table[right]<span class="pl-k">.</span>compareTo(pivote) <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>){
+                right<span class="pl-k">--</span>;
+            }
+            <span class="pl-k">if</span>(left <span class="pl-k">&lt;</span> right){
+                swap(table, left, right);
+            }
+        }
+        table[s]<span class="pl-k">=</span>table[right];
+        table[right] <span class="pl-k">=</span> pivote;
+
+        <span class="pl-k">return</span> right;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">swap</span>(<span class="pl-k">String</span>[] <span class="pl-v">table</span>, <span class="pl-k">int</span> <span class="pl-v">l</span>, <span class="pl-k">int</span> <span class="pl-v">r</span>){
+        <span class="pl-smi">String</span> temp <span class="pl-k">=</span> table[l];
+        table[l] <span class="pl-k">=</span> table[r];
+        table[r] <span class="pl-k">=</span> temp;
+    }</pre></div>
+
+<h3>
+<a id="511-clase-terminalui" class="anchor" href="#511-clase-terminalui" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.11 Clase TerminalUI</h3>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">package</span> <span class="pl-smi">lab2</span>;
+
+<span class="pl-k">import</span> <span class="pl-smi">java.io.*</span>;
+<span class="pl-k">import</span> <span class="pl-smi">java.util.Scanner</span>;
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * Created by Josu on 26/09/2016.</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">TerminalUI</span> {
+
+    <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-smi">TerminalUI</span> myTerminalGUI;
+    <span class="pl-k">private</span> <span class="pl-smi">Scanner</span> optMenu;
+
+    <span class="pl-k">private</span> <span class="pl-en">TerminalUI</span>() {
+        optMenu <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Scanner</span>(<span class="pl-smi">System</span><span class="pl-k">.</span>in);
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-smi">TerminalUI</span> <span class="pl-en">getMyTerminalGUI</span>() {
+        <span class="pl-k">if</span> (myTerminalGUI <span class="pl-k">==</span> <span class="pl-c1">null</span>) {
+            myTerminalGUI <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">TerminalUI</span>();
+        }
+        <span class="pl-k">return</span> myTerminalGUI;
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">main</span>() <span class="pl-k">throws</span> <span class="pl-smi">FileNotFoundException</span> {
+
+        <span class="pl-k">String</span>[] auxActorArray;
+        <span class="pl-smi">String</span> auxActorName;
+        <span class="pl-smi">String</span> auxActorSurname;
+
+        <span class="pl-smi">String</span> auxS;
+
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t\t</span>***-----Welcome to our IMDb EDA16/17 project menu-----***<span class="pl-pds">"</span></span>);
+
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n\n</span> ** We use OrderedCircularLinkedList for the list of films per actor, for the list of<span class="pl-pds">"</span></span>);
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>actors per film we decide to use UnorderedCircularLinkedList. ActorCatalog and FilmCatalog<span class="pl-pds">"</span></span>);
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>are still using HashMap&lt;String,Actor&gt; and HashMap&lt;String,Film&gt; respectively **<span class="pl-pds">"</span></span>);
+
+        <span class="pl-k">do</span> {
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n\t\t\t</span>----------MENU----------<span class="pl-pds">"</span></span>);
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>1) Read data from file<span class="pl-pds">"</span></span>);
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>2) Search for an actor/actress<span class="pl-pds">"</span></span>);
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>3) Add a new actor/actress<span class="pl-pds">"</span></span>);
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>4) Search for films of a particular actor<span class="pl-pds">"</span></span>);
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>5) Search for actor of a particular film<span class="pl-pds">"</span></span>);
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>6) Increase the money raised by a film<span class="pl-pds">"</span></span>);
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>7) Erase an actor/actress<span class="pl-pds">"</span></span>);
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>8) Obtain an ordered list of actor (name,surname)<span class="pl-pds">"</span></span>);
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>9) Save/Export the new list to a file<span class="pl-pds">"</span></span>);
+
+            <span class="pl-k">int</span> optMenu <span class="pl-k">=</span> <span class="pl-smi">Keyboard</span><span class="pl-k">.</span>getMyKeyboard()<span class="pl-k">.</span>getInt();
+
+            <span class="pl-k">switch</span> (optMenu) {
+                <span class="pl-k">case</span> <span class="pl-c1">0</span><span class="pl-k">:</span>
+                    <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>--- Saliendo del programa... ----<span class="pl-pds">"</span></span>);
+                    <span class="pl-k">break</span>;
+                <span class="pl-k">case</span> <span class="pl-c1">1</span><span class="pl-k">:</span>
+                    <span class="pl-k">try</span> {
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span>Select one of options below: <span class="pl-pds">"</span></span>);
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>1) Read only the 'readable' actors/films (after trying to rescue some names from the codification, take only the 'full readables') <span class="pl-pds">"</span></span>);
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t\t</span>2) Read the full list of actors/movies (don't care if they're wrong written, after running our conversor<span class="pl-pds">"</span></span>);
+                        <span class="pl-k">int</span> optMenu1 <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+                        <span class="pl-k">while</span> (optMenu1 <span class="pl-k">&lt;</span> <span class="pl-c1">1</span> <span class="pl-k">||</span> optMenu1 <span class="pl-k">&gt;</span> <span class="pl-c1">2</span>) {
+                            optMenu1 <span class="pl-k">=</span> <span class="pl-smi">Keyboard</span><span class="pl-k">.</span>getMyKeyboard()<span class="pl-k">.</span>getInt();
+                            <span class="pl-k">if</span> (optMenu1 <span class="pl-k">==</span> <span class="pl-c1">1</span>) {
+                                <span class="pl-smi">FileManager</span><span class="pl-k">.</span>getMyFileManager()<span class="pl-k">.</span>readFile(<span class="pl-c1">1</span>);
+                            } <span class="pl-k">else</span> <span class="pl-k">if</span> (optMenu1 <span class="pl-k">==</span> <span class="pl-c1">2</span>) {
+                                <span class="pl-smi">FileManager</span><span class="pl-k">.</span>getMyFileManager()<span class="pl-k">.</span>readFile(<span class="pl-c1">2</span>);
+                            } <span class="pl-k">else</span> {
+                                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Invalid option, try again. Select a number between 1-2 range<span class="pl-pds">"</span></span>);
+                            }
+                        }
+
+                    } <span class="pl-k">catch</span> (<span class="pl-smi">FileNotFoundException</span> e1) {
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>File not found. ¿Are you sure that you're opening the correct file?<span class="pl-pds">"</span></span>);
+                    } <span class="pl-k">catch</span> (<span class="pl-smi">IOException</span> e) {
+                        e<span class="pl-k">.</span>printStackTrace();
+                    }
+                    <span class="pl-k">break</span>;
+                <span class="pl-k">case</span> <span class="pl-c1">2</span><span class="pl-k">:</span>
+                    <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Enter the name of the actor you want to look for: <span class="pl-pds">"</span></span>);
+                    auxS <span class="pl-k">=</span> <span class="pl-smi">Keyboard</span><span class="pl-k">.</span>getMyKeyboard()<span class="pl-k">.</span>getString();
+                    auxActorArray <span class="pl-k">=</span> auxS<span class="pl-k">.</span>split(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>s<span class="pl-pds">"</span></span>);
+                    auxActorName <span class="pl-k">=</span> auxActorArray[<span class="pl-c1">0</span>];
+                    auxActorSurname <span class="pl-k">=</span> auxActorArray[<span class="pl-c1">1</span>];
+                    <span class="pl-smi">Actor</span> auxA <span class="pl-k">=</span> <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>searchActor(<span class="pl-k">new</span> <span class="pl-smi">Actor</span>(auxActorName, auxActorSurname));
+                    <span class="pl-k">if</span> (auxA <span class="pl-k">==</span> <span class="pl-c1">null</span>) {
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Actor not finded: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> auxS);
+                    } <span class="pl-k">else</span> {
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Actor finded: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> auxA<span class="pl-k">.</span>getName());
+                    }
+                    <span class="pl-k">break</span>;
+                <span class="pl-k">case</span> <span class="pl-c1">3</span><span class="pl-k">:</span>
+                    <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Enter the name of the actor that you want to add: <span class="pl-pds">"</span></span>);
+                    auxS <span class="pl-k">=</span> <span class="pl-smi">Keyboard</span><span class="pl-k">.</span>getMyKeyboard()<span class="pl-k">.</span>getString();
+                    auxActorArray <span class="pl-k">=</span> auxS<span class="pl-k">.</span>split(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>s<span class="pl-pds">"</span></span>);
+                    auxActorName <span class="pl-k">=</span> auxActorArray[<span class="pl-c1">0</span>];
+                    auxActorSurname <span class="pl-k">=</span> auxActorArray[<span class="pl-c1">1</span>];
+                    <span class="pl-k">if</span> (<span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>searchActor(<span class="pl-k">new</span> <span class="pl-smi">Actor</span>(auxActorName, auxActorSurname)) <span class="pl-k">!=</span> <span class="pl-c1">null</span>) {
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Actor: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> auxS <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> already exist<span class="pl-pds">"</span></span>);
+                    } <span class="pl-k">else</span> {
+                        <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>addActor(<span class="pl-k">new</span> <span class="pl-smi">Actor</span>(auxActorName, auxActorSurname));
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Actor: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> auxS <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> added to the ActorCatalog<span class="pl-pds">"</span></span>);
+                    }
+                    <span class="pl-k">break</span>;
+                <span class="pl-k">case</span> <span class="pl-c1">4</span><span class="pl-k">:</span>
+                    <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Enter the name of the actor whose films you want to know<span class="pl-pds">"</span></span>);
+                    auxS <span class="pl-k">=</span> <span class="pl-smi">Keyboard</span><span class="pl-k">.</span>getMyKeyboard()<span class="pl-k">.</span>getString();
+                    auxActorArray <span class="pl-k">=</span> auxS<span class="pl-k">.</span>split(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>s<span class="pl-pds">"</span></span>);
+                    auxActorName <span class="pl-k">=</span> auxActorArray[<span class="pl-c1">0</span>];
+                    auxActorSurname <span class="pl-k">=</span> auxActorArray[<span class="pl-c1">1</span>];
+                    <span class="pl-k">if</span> (<span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>searchActor(<span class="pl-k">new</span> <span class="pl-smi">Actor</span>(auxActorName, auxActorSurname)) <span class="pl-k">!=</span> <span class="pl-c1">null</span>) {
+                        <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>searchActor(<span class="pl-k">new</span> <span class="pl-smi">Actor</span>(auxActorName, auxActorSurname))<span class="pl-k">.</span>getFilmList()<span class="pl-k">.</span>printFilms();
+                    } <span class="pl-k">else</span> {
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Actor: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> auxS <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> do not exist in the ActorCatalog<span class="pl-pds">"</span></span>);
+                    }
+                    <span class="pl-k">break</span>;
+                <span class="pl-k">case</span> <span class="pl-c1">5</span><span class="pl-k">:</span>
+                    <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Enter the film whose actors that do you want to know: <span class="pl-pds">"</span></span>);
+                    auxS <span class="pl-k">=</span> <span class="pl-smi">Keyboard</span><span class="pl-k">.</span>getMyKeyboard()<span class="pl-k">.</span>getString();
+                    <span class="pl-k">if</span> (<span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>getFilm(auxS) <span class="pl-k">!=</span> <span class="pl-c1">null</span>) {
+                        <span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>getFilm(auxS)<span class="pl-k">.</span>getActorList()<span class="pl-k">.</span>printActors();
+                    }
+                    <span class="pl-k">break</span>;
+                <span class="pl-k">case</span> <span class="pl-c1">6</span><span class="pl-k">:</span>
+                    <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Enter the film whose amount of earning you want to raise: <span class="pl-pds">"</span></span>);
+                    auxS <span class="pl-k">=</span> <span class="pl-smi">Keyboard</span><span class="pl-k">.</span>getMyKeyboard()<span class="pl-k">.</span>getString();
+                    <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Enter the amount of money that you want to increase: <span class="pl-pds">"</span></span>);
+                    <span class="pl-k">int</span> auxI <span class="pl-k">=</span> <span class="pl-smi">Keyboard</span><span class="pl-k">.</span>getMyKeyboard()<span class="pl-k">.</span>getInt();
+                    <span class="pl-k">if</span> (<span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>exist(auxS)) {
+                        <span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>getFilm(auxS)<span class="pl-k">.</span>incrementEarned(auxI);
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Total earned by the film: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">FilmCatalog</span><span class="pl-k">.</span>getMyFilmCatalog()<span class="pl-k">.</span>getFilm(auxS)<span class="pl-k">.</span>getEarned());
+                    } <span class="pl-k">else</span> {
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>File not found. Are you sure that you have written title correctly?<span class="pl-pds">"</span></span>);
+                    }
+                    <span class="pl-k">break</span>;
+                <span class="pl-k">case</span> <span class="pl-c1">7</span><span class="pl-k">:</span>
+                    <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Enter the name of the actor that you want to remove<span class="pl-pds">"</span></span>);
+                    auxS <span class="pl-k">=</span> <span class="pl-smi">Keyboard</span><span class="pl-k">.</span>getMyKeyboard()<span class="pl-k">.</span>getString();
+                    auxActorArray <span class="pl-k">=</span> auxS<span class="pl-k">.</span>split(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>s<span class="pl-pds">"</span></span>);
+                    auxActorName <span class="pl-k">=</span> auxActorArray[<span class="pl-c1">0</span>];
+                    auxActorSurname <span class="pl-k">=</span> auxActorArray[<span class="pl-c1">1</span>];
+                    <span class="pl-k">if</span> (<span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>searchActor(<span class="pl-k">new</span> <span class="pl-smi">Actor</span>(auxActorName, auxActorSurname)) <span class="pl-k">!=</span> <span class="pl-c1">null</span>) {
+                        <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>removeActor(<span class="pl-k">new</span> <span class="pl-smi">Actor</span>(auxActorName, auxActorSurname));
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Actor: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> auxS <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> succesfully removed<span class="pl-pds">"</span></span>);
+                    } <span class="pl-k">else</span> {
+                        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Actor: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> auxS <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> do not exist in the ActorCatalog<span class="pl-pds">"</span></span>);
+                    }
+                    <span class="pl-k">break</span>;
+                <span class="pl-k">case</span> <span class="pl-c1">8</span><span class="pl-k">:</span>
+                    <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Do you want to print (console) the ordered list of actors?<span class="pl-pds">"</span></span>);
+                    <span class="pl-k">if</span> (<span class="pl-smi">Keyboard</span><span class="pl-k">.</span>getMyKeyboard()<span class="pl-k">.</span>getString()<span class="pl-k">.</span>equalsIgnoreCase(<span class="pl-s"><span class="pl-pds">"</span>y<span class="pl-pds">"</span></span>)){
+                        <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>printList(<span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>quickSortList());
+                    <span class="pl-k">break</span>;
+                    }
+                        <span class="pl-smi">ActorCatalog</span><span class="pl-k">.</span>getmyActorCatalog()<span class="pl-k">.</span>quickSortList();
+                    <span class="pl-k">break</span>;
+                <span class="pl-k">case</span> <span class="pl-c1">9</span><span class="pl-k">:</span>
+                    <span class="pl-smi">FileManager</span><span class="pl-k">.</span>getMyFileManager()<span class="pl-k">.</span>exportToFile();
+                    <span class="pl-k">break</span>;
+            }
+        } <span class="pl-k">while</span> (<span class="pl-c1">1</span> <span class="pl-k">!=</span> <span class="pl-c1">0</span>);
+    }
+}
+</pre></div>
+
+<h3>
+<a id="512-unorderedcircularlinkedlist" class="anchor" href="#512-unorderedcircularlinkedlist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5.12 UnorderedCircularLinkedList</h3>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">package</span> <span class="pl-smi">lab2</span>;
+
+<span class="pl-c">/**</span>
+<span class="pl-c"> * @author Josu on 27/10/2016</span>
+<span class="pl-c"> * @author David on 27/10/2016</span>
+<span class="pl-c"> */</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">UnorderedCircularLinkedList</span>&lt;T&gt; <span class="pl-k">extends</span> <span class="pl-e">CircularLinkedList&lt;<span class="pl-smi">T</span>&gt;</span> <span class="pl-k">implements</span> <span class="pl-e">UnorderedListADT&lt;<span class="pl-smi">T</span>&gt;</span> {
+
+    <span class="pl-c">/*Pre: We have a list, empty or not</span>
+<span class="pl-c">    * Post: We have added the element to the first position of the list*/</span>
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">addToFront</span>(<span class="pl-smi">T</span> <span class="pl-v">elem</span>){
+        <span class="pl-c">//System.out.println("AÑADIMOS el elemento "+elem+" a la PRIMERA POSICION de la lista");</span>
+
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> newNode <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span>(elem);
+        <span class="pl-k">if</span>(isEmpty()){
+            last <span class="pl-k">=</span> newNode;
+            last<span class="pl-k">.</span>next <span class="pl-k">=</span> last;
+        }
+        <span class="pl-k">else</span>{
+            newNode<span class="pl-k">.</span>next <span class="pl-k">=</span> last<span class="pl-k">.</span>next;
+            last<span class="pl-k">.</span>next <span class="pl-k">=</span> newNode;
+        }
+        count<span class="pl-k">++</span>;
+    }
+
+    <span class="pl-c">/* Pre: We have a list, empty or not</span>
+<span class="pl-c">    *  Post: We've added the element to the last position*/</span>
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">addToRear</span>(<span class="pl-smi">T</span> <span class="pl-v">elem</span>) {
+        <span class="pl-c">//System.out.println("AÑADIMOS el elemento "+elem+" a la ULTIMA POSICION de la lista");</span>
+
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> newNode <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span>(elem);
+        <span class="pl-k">if</span>(isEmpty()){
+            last <span class="pl-k">=</span> newNode;
+            last<span class="pl-k">.</span>next <span class="pl-k">=</span> last;
+        }<span class="pl-k">else</span>{
+            newNode<span class="pl-k">.</span>next <span class="pl-k">=</span> last<span class="pl-k">.</span>next; <span class="pl-c">//the next of 'our' rear points firts</span>
+            last<span class="pl-k">.</span>next <span class="pl-k">=</span> newNode; <span class="pl-c">//the next of the previous last points our 'rear' node</span>
+            last <span class="pl-k">=</span> newNode;
+        }
+        count<span class="pl-k">++</span>;
+    }
+    <span class="pl-c">/* Pre: We have a list, we must have at least one element. We receive the element that we want to add and the target to add after</span>
+<span class="pl-c">     * Post: We have added our element after the target element of the list */</span>
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">addAfter</span>(<span class="pl-smi">T</span> <span class="pl-v">elem</span>, <span class="pl-smi">T</span> <span class="pl-v">target</span>) {
+
+        <span class="pl-c">//System.out.println("Añadimos el elemento "+elem+" tras el elemento "+target+"\n");</span>
+
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> newNode <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span>(elem);
+        <span class="pl-k">Node&lt;<span class="pl-smi">T</span>&gt;</span> current <span class="pl-k">=</span> last;
+
+        <span class="pl-k">while</span>(<span class="pl-k">!</span>current<span class="pl-k">.</span>data<span class="pl-k">.</span>equals(target)){
+            current <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+        }
+
+        newNode<span class="pl-k">.</span>next <span class="pl-k">=</span> current<span class="pl-k">.</span>next;
+        current<span class="pl-k">.</span>next <span class="pl-k">=</span> newNode;
+
+        count<span class="pl-k">++</span>;
+
+    }
+
+}</pre></div>
+
+<h2>
+<a id="6-resultados-de-las-pruebas" class="anchor" href="#6-resultados-de-las-pruebas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>6. Resultados de las pruebas</h2>
+
+<p><strong>Estos son los resultados de las pruebas</strong>, en la etapa final de desarrollo (lo que estamos entregando) de la actividad. <strong>Todos los tiempos que mostramos son medias</strong> realizadas (entre 5-10 ejecuciones) <strong>de la misma operación</strong>. Las pruebas <strong>se han realizado en diferentes equipos con diferentes sistemas operativos</strong>, detallamos:</p>
+
+<p>En el fichero normalizado encontramos <strong>1 061 522</strong> actores, <strong>230 369</strong> peliculas.
+En el fichero sin normalizar (cogiento toda la informacion, independientemente de si estan bien escritos) encontramos <strong>1 191 316</strong> actores, <strong>238 809</strong> peliculas.</p>
+
+<pre><code>- Media de actores por pelicula
+    * 11,91 actores en el fichero normalizado
+    * 13,78 actores en el fichero sin normalizar
+- Media de peliculas por actor**: 1.0 en ambas pruebas (fichero normalizado y no normalizado)
+</code></pre>
+
+<ul>
+<li>
+<p><strong>CPU</strong>: Intel i5 6600K 3,9 GHz x 4 cores, <strong>GPU:</strong> nVidia GTX 970 4GB Strix,<strong>RAM:</strong> 16GB DDR5  2666, <strong>SO:</strong> <em>Windows 10 Pro x64</em></p>
+
+<ul>
+<li>Cargar fichero normalizado: 7sec (4s menos que el lab1)</li>
+<li>Cargar fichero completo: 8sec (3s menos que el lab1)</li>
+<li>Ordenar lista normalizada de actores: 0sec, 609000ms</li>
+<li>Ordenar lista completa de actores: 0sec, 688000ms</li>
+<li>Exportar lista normalizada de actores: 1sec, 1282000ms</li>
+<li>Exportar lista completa de actores: 1sec, 1672000ms</li>
+</ul>
+</li>
+<li>
+<p><strong>CPU</strong>: Intel i5 2,7 GHz x 2 cores, <strong>GPU:</strong> HD 6100,<strong>RAM:</strong> 8GB LPDDR3  1866, <strong>SO:</strong> <em>Mac OS Sierra (10.12)</em></p>
+
+<ul>
+<li>Cargar fichero normalizado: 16sec (4s menos que el lab1)</li>
+<li>Cargar fichero completo: 18sec (8s menos que el lab1)</li>
+<li>Ordenar lista normalizada de actores: 1sec, 1398000ms</li>
+<li>Ordenar lista completa de actores: 1sec, 1376000ms</li>
+<li>Exportar lista normalizada de actores: 4sec, 12976000ms (8s menos que el lab1)</li>
+<li>Exportar lista completa de actores: 9sec, 21158000ms (12s menos que el lab1)</li>
+</ul>
+</li>
+<li>
+<p><strong>CPU</strong>: Intel Atom Z3775 1,46 GHz x 2 cores, <strong>GPU:</strong> Intel HD Graphics (Bay Trail) (311 - 778 MHz),<strong>RAM:</strong> 2GB RAM 1333, <strong>SO:</strong> <em>Windows 10 Home x32</em></p>
+
+<ul>
+<li>Cargar fichero normalizado: 68sec</li>
+<li>Cargar fichero completo: El ordenador no es capaz de leerlo</li>
+<li>Ordenar lista normalizada de actores: 2sec, 2312000ms</li>
+<li>Ordenar lista completa de actores: No es capaz de leer el fichero completo</li>
+<li>Exportar lista normalizada de actores: 78sec, 78051000ms</li>
+<li>Exportar lista completa de actores: No es posible leer el fichero completo</li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="7-conclusiones" class="anchor" href="#7-conclusiones" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>7. Conclusiones</h2>
+
+<p>Volvemos a destacar, *<em>la importancia de las búsquedas en el funcionamiento de nuestro programa.  *</em>Al tener que trabajarlas tanto, es necesario optimizarlas al máximo para evitar tiempos de ejecución demasiado altos.</p>
+
+<p><strong>Destacar la dificultad añadida de trabajar con datos 'T' para hacer el metodo de adición de la lista OrderedCircularLinkedList</strong>. Aunque finalmente entendimos como trabajar con la Interfaz Comparable y nos sentimos mucho mas cómodos, pudiendo asi implementar dicha lista en FilmList.</p>
+
+<p><strong>Otro de los métodos con mucha importancia es cargarFichero()</strong> dado que coge línea a línea el texto que hay en el fichero y lo trata. Es decir, elimina toda la información no relevante para el programa y añade la que si tiene importancia.</p>
+
+<p><strong>Tras analizar el fichero y destacar un patrón que pudiera servirnos</strong> para, basandonos en el metodo split (de la clase String), separar las lineas del documento en información que nos fuera mas sencilla de manejar; <strong>nos centramos en optimizar al máximo el funcionamiento de esta carga</strong>.
+Para realizar la operacion de una forma mas transparente al usuario y sin saturar la ventana de la consola,** hemos desarrollado un metodo que calcula el procentaje actual del documento y la imprime por pantalla en bloques de 10% en 10%** y sin repetirse ninguna de las impresiones.
+Así mismo, <strong>hemos implementado programación basada en multiples procesos para aligerar la carga del fichero con la opción de normalización de nombres que hemos decidido aportar</strong>. Las diferencias las detallaremos ahora con mas datos.</p>
+
+<h1>
+<a id="practica-actividad-1" class="anchor" href="#practica-actividad-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Practica. Actividad 1.</h1>
+
+<pre><code>            UPV-EHU 2016/2017
+
+
+
+            Estructuras de Datos y Algoritmos
+
+
+
+
+
+
+                                                        Josu Alvarez
+                                                        David Max
+</code></pre>
+
+<hr>
+
+<h2>
+<a id="indice-1" class="anchor" href="#indice-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indice</h2>
+
+<p>Mas informacion en la pagina web del proyecto: <a href="http://txusyk.github.io/EDA16-17/">GITHUB</a>: <a href="http://txusyk.github.io/EDA16-17/">http://txusyk.github.io/EDA16-17/</a></p>
+
+<p>[TOC]</p>
+
+<hr>
+
+<h2>
+<a id="1-introducción-1" class="anchor" href="#1-introducci%C3%B3n-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. Introducción</h2>
+
+<p><strong>Dado un fichero de datos</strong> que contiene actores y actrices de Internet Movie DataBase (IMDB), con una estructura efinida ('nombrePelicula' ---&gt; 'nombreActor1' &amp;&amp;&amp; 'nombreActor2'...) . <strong>Se ha de implementar un programa que cargue el fichero de datos y extraiga del mismo los nombres de los actores y las peliculas que contiene</strong>.</p>
+
+<p><strong>El pilar del funcionamiento de nuestro programa son las búsquedas</strong>. Dado que tanto para añadir, eliminar como para gestionar alguno de los datos previamente se hará una búsqueda para comprobar si realmente existe.</p>
+
+<p>Dado que disponiamos de tiempo y que el proyecto nos ha parecido interesante, <strong>hemos decidido implementar ciertas mejoras sobre el trabajo inicial</strong>, siendo estas:</p>
+
+<ul>
+<li>** El sistema dará la opción** al usuario para que decida como quiere ejecutar el programa, si por la <strong>consola o bien mediante una GUI</strong> que hemos construido con Swing.</li>
+<li>
+<strong>Hay dos formas de cargar el archivo</strong>, una <strong>con todos los datos y</strong> otra <strong>con los datos normalizados</strong> (se explica mejor en las proximas lineas).</li>
+<li>
+<strong>Todo el proyecto</strong> y todas sus versiones estan <strong>siendo manejadas mediante GitHub</strong>, se ha dispuesto una pagina web publica que contiene esta misma información y será actualizada con cada una de las proximas entregas.</li>
+<li>
+<strong>Uso exclusivo de lenguaje 'Markdown' para proceder a documentar el codigo</strong>. En nuestro esfuerzo por usar tecnologías libres y ser eficientes, hemos encontrado este lenguaje ideal (dada su total compatibilidad con las wikis y las webs de GitHub).</li>
+<li>
+<strong>Uso del ingles</strong> siempre que nos ha sido posible, para desarrollar el codigo de forma universal y que cualquier programador interesado lo pueda revisar, utilizar o mejorar desde el GitHub habilitado para ello.</li>
+</ul>
+
+<p><strong>Hemos definido que el programa cumpla</strong> las siguientes funciones:</p>
+
+<ol>
+<li>**<em>Carga de datos desde fichero:</em> ** Se dará a elegir al usuario si quiere cargar la lista completa o solo querrá cargar los actores/peliculas que se encuentren bien escritos, es decir, que sean legibles tras haber sido tratados con un método que hemos establecido para normalizar nombres en base a caracteres desconocidos.</li>
+<li>**<em>Búsqueda de un actor/película:</em> ** Devolvera el actor en caso de existir, en caso contrario dará un aviso por terminal/pop-up.</li>
+<li>**<em>Inserción de un actor/película:</em> ** Indica si ha sido posible añadir el actor o si el mismo existía previamente.</li>
+<li>**<em>Eliminación de un actor/película:</em> ** Indica si el actor existe y en ese caso, que ha sido borrado. En caso contrario informará de que no existe.</li>
+<li>**<em>Obtener la lista de peliculas de un actor:</em> * ** Comprueba que el actor exista, y en caso positivo, muestra la lista de peliculas del mismo</li>
+<li>**<em>Obtener la lista de actores de una pelicula (reparto):</em> **  Comprobamos que la pelicula existe previamente y en caso positivo, imprimimos por pantalla los actores que la componen. En caso de no existir, se informará de dicha situación al usuario.</li>
+<li>**<em>Modificar el presupuesto de una pelicula:</em> ** Comprobamos que la pelicula introducida existe previamente y si es así, incrementamos el valor de recaudación en X (donde X es el valor introducido por el usuario). En caso de no existir la pelicula, se informará de dicha siatuación al usuario.</li>
+<li>**<em>Obtener una lista de actores ordenada (nombre, apellido):</em> ** Obtenemos una lista de actores ordenados bajo el criterio: Nombre Apellido (separados unicamente por un espacio)</li>
+<li>**<em>Exportar los datos a un fichero de texto:</em> ** Exportamos la lista ordenada de los actores, con sus respetivas peliculas a un fichero de texto <code>.txt</code>
+</li>
+</ol>
+
+<hr>
+
+<h2>
+<a id="2-diagrama-de-clases-1" class="anchor" href="#2-diagrama-de-clases-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. Diagrama de clases</h2>
+
+<p>Este es el diseño final del programa, los diseños iniciales y la evolución de los mismos hasta llegar a esta se encuentran en nuestro GitHub.</p>
+
+<p><img src="/Users/Josu/IdeaProjects/EDA16-17/src/lab1/diagram.png" alt=""></p>
+
+<hr>
+
+<h2>
+<a id="3-descripción-de-las-estructuras-de-datos-principales-1" class="anchor" href="#3-descripci%C3%B3n-de-las-estructuras-de-datos-principales-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. Descripción de las estructuras de datos principales</h2>
 
 <p>Como comentábamos en la introducción del documento, <strong>la parte más importante</strong> del documento recae en los métodos que realizan <strong>las búsquedas</strong>. Dado que <strong>son necesarios para trabajar la información, añadir y eliminarla</strong>.</p>
 
@@ -127,7 +2093,7 @@
 Para realizar <strong>la operación de ordenación</strong>, previamente <strong>volcamos las claves de nuestro HashMap</strong> (que son los nombres de los actores) <strong>en un Array[] de String y procedemos a ordenarlo</strong>. <strong>Tras esto, recibiremos una lista de claves ordenadas</strong>, que en caso de querer mostrar unicamente los nombres de los actores cumple al 100% la función y en caso de querer mostrar mas información, lo recorreremos en orden y accederemos con cada clave a la información de nuestro catálogo (HashMap).</p>
 
 <h2>
-<a id="4-diseño-e-implementacion-de-los-metodos-principales" class="anchor" href="#4-dise%C3%B1o-e-implementacion-de-los-metodos-principales" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4. Diseño e implementacion de los metodos principales</h2>
+<a id="4-diseño-e-implementacion-de-los-metodos-principales-1" class="anchor" href="#4-dise%C3%B1o-e-implementacion-de-los-metodos-principales-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4. Diseño e implementacion de los metodos principales</h2>
 
 <p>Este apartado lo dedicaremos a explicar el funcionamiento de diferentes métodos principales, así como: readFile(), addActor(), removeActor(), searchActor() y quickSortList().</p>
 
@@ -1892,7 +3858,7 @@ En el caso promedio, el orden es *</em><em>O(n·log n)</em> **.</p>
 }</pre></div>
 
 <h3>
-<a id="6-resultados-de-las-pruebas" class="anchor" href="#6-resultados-de-las-pruebas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>6. Resultados de las pruebas</h3>
+<a id="6-resultados-de-las-pruebas-1" class="anchor" href="#6-resultados-de-las-pruebas-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>6. Resultados de las pruebas</h3>
 
 <p><strong>Estos son los resultados de las pruebas</strong>, en la etapa final de desarrollo (lo que estamos entregando) de la actividad. <strong>Todos los tiempos que mostramos son medias</strong> realizadas (entre 5-10 ejecuciones) <strong>de la misma operación</strong>. Las pruebas <strong>se han realizado en diferentes equipos con diferentes sistemas operativos</strong>, detallamos:</p>
 
@@ -1951,7 +3917,7 @@ En el fichero sin normalizar (cogiento toda la informacion, independientemente d
 </ul>
 
 <h3>
-<a id="7-conclusiones" class="anchor" href="#7-conclusiones" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>7. Conclusiones</h3>
+<a id="7-conclusiones-1" class="anchor" href="#7-conclusiones-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>7. Conclusiones</h3>
 
 <p>Destacamos como bien hemos indicado, l<strong>a importancia de las búsquedas en el funcionamiento de nuestro programa</strong>. Al tener que trabajarlas tanto, es necesario optimizarlas al máximo para evitar tiempos de ejecución demasiado altos.</p>
 
@@ -1962,8 +3928,9 @@ Mientras trabajamos, como ya hemos comentado, <strong>hicimos una version del pr
 Para realizar la operacion de una forma mas transparente al usuario y sin saturar la ventana de la consola,** hemos desarrollado un metodo que calcula el procentaje actual del documento y la imprime por pantalla en bloques de 10% en 10%** y sin repetirse ninguna de las impresiones.
 Así mismo, <strong>hemos implementado programación basada en multiples procesos para aligerar la carga del fichero con la opción de normalización de nombres que hemos decidido aportar</strong>. Las diferencias las detallaremos ahora con mas datos.</p>
       </section>
-    </div>
 
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
 </html>
