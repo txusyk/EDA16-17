@@ -687,27 +687,13 @@ public class SymbolGraph {
     private HashMap<String, Integer> st;  // string -> index
     private String[] keys;           // index  -> string
     private Graph graph;             // the underlying graph
+    private String graphToString;
 
-    /**
-     * Initializes a graph from a file using the specified delimiter.
-     * Each line in the file contains
-     * the name of a vertex, followed by a list of the names
-     * of the vertices adjacent to that vertex, separated by the delimiter.
-     */
-    public SymbolGraph() {
+    private static SymbolGraph mySymbolGraph;
+
+
+    private SymbolGraph() {
         // Paso 1: llenar st
-        /*long i = 0L;
-        for (String f : filmL.getFilmL().keySet()) {
-            if (!st.containsKey(f))
-                st.put(f, (int) i);
-            i++;
-            for (String a : filmL.getFilm(f).getActorList().getActorL().keySet()) {
-                if (!st.containsKey(a)) {
-                    st.put(a, (int) i);
-                    i++;
-                }
-            }
-        }*/
         st = new HashMap<>();
         int i = 0;
         for (String f : FilmCatalog.getMyFilmCatalog().getFilmL().keySet()) {
@@ -726,11 +712,7 @@ public class SymbolGraph {
         // Paso 2: llenar keys�
         keys = new String[st.size()];
         for (String k : st.keySet()) {
-            try {
                 keys[st.get(k)] = k;
-            } catch (ArrayIndexOutOfBoundsException e) {
-                e.printStackTrace();
-            }
         }
 
         // second pass builds the graph by connecting first vertex on each
@@ -752,86 +734,39 @@ public class SymbolGraph {
                 }
             }
         }
-        System.out.println(graph.toString());
+        System.out.println("Graph succesfully generated. Do you want to save it to a String and print it? (Y/N) (Only for PCs with more than the usual Java heap space");
+        if (Keyboard.getMyKeyboard().getString().equalsIgnoreCase("Y")) {
+            this.graphToString = graph.toString();
+            System.out.println(graphToString);
+        }
     }
 
-    /**
-     * Does the graph contain the vertex named {@code s}?
-     *
-     * @param s the name of a vertex
-     * @return {@code true} if {@code s} is the name of a vertex, and {@code false} otherwise
-     */
+    public String getGraphToString(){
+        return this.graphToString;
+    }
+
+    public static SymbolGraph getMySymbolGraph(){
+        if (mySymbolGraph == null){
+            long time = System.currentTimeMillis();
+            mySymbolGraph = new SymbolGraph();
+            System.out.println(((time-System.currentTimeMillis())/1000)+"s elapsed to generate graph\n"+"****************************************************");
+        }
+        return mySymbolGraph;
+    }
+
     public boolean contains(String s) {
         return st.get(s) != null;
     }
 
-    /**
-     * Returns the integer associated with the vertex named {@code s}.
-     *
-     * @param s the name of a vertex
-     * @return the integer (between 0 and <em>V</em> - 1) associated with the vertex named {@code s}
-     * @deprecated Replaced by {@link #indexOf(String)}.
-     */
-    @Deprecated
-    public int index(String s) {
-        return st.get(s);
-    }
-
-
-    /**
-     * Returns the integer associated with the vertex named {@code s}.
-     *
-     * @param s the name of a vertex
-     * @return the integer (between 0 and <em>V</em> - 1) associated with the vertex named {@code s}
-     */
     public int indexOf(String s) {
         return st.get(s);
     }
 
-    /**
-     * Returns the name of the vertex associated with the integer {@code v}.
-     *
-     * @param v the integer corresponding to a vertex (between 0 and <em>V</em> - 1)
-     * @return the name of the vertex associated with the integer {@code v}
-     * @throws IllegalArgumentException unless {@code 0 <= v < V}
-     * @deprecated Replaced by {@link #nameOf(int)}.
-     */
-    @Deprecated
-    public String name(int v) {
-        validateVertex(v);
-        return keys[v];
-    }
-
-    /**
-     * Returns the name of the vertex associated with the integer {@code v}.
-     *
-     * @param v the integer corresponding to a vertex (between 0 and <em>V</em> - 1)
-     * @return the name of the vertex associated with the integer {@code v}
-     * @throws IllegalArgumentException unless {@code 0 <= v < V}
-     */
     public String nameOf(int v) {
         validateVertex(v);
         return keys[v];
     }
 
-    /**
-     * Returns the graph assoicated with the symbol graph. It is the client's responsibility
-     * not to mutate the graph.
-     *
-     * @return the graph associated with the symbol graph
-     * @deprecated Replaced by {@link #graph()}.
-     */
-    @Deprecated
-    public Graph G() {
-        return graph;
-    }
-
-    /**
-     * Returns the graph assoicated with the symbol graph. It is the client's responsibility
-     * not to mutate the graph.
-     *
-     * @return the graph associated with the symbol graph
-     */
     public Graph graph() {
         return graph;
     }

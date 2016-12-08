@@ -745,13 +745,11 @@ public class ActorCatalog {
         }
     }
 
-    public float getAverageFilmsPerActor(){
+    public float getAverageFilmsPerActor() {
         int contFilms = 0;
-        for (String actorName : this.actorL.keySet()){
+        for (String actorName : this.actorL.keySet()) {
             contFilms += this.actorL.get(actorName).getFilmList().getSize();
         }
-        return (float)contFilms/(float)this.actorL.keySet().size();
+        return (float) contFilms / (float) this.actorL.keySet().size();
     }
-
-
 }

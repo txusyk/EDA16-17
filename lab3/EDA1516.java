@@ -718,5 +718,4 @@ public class EDA1516 {
             TerminalUI.main();
         }
     }
-
 }

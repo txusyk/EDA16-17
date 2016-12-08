@@ -677,25 +677,22 @@
 
 package lab3;
 
-import lab3.GraphHash;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * Created by Josu on 26/09/2016 for the project EDA16-17 in package lab1
  */
 public class TerminalUI {
 
-    private Scanner optMenu;
 
     private TerminalUI() {
-        optMenu = new Scanner(System.in);
+
     }
 
     public static void main() throws FileNotFoundException, InterruptedException {
-
         String[] auxActorArray;
         String auxActorName;
         String auxActorSurname;
@@ -716,7 +713,8 @@ public class TerminalUI {
             System.out.println("\t\t6) Increase the money raised by a film");
             System.out.println("\t\t7) Erase an actor/actress");
             System.out.println("\t\t8) Obtain an ordered list of actor (name,surname)");
-            System.out.println("\t\t9) Save/Export the new list to a file\n");
+            System.out.println("\t\t9) Save/Export the new list to a file");
+            System.out.println("\t\t10) Launch get connected API that shows connections (if are) between a start film/actor and end one \n");
 
             System.out.println("\t\t0) Exit");
 
@@ -830,13 +828,87 @@ public class TerminalUI {
                     FileManager.getMyFileManager().exportToFile();
                     break;
                 case 10:
-                    //Graph auxG = new Graph();
-                    //auxG.createGraph(ActorCatalog.getmyActorCatalog().searchActor(new Actor("Tony","Devon")).getFilmList());
+                    System.out.println("Do you want to use your own searches (1) or use predefined names of films and actors(2)");
+                    int i = Keyboard.getMyKeyboard().getInt();
+                    if (i == 1){
+                        boolean flag = false;
+                        String firstF = null, secondF = null;
+                        while (!flag){
+                            System.out.println("Introduce a valid film name: ");
+                            firstF = Keyboard.getMyKeyboard().getString();
+                            System.out.println("Introduce a valid film name: ");
+                            secondF = Keyboard.getMyKeyboard().getString();
+                            if (FilmCatalog.getMyFilmCatalog().getFilm(firstF) != null && FilmCatalog.getMyFilmCatalog().getFilm(secondF) != null){
+                                flag = true;
+                            }else{
+                                if (FilmCatalog.getMyFilmCatalog().getFilm(firstF) == null){
+                                    System.out.println("Insert a valid first film");
+                                }
+                                if (FilmCatalog.getMyFilmCatalog().getFilm(secondF) == null){
+                                    System.out.println("Insert a valid second film");
+                                }
+                            }
+                        }
+                        long startTime = System.currentTimeMillis();
+                        System.out.println("Film1: "+firstF);
+                        System.out.println("Film2: "+secondF);
+                        DegreesOfSeparation.getMyDegrees().calculateDegrees(firstF, secondF);
+                        System.out.println("\n\t " + ((startTime - System.currentTimeMillis()) / 1000) + "s elapsed");
+                        System.out.println("**************************************************************");
 
-                    //System.out.println(GraphHash.getMyGraphHash().estanConectadas("Doctor Who","Brother to Brother"));
-                    //System.out.println(GraphHash.getMyGraphHash().estanConectadas("Doctor Who","Doctor Who"));
 
-                    DegreesOfSeparation.getMyDegrees().calculateDegrees("Chef","24");
+                    }else if (i == 2) {
+                        System.out.println("Lets try with some films...");
+                        long startTime = System.currentTimeMillis();
+                        System.out.println("Film1: 24");
+                        System.out.println("Film2: Ed");
+                        DegreesOfSeparation.getMyDegrees().calculateDegrees("24", "Ed");
+                        System.out.println("\n\t " + ((startTime - System.currentTimeMillis()) / 1000) + "s elapsed");
+                        System.out.println("**************************************************************");
+                        startTime = System.currentTimeMillis();
+                        System.out.println("Film1: 24");
+                        System.out.println("Film2: CSY: NY");
+                        DegreesOfSeparation.getMyDegrees().calculateDegrees("24", "CSY: NY");
+                        System.out.println("\n\t " + ((startTime - System.currentTimeMillis()) / 1000) + "s elapsed");
+                        System.out.println("**************************************************************");
+                        startTime = System.currentTimeMillis();
+                        System.out.println("Film1: Chef");
+                        System.out.println("Film2: Ghost Whisperer");
+                        DegreesOfSeparation.getMyDegrees().calculateDegrees("Chef", "Ghost Whisperer");
+                        System.out.println("\n\t " + ((startTime - System.currentTimeMillis()) / 1000) + "s elapsed");
+                        System.out.println("**************************************************************");
+                        startTime = System.currentTimeMillis();
+                        System.out.println("Film1: Chef");
+                        System.out.println("Film2: 24");
+                        DegreesOfSeparation.getMyDegrees().calculateDegrees("Chef", "24");
+                        System.out.println("\n\t " + ((startTime - System.currentTimeMillis()) / 1000) + "s elapsed");
+                        System.out.println("**************************************************************");
+                        startTime = System.currentTimeMillis();
+                        System.out.println("Film1: Sleeping with the Fishes");
+                        System.out.println("Film2: Everybody Hates Chris");
+                        DegreesOfSeparation.getMyDegrees().calculateDegrees("Sleeping with the Fishes", "Everybody Hates Chris");
+                        System.out.println("\n\t " + ((startTime - System.currentTimeMillis()) / 1000) + "s elapsed");
+                        System.out.println("**************************************************************\n\n");
+
+
+                        System.out.println("Now lets try with actors!");
+                        System.out.println("\n************************************************************** ");
+                        startTime = System.currentTimeMillis();
+                        System.out.println("Actor1: Tony Devon");
+                        System.out.println("Actor2: Lombardo Boyar");
+                        DegreesOfSeparation.getMyDegrees().calculateDegrees("Tony Devon", "Lombardo Boyar");
+                        System.out.println("\n\t " + ((startTime - System.currentTimeMillis()) / 1000) + "s elapsed");
+                        System.out.println("**************************************************************");
+                        startTime = System.currentTimeMillis();
+                        System.out.println("Actor1: Tony Devon");
+                        System.out.println("Actor2: Nassim Khavaran");
+                        DegreesOfSeparation.getMyDegrees().calculateDegrees("Tony Devon", "Nassim Khavaran");
+                        System.out.println("\n\t " + ((startTime - System.currentTimeMillis()) / 1000) + "s elapsed");
+                    }else{
+                        System.out.println("Try again with a valid option");
+                    }
+
+
             }
         } while (optMenu != 0);
     }
