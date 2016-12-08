@@ -678,11 +678,10 @@
 package lab3;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Josu on 25/09/2016 for the project EDA16-17 in package lab1
+ * Created by Josu on 25/09/2016.
  */
 public class FilmList {
 
@@ -724,14 +723,6 @@ public class FilmList {
 
     public int getSize(){
         return this.filmL.size();
-    }
-
-    public ArrayList<String> getFilmArray(){
-        ArrayList<String> auxArray = new ArrayList<>();
-        for(String key: this.getFilmL().keySet()){
-            auxArray.add(key);
-        }
-        return auxArray;
     }
 
 

@@ -680,7 +680,7 @@ package lab3;
 import java.util.HashMap;
 
 /**
- * Created by Josu on 25/09/2016 for the project EDA16-17 in package lab1
+ * Created by Josu on 25/09/2016.
  */
 public class ActorCatalog {
 
@@ -735,7 +735,7 @@ public class ActorCatalog {
             auxS[i] = key;
             i++;
         }
-        StringQuickSort.quickSort(auxS);
+        StringQuickSort.sort(auxS);
         return auxS;
     }
 
@@ -752,4 +752,6 @@ public class ActorCatalog {
         }
         return (float)contFilms/(float)this.actorL.keySet().size();
     }
+
+
 }

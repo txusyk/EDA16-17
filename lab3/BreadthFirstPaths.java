@@ -677,99 +677,202 @@
 
 package lab3;
 
+import sun.misc.Queue;
+
+import java.util.Stack;
+
 /**
- * Created by Josu on 25/09/2016.
+ * Created by Josu on 06/12/2016 for the project EDA16-17
  */
-public class StringQuickSort {
+public class BreadthFirstPaths {
+    private static final int INFINITY = Integer.MAX_VALUE;
+    private boolean[] marked;  // marked[v] = is there an s-v path
+    private int[] edgeTo;      // edgeTo[v] = previous edge on shortest s-v path
+    private int[] distTo;      // distTo[v] = number of edges shortest s-v path
 
-    public static void sort(String[] array) {
-        sort(array, 0, array.length);
+    /**
+     * Computes the shortest path between the source vertex {@code s}
+     * and every other vertex in the graph {@code G}.
+     * @param G the graph
+     * @param s the source vertex
+     * @throws IllegalArgumentException unless {@code 0 <= s < V}
+     */
+    public BreadthFirstPaths(Graph G, int s) throws InterruptedException {
+        marked = new boolean[G.V()];
+        distTo = new int[G.V()];
+        edgeTo = new int[G.V()];
+        validateVertex(s);
+        bfs(G, s);
+
+        assert check(G, s);
     }
 
-    private static void sort(String[] array, int fromIndex, int toIndex) {
-        if (toIndex - fromIndex < 2) {
-            return;
-        }
-        long timeStart = System.currentTimeMillis();
-        sortImpl(array, fromIndex, toIndex, 0);
-        long timeTotal = (System.currentTimeMillis() - timeStart);
-        System.out.println("\t\t --- Elapsed time to order the actor list --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
+    /**
+     * Computes the shortest path between any one of the source vertices in {@code sources}
+     * and every other vertex in graph {@code G}.
+     * @param G the graph
+     * @param sources the source vertices
+     * @throws IllegalArgumentException unless {@code 0 <= s < V} for each vertex
+     *         {@code s} in {@code sources}
+     */
+    public BreadthFirstPaths(Graph G, Iterable<Integer> sources) throws InterruptedException {
+        marked = new boolean[G.V()];
+        distTo = new int[G.V()];
+        edgeTo = new int[G.V()];
+        for (int v = 0; v < G.V(); v++)
+            distTo[v] = INFINITY;
+        validateVertices(sources);
+        bfs(G, sources);
     }
 
-    private static void sortImpl(String[] array, int fromIndex, int toIndex, int stringLength) throws NullPointerException {
 
-        int rangeLength = toIndex - fromIndex;
+    // breadth-first search from a single source
+    private void bfs(Graph G, int s) throws InterruptedException {
+        Queue<Integer> q = new Queue<Integer>();
+        for (int v = 0; v < G.V(); v++)
+            distTo[v] = INFINITY;
+        distTo[s] = 0;
+        marked[s] = true;
+        q.enqueue(s);
 
-        if (rangeLength < 2) {
-            return;
+        while (!q.isEmpty()) {
+            int v = q.dequeue();
+            for (int w : G.adj(v)) {
+                if (!marked[w]) {
+                    edgeTo[w] = v;
+                    distTo[w] = distTo[v] + 1;
+                    marked[w] = true;
+                    q.enqueue(w);
+                }
+            }
+        }
+    }
+
+    // breadth-first search from multiple sources
+    private void bfs(Graph G, Iterable<Integer> sources) throws InterruptedException {
+        Queue<Integer> q = new Queue<Integer>();
+        for (int s : sources) {
+            marked[s] = true;
+            distTo[s] = 0;
+            q.enqueue(s);
+        }
+        while (!q.isEmpty()) {
+            int v = q.dequeue();
+            for (int w : G.adj(v)) {
+                if (!marked[w]) {
+                    edgeTo[w] = v;
+                    distTo[w] = distTo[v] + 1;
+                    marked[w] = true;
+                    q.enqueue(w);
+                }
+            }
+        }
+    }
+
+    /**
+     * Is there a path between the source vertex {@code s} (or sources) and vertex {@code v}?
+     * @param v the vertex
+     * @return {@code true} if there is a path, and {@code false} otherwise
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    public boolean hasPathTo(int v) {
+        validateVertex(v);
+        return marked[v];
+    }
+
+    /**
+     * Returns the number of edges in a shortest path between the source vertex {@code s}
+     * (or sources) and vertex {@code v}?
+     * @param v the vertex
+     * @return the number of edges in a shortest path
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    public int distTo(int v) {
+        validateVertex(v);
+        return distTo[v];
+    }
+
+    /**
+     * Returns a shortest path between the source vertex {@code s} (or sources)
+     * and {@code v}, or {@code null} if no such path.
+     * @param  v the vertex
+     * @return the sequence of vertices on a shortest path, as an Iterable
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    public Iterable<Integer> pathTo(int v) {
+        validateVertex(v);
+        if (!hasPathTo(v)) return null;
+        Stack<Integer> path = new Stack<Integer>();
+        int x;
+        for (x = v; distTo[x] != 0; x = edgeTo[x])
+            path.push(x);
+        path.push(x);
+        return path;
+    }
+
+
+    // check optimality conditions for single source
+    private boolean check(Graph G, int s) {
+
+        // check that the distance of s = 0
+        if (distTo[s] != 0) {
+            System.out.println("distance of source " + s + " to itself = " + distTo[s]);
+            return false;
         }
 
-        int finger = fromIndex;
-
-        // Put all strings of length 'stringLength' to the beginning of the
-        // requested sort range.
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-            if (current.length() == stringLength) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
+        // check that for each edge v-w dist[w] <= dist[v] + 1
+        // provided v is reachable from s
+        for (int v = 0; v < G.V(); v++) {
+            for (int w : G.adj(v)) {
+                if (hasPathTo(v) != hasPathTo(w)) {
+                    System.out.println("edge " + v + "-" + w);
+                    System.out.println("hasPathTo(" + v + ") = " + hasPathTo(v));
+                    System.out.println("hasPathTo(" + w + ") = " + hasPathTo(w));
+                    return false;
+                }
+                if (hasPathTo(v) && (distTo[w] > distTo[v] + 1)) {
+                    System.out.println("edge " + v + "-" + w);
+                    System.out.println("distTo[" + v + "] = " + distTo[v]);
+                    System.out.println("distTo[" + w + "] = " + distTo[w]);
+                    return false;
+                }
             }
         }
 
-        fromIndex = finger;
-
-        // Choose a pivot string by median.
-        String probeLeft = array[fromIndex];
-        String probeRight = array[toIndex - 1];
-        String probeMiddle = array[fromIndex + rangeLength >> 1];
-
-        String pivot = median(probeLeft, probeMiddle, probeRight);
-
-        // Process strings S for which S[stringLength] < X[stringLength].
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-
-            if (current.charAt(stringLength) < pivot.charAt(stringLength)) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
+        // check that v = edgeTo[w] satisfies distTo[w] = distTo[v] + 1
+        // provided v is reachable from s
+        for (int w = 0; w < G.V(); w++) {
+            if (!hasPathTo(w) || w == s) continue;
+            int v = edgeTo[w];
+            if (distTo[w] != distTo[v] + 1) {
+                System.out.println("shortest path edge " + v + "-" + w);
+                System.out.println("distTo[" + v + "] = " + distTo[v]);
+                System.out.println("distTo[" + w + "] = " + distTo[w]);
+                return false;
             }
         }
 
-        sortImpl(array, fromIndex, finger, stringLength);
-
-        fromIndex = finger;
-
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-
-            if (current.charAt(stringLength) == pivot.charAt(stringLength)) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
-            }
-        }
-
-        sortImpl(array, fromIndex, finger, stringLength + 1);
-        sortImpl(array, finger, toIndex, stringLength);
+        return true;
     }
 
-    private static String median(String a, String b, String c) {
-        if (a.compareTo(b) <= 0) {
-            if (c.compareTo(a) <= 0) {
-                return a;
-            }
-            return b.compareTo(c) <= 0 ? b : c;
-        }
-
-        if (c.compareTo(b) <= 0) {
-            return b;
-        }
-        return a.compareTo(c) <= 0 ? a : c;
+    // throw an IllegalArgumentException unless {@code 0 <= v < V}
+    private void validateVertex(int v) {
+        int V = marked.length;
+        if (v < 0 || v >= V)
+            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
     }
 
+    // throw an IllegalArgumentException unless {@code 0 <= v < V}
+    private void validateVertices(Iterable<Integer> vertices) {
+        if (vertices == null) {
+            throw new IllegalArgumentException("argument is null");
+        }
+        int V = marked.length;
+        for (int v : vertices) {
+            if (v < 0 || v >= V) {
+                throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
+            }
+        }
+    }
 }
+

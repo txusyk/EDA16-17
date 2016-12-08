@@ -680,7 +680,7 @@ package lab3;
 import java.util.HashMap;
 
 /**
- * Created by Josu on 25/09/2016 for the project EDA16-17 in package lab1
+ * Created by Josu on 25/09/2016.
  */
 public class FilmCatalog {
 
@@ -718,6 +718,8 @@ public class FilmCatalog {
     public int getSize(){
         return this.filmL.size();
     }
+
+    public HashMap<String, Film> getFilmL() { return this.filmL;}
 
     public float getAverageActorsPerFilm(){
         int contActors = 0;

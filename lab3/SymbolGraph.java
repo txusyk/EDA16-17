@@ -677,99 +677,170 @@
 
 package lab3;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
- * Created by Josu on 25/09/2016.
+ * Created by Josu on 05/12/2016 for the project EDA16-17
  */
-public class StringQuickSort {
+public class SymbolGraph {
+    private HashMap<String, Integer> st;  // string -> index
+    private String[] keys;           // index  -> string
+    private Graph graph;             // the underlying graph
 
-    public static void sort(String[] array) {
-        sort(array, 0, array.length);
-    }
-
-    private static void sort(String[] array, int fromIndex, int toIndex) {
-        if (toIndex - fromIndex < 2) {
-            return;
+    /**
+     * Initializes a graph from a file using the specified delimiter.
+     * Each line in the file contains
+     * the name of a vertex, followed by a list of the names
+     * of the vertices adjacent to that vertex, separated by the delimiter.
+     */
+    public SymbolGraph() {
+        // Paso 1: llenar st
+        /*long i = 0L;
+        for (String f : filmL.getFilmL().keySet()) {
+            if (!st.containsKey(f))
+                st.put(f, (int) i);
+            i++;
+            for (String a : filmL.getFilm(f).getActorList().getActorL().keySet()) {
+                if (!st.containsKey(a)) {
+                    st.put(a, (int) i);
+                    i++;
+                }
+            }
+        }*/
+        st = new HashMap<>();
+        int i = 0;
+        for (String f : FilmCatalog.getMyFilmCatalog().getFilmL().keySet()) {
+            if (!st.containsKey(f)) {
+                st.put(f, i);
+                i++;
+            }
         }
-        long timeStart = System.currentTimeMillis();
-        sortImpl(array, fromIndex, toIndex, 0);
-        long timeTotal = (System.currentTimeMillis() - timeStart);
-        System.out.println("\t\t --- Elapsed time to order the actor list --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
-    }
-
-    private static void sortImpl(String[] array, int fromIndex, int toIndex, int stringLength) throws NullPointerException {
-
-        int rangeLength = toIndex - fromIndex;
-
-        if (rangeLength < 2) {
-            return;
-        }
-
-        int finger = fromIndex;
-
-        // Put all strings of length 'stringLength' to the beginning of the
-        // requested sort range.
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-            if (current.length() == stringLength) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
+        for (String a : ActorCatalog.getmyActorCatalog().getActorL().keySet()) {
+            if (!st.containsKey(a)) {
+                st.put(a, i);
+                i++;
             }
         }
 
-        fromIndex = finger;
-
-        // Choose a pivot string by median.
-        String probeLeft = array[fromIndex];
-        String probeRight = array[toIndex - 1];
-        String probeMiddle = array[fromIndex + rangeLength >> 1];
-
-        String pivot = median(probeLeft, probeMiddle, probeRight);
-
-        // Process strings S for which S[stringLength] < X[stringLength].
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-
-            if (current.charAt(stringLength) < pivot.charAt(stringLength)) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
+        // Paso 2: llenar keys�
+        keys = new String[st.size()];
+        for (String k : st.keySet()) {
+            try {
+                keys[st.get(k)] = k;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                e.printStackTrace();
             }
         }
 
-        sortImpl(array, fromIndex, finger, stringLength);
-
-        fromIndex = finger;
-
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-
-            if (current.charAt(stringLength) == pivot.charAt(stringLength)) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
+        // second pass builds the graph by connecting first vertex on each
+        // line to all others
+        graph = new Graph(st.size());
+        for (String index : st.keySet()) {
+            ArrayList<String> a = new ArrayList<>();
+            a.add(index);
+            if (FilmCatalog.getMyFilmCatalog().getFilm(index) != null) {
+                for (String actor : FilmCatalog.getMyFilmCatalog().getFilm(index).getActorList().getActorL().keySet()) {
+                    a.add(actor);
+                }
+                int v = st.get(a.get(0));
+                for (int j = 1; j < a.size(); j++) {
+                    if (st.get(a.get(j)) != null) {
+                        int w = st.get(a.get(j));
+                        graph.addEdge(v, w);
+                    }
+                }
             }
         }
-
-        sortImpl(array, fromIndex, finger, stringLength + 1);
-        sortImpl(array, finger, toIndex, stringLength);
+        System.out.println(graph.toString());
     }
 
-    private static String median(String a, String b, String c) {
-        if (a.compareTo(b) <= 0) {
-            if (c.compareTo(a) <= 0) {
-                return a;
-            }
-            return b.compareTo(c) <= 0 ? b : c;
-        }
-
-        if (c.compareTo(b) <= 0) {
-            return b;
-        }
-        return a.compareTo(c) <= 0 ? a : c;
+    /**
+     * Does the graph contain the vertex named {@code s}?
+     *
+     * @param s the name of a vertex
+     * @return {@code true} if {@code s} is the name of a vertex, and {@code false} otherwise
+     */
+    public boolean contains(String s) {
+        return st.get(s) != null;
     }
 
+    /**
+     * Returns the integer associated with the vertex named {@code s}.
+     *
+     * @param s the name of a vertex
+     * @return the integer (between 0 and <em>V</em> - 1) associated with the vertex named {@code s}
+     * @deprecated Replaced by {@link #indexOf(String)}.
+     */
+    @Deprecated
+    public int index(String s) {
+        return st.get(s);
+    }
+
+
+    /**
+     * Returns the integer associated with the vertex named {@code s}.
+     *
+     * @param s the name of a vertex
+     * @return the integer (between 0 and <em>V</em> - 1) associated with the vertex named {@code s}
+     */
+    public int indexOf(String s) {
+        return st.get(s);
+    }
+
+    /**
+     * Returns the name of the vertex associated with the integer {@code v}.
+     *
+     * @param v the integer corresponding to a vertex (between 0 and <em>V</em> - 1)
+     * @return the name of the vertex associated with the integer {@code v}
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     * @deprecated Replaced by {@link #nameOf(int)}.
+     */
+    @Deprecated
+    public String name(int v) {
+        validateVertex(v);
+        return keys[v];
+    }
+
+    /**
+     * Returns the name of the vertex associated with the integer {@code v}.
+     *
+     * @param v the integer corresponding to a vertex (between 0 and <em>V</em> - 1)
+     * @return the name of the vertex associated with the integer {@code v}
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    public String nameOf(int v) {
+        validateVertex(v);
+        return keys[v];
+    }
+
+    /**
+     * Returns the graph assoicated with the symbol graph. It is the client's responsibility
+     * not to mutate the graph.
+     *
+     * @return the graph associated with the symbol graph
+     * @deprecated Replaced by {@link #graph()}.
+     */
+    @Deprecated
+    public Graph G() {
+        return graph;
+    }
+
+    /**
+     * Returns the graph assoicated with the symbol graph. It is the client's responsibility
+     * not to mutate the graph.
+     *
+     * @return the graph associated with the symbol graph
+     */
+    public Graph graph() {
+        return graph;
+    }
+
+    // throw an IllegalArgumentException unless {@code 0 <= v < V}
+    private void validateVertex(int v) {
+        int V = graph.V();
+        if (v < 0 || v >= V)
+            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+    }
 }
+

@@ -677,99 +677,167 @@
 
 package lab3;
 
+import lab3.GraphHash;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+
 /**
- * Created by Josu on 25/09/2016.
+ * Created by Josu on 26/09/2016 for the project EDA16-17 in package lab1
  */
-public class StringQuickSort {
+public class TerminalUI {
 
-    public static void sort(String[] array) {
-        sort(array, 0, array.length);
+    private Scanner optMenu;
+
+    private TerminalUI() {
+        optMenu = new Scanner(System.in);
     }
 
-    private static void sort(String[] array, int fromIndex, int toIndex) {
-        if (toIndex - fromIndex < 2) {
-            return;
-        }
-        long timeStart = System.currentTimeMillis();
-        sortImpl(array, fromIndex, toIndex, 0);
-        long timeTotal = (System.currentTimeMillis() - timeStart);
-        System.out.println("\t\t --- Elapsed time to order the actor list --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
+    public static void main() throws FileNotFoundException, InterruptedException {
+
+        String[] auxActorArray;
+        String auxActorName;
+        String auxActorSurname;
+
+        String auxS;
+
+        System.out.println("\t\t\t***-----Welcome to our IMDb EDA16/17 project menu-----***");
+
+        int optMenu;
+
+        do {
+            System.out.println("\n\t\t\t----------MENU----------");
+            System.out.println("\t\t1) Read data from file");
+            System.out.println("\t\t2) Search for an actor/actress");
+            System.out.println("\t\t3) Add a new actor/actress");
+            System.out.println("\t\t4) Search for films of a particular actor");
+            System.out.println("\t\t5) Search for actor of a particular film");
+            System.out.println("\t\t6) Increase the money raised by a film");
+            System.out.println("\t\t7) Erase an actor/actress");
+            System.out.println("\t\t8) Obtain an ordered list of actor (name,surname)");
+            System.out.println("\t\t9) Save/Export the new list to a file\n");
+
+            System.out.println("\t\t0) Exit");
+
+
+            optMenu = Keyboard.getMyKeyboard().getInt();
+
+            switch (optMenu) {
+                case 0:
+                    System.out.println("\t\t--- Saliendo del programa... ----");
+                    break;
+                case 1:
+                    try {
+                        System.out.println("\tSelect one of options below: ");
+                        System.out.println("\t\t1) Read only the 'readable' actors/films (after trying to rescue some names from the codification, take only the 'full readables') ");
+                        System.out.println("\t\t2) Read the full list of actors/movies (don't care if they're wrong written, after running our conversor");
+                        int optMenu1 = 0;
+                        while (optMenu1 < 1 || optMenu1 > 2) {
+                            optMenu1 = Keyboard.getMyKeyboard().getInt();
+                            if (optMenu1 == 1 || optMenu1 == 2) {
+                                FileManager.getMyFileManager().readFile(optMenu1);
+                            } else {
+                                System.out.println("Invalid option, try again. Select a number between 1-2 range");
+                            }
+                        }
+
+                    } catch (FileNotFoundException e1) {
+                        System.out.println("File not found. ¿Are you sure that you're opening the correct file?");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 2:
+                    System.out.println("Enter the name of the actor you want to look for: ");
+                    auxS = Keyboard.getMyKeyboard().getString();
+                    auxActorArray = auxS.split("\\s");
+                    auxActorName = auxActorArray[0];
+                    auxActorSurname = auxActorArray[1];
+                    Actor auxA = ActorCatalog.getmyActorCatalog().searchActor(new Actor(auxActorName, auxActorSurname));
+                    if (auxA == null) {
+                        System.out.println("Actor not finded: " + auxS);
+                    } else {
+                        System.out.println("Actor finded: " + auxA.getName());
+                    }
+                    break;
+                case 3:
+                    System.out.println("Enter the name of the actor that you want to add: ");
+                    auxS = Keyboard.getMyKeyboard().getString();
+                    auxActorArray = auxS.split("\\s");
+                    auxActorName = auxActorArray[0];
+                    auxActorSurname = auxActorArray[1];
+                    if (ActorCatalog.getmyActorCatalog().searchActor(new Actor(auxActorName, auxActorSurname)) != null) {
+                        System.out.println("Actor: " + auxS + " already exist");
+                    } else {
+                        ActorCatalog.getmyActorCatalog().addActor(new Actor(auxActorName, auxActorSurname));
+                        System.out.println("Actor: " + auxS + " added to the ActorCatalog");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Enter the name of the actor whose films you want to know");
+                    auxS = Keyboard.getMyKeyboard().getString();
+                    auxActorArray = auxS.split("\\s");
+                    auxActorName = auxActorArray[0];
+                    auxActorSurname = auxActorArray[1];
+                    if (ActorCatalog.getmyActorCatalog().searchActor(new Actor(auxActorName, auxActorSurname)) != null) {
+                        ActorCatalog.getmyActorCatalog().searchActor(new Actor(auxActorName, auxActorSurname)).getFilmList().printFilms();
+                    } else {
+                        System.out.println("Actor: " + auxS + " do not exist in the ActorCatalog");
+                    }
+                    break;
+                case 5:
+                    System.out.println("Enter the film whose actors that do you want to know: ");
+                    auxS = Keyboard.getMyKeyboard().getString();
+                    if (FilmCatalog.getMyFilmCatalog().getFilm(auxS) != null) {
+                        FilmCatalog.getMyFilmCatalog().getFilm(auxS).getActorList().printActors();
+                    }
+                    break;
+                case 6:
+                    System.out.println("Enter the film whose amount of earning you want to raise: ");
+                    auxS = Keyboard.getMyKeyboard().getString();
+                    System.out.println("Enter the amount of money that you want to increase: ");
+                    int auxI = Keyboard.getMyKeyboard().getInt();
+                    if (FilmCatalog.getMyFilmCatalog().exist(auxS)) {
+                        FilmCatalog.getMyFilmCatalog().getFilm(auxS).incrementEarned(auxI);
+                        System.out.println("Total earned by the film: " + FilmCatalog.getMyFilmCatalog().getFilm(auxS).getEarned());
+                    } else {
+                        System.out.println("File not found. Are you sure that you have written title correctly?");
+                    }
+                    break;
+                case 7:
+                    System.out.println("Enter the name of the actor that you want to remove");
+                    auxS = Keyboard.getMyKeyboard().getString();
+                    auxActorArray = auxS.split("\\s");
+                    auxActorName = auxActorArray[0];
+                    auxActorSurname = auxActorArray[1];
+                    if (ActorCatalog.getmyActorCatalog().searchActor(new Actor(auxActorName, auxActorSurname)) != null) {
+                        ActorCatalog.getmyActorCatalog().removeActor(new Actor(auxActorName, auxActorSurname));
+                        System.out.println("Actor: " + auxS + " succesfully removed");
+                    } else {
+                        System.out.println("Actor: " + auxS + " do not exist in the ActorCatalog");
+                    }
+                    break;
+                case 8:
+                    System.out.println("Do you want to print (console) the ordered list of actors?");
+                    if (Keyboard.getMyKeyboard().getString().equalsIgnoreCase("y")){
+                        ActorCatalog.getmyActorCatalog().printList(ActorCatalog.getmyActorCatalog().quickSortList());
+                        break;
+                    }
+                    ActorCatalog.getmyActorCatalog().quickSortList();
+                    break;
+                case 9:
+                    FileManager.getMyFileManager().exportToFile();
+                    break;
+                case 10:
+                    //Graph auxG = new Graph();
+                    //auxG.createGraph(ActorCatalog.getmyActorCatalog().searchActor(new Actor("Tony","Devon")).getFilmList());
+
+                    //System.out.println(GraphHash.getMyGraphHash().estanConectadas("Doctor Who","Brother to Brother"));
+                    //System.out.println(GraphHash.getMyGraphHash().estanConectadas("Doctor Who","Doctor Who"));
+
+                    DegreesOfSeparation.getMyDegrees().calculateDegrees("Chef","24");
+            }
+        } while (optMenu != 0);
     }
-
-    private static void sortImpl(String[] array, int fromIndex, int toIndex, int stringLength) throws NullPointerException {
-
-        int rangeLength = toIndex - fromIndex;
-
-        if (rangeLength < 2) {
-            return;
-        }
-
-        int finger = fromIndex;
-
-        // Put all strings of length 'stringLength' to the beginning of the
-        // requested sort range.
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-            if (current.length() == stringLength) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
-            }
-        }
-
-        fromIndex = finger;
-
-        // Choose a pivot string by median.
-        String probeLeft = array[fromIndex];
-        String probeRight = array[toIndex - 1];
-        String probeMiddle = array[fromIndex + rangeLength >> 1];
-
-        String pivot = median(probeLeft, probeMiddle, probeRight);
-
-        // Process strings S for which S[stringLength] < X[stringLength].
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-
-            if (current.charAt(stringLength) < pivot.charAt(stringLength)) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
-            }
-        }
-
-        sortImpl(array, fromIndex, finger, stringLength);
-
-        fromIndex = finger;
-
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-
-            if (current.charAt(stringLength) == pivot.charAt(stringLength)) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
-            }
-        }
-
-        sortImpl(array, fromIndex, finger, stringLength + 1);
-        sortImpl(array, finger, toIndex, stringLength);
-    }
-
-    private static String median(String a, String b, String c) {
-        if (a.compareTo(b) <= 0) {
-            if (c.compareTo(a) <= 0) {
-                return a;
-            }
-            return b.compareTo(c) <= 0 ? b : c;
-        }
-
-        if (c.compareTo(b) <= 0) {
-            return b;
-        }
-        return a.compareTo(c) <= 0 ? a : c;
-    }
-
 }

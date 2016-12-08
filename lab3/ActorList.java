@@ -674,15 +674,12 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
-
 package lab3;
 
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by david on 25/09/2016 for the project EDA16-17 in package lab1
+ * Created by david on 25/09/2016.
  */
 public class ActorList {
 
@@ -693,9 +690,8 @@ public class ActorList {
         this.actorList = new HashMap<>();
     }
 
-    public HashMap<String, Actor> getActorL(){
-        return this.actorList;
-    }
+    public HashMap<String, Actor> getActorL(){return this.actorList;}
+
 
     public boolean exist(String pActorName, String pActorSurname) {
         return this.actorList.get(pActorName + " " + pActorSurname) != null;
@@ -704,6 +700,14 @@ public class ActorList {
     public void addActor(Actor auxActor) {
         if (!this.exist(auxActor.getName(), auxActor.getSurname())) {
             this.actorList.put(auxActor.getName() + " " + auxActor.getSurname(), auxActor);
+        }
+    }
+
+    public Actor  searchActor(Actor auxActor){
+        if (this.exist(auxActor.getName(), auxActor.getSurname())){
+            return this.actorList.get(auxActor.getName()+" "+auxActor.getSurname());
+        }else{
+            return null;
         }
     }
 
@@ -732,11 +736,6 @@ public class ActorList {
         return  this.actorList.size();
     }
 
-    public ArrayList<String> getActorArray() {
-        ArrayList<String> auxArray = new ArrayList<>();
-        for(String key: this.actorList.keySet()){
-            auxArray.add(key);
-        }
-        return auxArray;
-    }
+
+
 }

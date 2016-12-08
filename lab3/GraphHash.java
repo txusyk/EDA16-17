@@ -1,73 +1,80 @@
 package lab3;
 
+import lab2.UnorderedCircularLinkedList;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 
 public class GraphHash {
 
-	private HashMap<String, ArrayList<String>> g;
-	private static GraphHash myGraphHash;
+    private  HashMap<Film,Film> path;
+    private static GraphHash myGraphHash;
 
-	private GraphHash(){
-		g = new HashMap<>();
-	}
+    private  GraphHash(){
+        this.path = new HashMap<>();
+    }
 
-	public static GraphHash getMiGraphHash(){
-		if(myGraphHash == null){
-			myGraphHash = new GraphHash();
-		}
-		return myGraphHash;
-	}
-	
-	public void crearGrafo(FilmList lPeliculas) {
-		// Post: crea el grafo desde la lista de pel�culas
-		//       Los nodos son nombres de actores y t�tulos de pel�culas 
+    public static GraphHash getMyGraphHash(){
+        if (myGraphHash == null){
+            myGraphHash = new GraphHash();
+        }
+        return myGraphHash;
+    }
 
-		// COMPLETAR C�DIGO
-
-		Film auxF = null;
-		Actor auxA = null;
-		int i = 0;
-		Collection<Actor> auxActors = new ArrayList<>();
-		Iterator<Actor> itrA = null;
-		ArrayList<Film> auxFilms = new ArrayList<>(lPeliculas.getFilmL().values());
-		Iterator<Film> itrF = auxFilms.iterator();
-
-		while(itrF.hasNext()){
-			auxF = itrF.next();
-			itrA = auxF.getActorList().getActorL().values().iterator();
-			while(itrA.hasNext()){
-				auxA = itrA.next();
-				if(!auxActors.contains(auxA)){
-					auxActors.add(auxA);
-				}
-			}
-		}
-
-		itrA = auxActors.iterator();
-		while(itrA.hasNext()) {
-			auxA = itrA.next();
-			if (!g.containsKey(auxA.getName())) {
-				g.put(auxA.getName(), auxA.getFilmList().getFilmArray());
-			}
-		}
-	}
-
-	public void print(){
-		int i = 1;
-		for (String s: g.keySet()){
-			System.out.print("Element: " + i++ + " " + s + " --> ");
-			for (String k: g.get(s)){
-				System.out.print(k + " ### ");
-			}
-			System.out.println();
-		}
+	public void crearGrafo(){
+		for (String f : FilmCatalog.getMyFilmCatalog().getFilmL().keySet()){
+            ArrayList<String> tested = new ArrayList<>();
+		    for (String auxA : FilmCatalog.getMyFilmCatalog().getFilm(f).getActorList().getActorL().keySet()){
+		        String name, surname;
+		        String[] auxName = auxA.split("\\s");
+		        name = auxName[0];
+		        surname = "";
+		        if (auxName.length > 1) {
+                    surname = auxName[1];
+                }
+		        if (ActorCatalog.getmyActorCatalog().searchActor(new Actor(name,surname)) != null) {
+                    for (String auxF : ActorCatalog.getmyActorCatalog().searchActor(new Actor(name,surname)).getFilmList().getFilmL().keySet()) {
+                        if (!f.equalsIgnoreCase(auxF) && !tested.contains(auxA)) {
+                            if (FilmCatalog.getMyFilmCatalog().getFilm(auxF) != null && FilmCatalog.getMyFilmCatalog().getFilm(f) != null){
+                                FilmCatalog.getMyFilmCatalog().getFilm(auxF).getFriends().add(FilmCatalog.getMyFilmCatalog().getFilm(f));
+                            }
+                            tested.add(auxA);
+                        }
+                    }
+                }
+            }
+        }
 	}
 	
-	public boolean estanConectadas(String p1, String p2) {
-		// COMPLETAR C�DIGO
-		return true;
-	}
+	public boolean estanConectadas(String p1, String p2){
+	    crearGrafo();
+        UnorderedCircularLinkedList<Film> pending = new UnorderedCircularLinkedList<>();
+        pending.addToRear(FilmCatalog.getMyFilmCatalog().getFilm(p1));
+
+        HashSet<String> checked =  new HashSet<>();
+        boolean find = false;
+
+        Film currentFilm;
+        do{
+            currentFilm = pending.first();
+            pending.remove(currentFilm);
+            if (currentFilm.getName().equalsIgnoreCase(p2)){
+                find = true;
+            }else{
+                for (Film friendsFilm : currentFilm.getFriends()){
+                    if (!checked.contains(friendsFilm.getName())){
+                        path.put(friendsFilm, currentFilm);
+                        checked.add(friendsFilm.getName());
+                    }
+                    pending.addToRear(friendsFilm);
+                }
+            }
+        }while (!find && !pending.isEmpty());
+
+        for (Film auxFilm : path.keySet()){
+            System.out.println(auxFilm.getName());
+        }
+        return find;
+    }
 }

@@ -677,99 +677,90 @@
 
 package lab3;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
- * Created by Josu on 25/09/2016.
+ * Created by Josu on 05/12/2016 for the project EDA16-17
  */
-public class StringQuickSort {
+public class Bag<Item> implements Iterable<Item> {
+    private Node<Item> first;    // beginning of bag
+    private int n;               // number of elements in bag
 
-    public static void sort(String[] array) {
-        sort(array, 0, array.length);
+    // helper linked list class
+    private static class Node<Item> {
+        private Item item;
+        private Node<Item> next;
     }
 
-    private static void sort(String[] array, int fromIndex, int toIndex) {
-        if (toIndex - fromIndex < 2) {
-            return;
-        }
-        long timeStart = System.currentTimeMillis();
-        sortImpl(array, fromIndex, toIndex, 0);
-        long timeTotal = (System.currentTimeMillis() - timeStart);
-        System.out.println("\t\t --- Elapsed time to order the actor list --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
+    /**
+     * Initializes an empty bag.
+     */
+    public Bag() {
+        first = null;
+        n = 0;
     }
 
-    private static void sortImpl(String[] array, int fromIndex, int toIndex, int stringLength) throws NullPointerException {
-
-        int rangeLength = toIndex - fromIndex;
-
-        if (rangeLength < 2) {
-            return;
-        }
-
-        int finger = fromIndex;
-
-        // Put all strings of length 'stringLength' to the beginning of the
-        // requested sort range.
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-            if (current.length() == stringLength) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
-            }
-        }
-
-        fromIndex = finger;
-
-        // Choose a pivot string by median.
-        String probeLeft = array[fromIndex];
-        String probeRight = array[toIndex - 1];
-        String probeMiddle = array[fromIndex + rangeLength >> 1];
-
-        String pivot = median(probeLeft, probeMiddle, probeRight);
-
-        // Process strings S for which S[stringLength] < X[stringLength].
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-
-            if (current.charAt(stringLength) < pivot.charAt(stringLength)) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
-            }
-        }
-
-        sortImpl(array, fromIndex, finger, stringLength);
-
-        fromIndex = finger;
-
-        for (int index = fromIndex; index < toIndex; ++index) {
-            String current = array[index];
-
-            if (current.charAt(stringLength) == pivot.charAt(stringLength)) {
-                String tmp = array[finger];
-                array[finger] = current;
-                array[index] = tmp;
-                ++finger;
-            }
-        }
-
-        sortImpl(array, fromIndex, finger, stringLength + 1);
-        sortImpl(array, finger, toIndex, stringLength);
+    /**
+     * Returns true if this bag is empty.
+     *
+     * @return {@code true} if this bag is empty;
+     *         {@code false} otherwise
+     */
+    public boolean isEmpty() {
+        return first == null;
     }
 
-    private static String median(String a, String b, String c) {
-        if (a.compareTo(b) <= 0) {
-            if (c.compareTo(a) <= 0) {
-                return a;
-            }
-            return b.compareTo(c) <= 0 ? b : c;
+    /**
+     * Returns the number of items in this bag.
+     *
+     * @return the number of items in this bag
+     */
+    public int size() {
+        return n;
+    }
+
+    /**
+     * Adds the item to this bag.
+     *
+     * @param  item the item to add to this bag
+     */
+    public void add(Item item) {
+        Node<Item> oldfirst = first;
+        first = new Node<Item>();
+        first.item = item;
+        first.next = oldfirst;
+        n++;
+    }
+
+
+    /**
+     * Returns an iterator that iterates over the items in this bag in arbitrary order.
+     *
+     * @return an iterator that iterates over the items in this bag in arbitrary order
+     */
+    public Iterator<Item> iterator()  {
+        return new ListIterator<Item>(first);
+    }
+
+    // an iterator, doesn't implement remove() since it's optional
+    private class ListIterator<Item> implements Iterator<Item> {
+        private Node<Item> current;
+
+        public ListIterator(Node<Item> first) {
+            current = first;
         }
 
-        if (c.compareTo(b) <= 0) {
-            return b;
+        public boolean hasNext()  { return current != null;                     }
+        public void remove()      { throw new UnsupportedOperationException();  }
+
+        public Item next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            Item item = current.item;
+            current = current.next;
+            return item;
         }
-        return a.compareTo(c) <= 0 ? a : c;
     }
 
 }
+

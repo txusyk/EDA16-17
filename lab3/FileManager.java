@@ -717,9 +717,9 @@ public class FileManager {
         int total = 0; //total = saves total running time of reading
         int auxCont = 0;  //auxCount = saves the percentage of reading of file
 
-        try (InputStream resource = FileManager.class.getResourceAsStream("test1525films.txt")) {
+        try (InputStream resource = FileManager.class.getResourceAsStream("testAllActors.txt")) {
 
-            int contLines = countLines(new File("D:/ProjectosJava/EDA16-17/src/lab3/test1525films.txt"));
+            int contLines = countLines(new File("/Users/Josu/IdeaProjects/EDA16-17/src/lab1/testAllActors.txt"));
 
             String filmName, actorName, actorSurname;
             String[] auxLine;
