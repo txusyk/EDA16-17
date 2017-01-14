@@ -677,6 +677,8 @@
 
 package lab4;
 
+import static java.lang.Math.abs;
+
 /**
  * Created by Josu on 11/01/2017 for the project EDA16-17
  */
@@ -702,7 +704,7 @@ public class PageRank {
         return myPageRank;
     }
 
-    private void calculatePR(int v) {
+    private boolean calculatePR(int v) {
         double result = 0.0;
         for (int auxV : SymbolGraph.getMySymbolGraph().graph().adj(v)) {
             Film f;
@@ -718,7 +720,6 @@ public class PageRank {
                     for (Integer value : SymbolGraph.getMySymbolGraph().graph().adj(auxV)) {
                         i++;
                     }
-
                     a.setpRelative(a.getpR() / i);
                     result += a.getpRelative();
                 }
@@ -734,32 +735,27 @@ public class PageRank {
                 }
             }
         }
+        double tempPr = 1.0;
         if (FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(v)) != null) {
-            prList[v] = FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(v)).getpR();
+            tempPr = FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(v)).getpR();
             FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(v)).setpR(INITIALCALCULATIONVALUE + (DF * result));
+            tempPr = abs(FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(v)).getpR() - tempPr);
         }
         if (ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(v)) != null) {
-            prList[v] = ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(v)).getpR();
+            tempPr = ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(v)).getpR();
             ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(v)).setpR(INITIALCALCULATIONVALUE + (DF * result));
+            tempPr = abs(ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(v)).getpR() - tempPr);
         }
-
+        return (tempPr  < 5.0);
     }
 
     public void calculateAllPr() {
         int Gsize = SymbolGraph.getMySymbolGraph().graph().V();
-        for (int i = 0; i < Gsize; i++) {
-            this.calculatePR(i);
+        int i = 0;
+        boolean flag = false;
+        while(i < Gsize && !flag) {
+            flag =this.calculatePR(i);
         }
-        for (Actor a : ActorCatalog.getmyActorCatalog().getActorL().values()) {
-            if (a.getpR() != 0.85) {
-                System.out.println(a.getpR());
-            }
-        }
-        /*for (Film f : FilmCatalog.getMyFilmCatalog().getFilmL().values()){
-            if (f.getpR() != 0.85){
-                System.out.println(f.getpR());
-            }
-        }*/
     }
 }
 
