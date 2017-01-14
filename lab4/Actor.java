@@ -675,7 +675,7 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package lab3;
+package lab4;
 
 /**
  * Created by Josu on 25/09/2016.
@@ -685,11 +685,29 @@ public class Actor {
     private String name;
     private String surname;
     private FilmList filmL;
+    private float pR,pRelative;
+
 
     public Actor(String pName, String pSurname) {
         this.name = pName;
         this.surname = pSurname;
         this.filmL = new FilmList();
+    }
+
+    public float getpR() {
+        return pR;
+    }
+
+    public void setpR(float pR) {
+        this.pR = pR;
+    }
+
+    public float getpRelative() {
+        return pRelative;
+    }
+
+    public void setpRelative(float pRelative) {
+        this.pRelative = pRelative;
     }
 
     public FilmList getFilmList() {

@@ -675,7 +675,7 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package lab3;
+package lab4;
 
 /**
  * Created by Josu on 25/09/2016.

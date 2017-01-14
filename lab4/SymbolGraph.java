@@ -675,7 +675,7 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package lab3;
+package lab4;
 
 import java.util.ArrayList;
 import java.util.HashMap;

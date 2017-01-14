@@ -675,9 +675,7 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package lab3;
-
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
+package lab4;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

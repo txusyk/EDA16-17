@@ -674,7 +674,8 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
-package lab3;
+
+package lab4;
 
 /**
  * Created by Josu on 05/12/2016 for the project EDA16-17

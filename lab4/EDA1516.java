@@ -675,7 +675,7 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package lab3;
+package lab4;
 
 import javax.swing.*;
 import java.awt.*;

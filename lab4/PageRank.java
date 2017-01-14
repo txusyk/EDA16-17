@@ -677,13 +677,9 @@
 
 package lab4;
 
-import lab3.*;
-
 /**
  * Created by Josu on 11/01/2017 for the project EDA16-17
  */
-
-/**
  public class PageRank {
 
     private final double DF = 0.85;
@@ -740,4 +736,4 @@ import lab3.*;
         }
     }
 }
-**/
+

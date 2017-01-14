@@ -675,10 +675,9 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package lab3;
+package lab4;
 
 import java.util.ArrayList;
-import java.util.Queue;
 
 /**
  * Created by david on 25/09/2016.
@@ -688,12 +687,28 @@ public class Film {
     private String name;
     private int earned = 0;
     private ActorList actorList;
-
+    private float pR, pRelative;
     private ArrayList<Film> friends = new ArrayList<>();
 
     public Film(String pName) {
         this.name = pName;
         this.actorList = new ActorList();
+    }
+
+    public float getpR() {
+        return pR;
+    }
+
+    public void setpR(float pR) {
+        this.pR = pR;
+    }
+
+    public float getpRelative() {
+        return pRelative;
+    }
+
+    public void setpRelative(float pRelative) {
+        this.pRelative = pRelative;
     }
 
     public ArrayList<Film> getFriends() { return this.friends;}

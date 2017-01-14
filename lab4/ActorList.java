@@ -674,7 +674,8 @@
  * Public License instead of this License.  But first, please read
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
-package lab3;
+
+package lab4;
 
 import java.util.HashMap;
 
@@ -703,7 +704,7 @@ public class ActorList {
         }
     }
 
-    public Actor  searchActor(Actor auxActor){
+    public Actor searchActor(Actor auxActor){
         if (this.exist(auxActor.getName(), auxActor.getSurname())){
             return this.actorList.get(auxActor.getName()+" "+auxActor.getSurname());
         }else{
