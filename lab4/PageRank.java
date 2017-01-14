@@ -680,23 +680,23 @@ package lab4;
 /**
  * Created by Josu on 11/01/2017 for the project EDA16-17
  */
- public class PageRank {
+public class PageRank {
 
     private final double DF = 0.85;
-    private final double INITIALPR = 1/SymbolGraph.getMySymbolGraph().graph().V();
-    private final double INITIALCALCULATIONVALUE = (1-DF)/SymbolGraph.getMySymbolGraph().graph().V();
+    private final double INITIALPR = 1 / SymbolGraph.getMySymbolGraph().graph().V();
+    private final double INITIALCALCULATIONVALUE = (1 - DF) / SymbolGraph.getMySymbolGraph().graph().V();
 
     private static PageRank myPageRank;
     private double[] prList = new double[SymbolGraph.getMySymbolGraph().graph().V()];
 
-    private PageRank(){
-        for (int i = 0; i < prList.length-1; i++){
+    private PageRank() {
+        for (int i = 0; i < prList.length - 1; i++) {
             prList[i] = INITIALPR;
         }
     }
 
-    public static PageRank getMyPageRank(){
-        if (myPageRank == null){
+    public static PageRank getMyPageRank() {
+        if (myPageRank == null) {
             myPageRank = new PageRank();
         }
         return myPageRank;
@@ -704,36 +704,62 @@ package lab4;
 
     private void calculatePR(int v) {
         double result = 0.0;
-        boolean isFilm = false;
-        if (FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(v)) != null) {
-            isFilm = true;
-        }
         for (int auxV : SymbolGraph.getMySymbolGraph().graph().adj(v)) {
             Film f;
             Actor a;
-            if (!isFilm) {
-                f = FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(auxV));
-                int i = 0;
-                for (Integer value : SymbolGraph.getMySymbolGraph().graph().adj(auxV)) {
-                    i++;
+            boolean isFilm = false;
+            if (FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(v)) != null) {
+                isFilm = true;
+            }
+            if (isFilm) {
+                if (ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(auxV)) != null) {
+                    a = ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(auxV));
+                    int i = 0;
+                    for (Integer value : SymbolGraph.getMySymbolGraph().graph().adj(auxV)) {
+                        i++;
+                    }
+
+                    a.setpRelative(a.getpR() / i);
+                    result += a.getpRelative();
                 }
-                f.setPrr(f.getPr() / i);
-                result += f.getPrr();
             } else {
-                a = ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(auxV));
-                int i = 0;
-                for (Integer value : SymbolGraph.getMySymbolGraph().graph().adj(auxV)) {
-                    i++;
+                if (FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(auxV)) != null) {
+                    f = FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(auxV));
+                    int i = 0;
+                    for (Integer value : SymbolGraph.getMySymbolGraph().graph().adj(auxV)) {
+                        i++;
+                    }
+                    f.setpRelative(f.getpR() / i);
+                    result += f.getpRelative();
                 }
-                a.setPrr(a.getPr() / i);
-                result += a.getPrr();
             }
         }
-        if (isFilm) {
-            FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(v)).setPr(INITIALCALCULATIONVALUE + (DF * result));
-        }else {
-            ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(v)).setPr(INITIALCALCULATIONVALUE + (DF * result));
+        if (FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(v)) != null) {
+            prList[v] = FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(v)).getpR();
+            FilmCatalog.getMyFilmCatalog().getFilm(SymbolGraph.getMySymbolGraph().nameOf(v)).setpR(INITIALCALCULATIONVALUE + (DF * result));
         }
+        if (ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(v)) != null) {
+            prList[v] = ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(v)).getpR();
+            ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(v)).setpR(INITIALCALCULATIONVALUE + (DF * result));
+        }
+
+    }
+
+    public void calculateAllPr() {
+        int Gsize = SymbolGraph.getMySymbolGraph().graph().V();
+        for (int i = 0; i < Gsize; i++) {
+            this.calculatePR(i);
+        }
+        for (Actor a : ActorCatalog.getmyActorCatalog().getActorL().values()) {
+            if (a.getpR() != 0.85) {
+                System.out.println(a.getpR());
+            }
+        }
+        /*for (Film f : FilmCatalog.getMyFilmCatalog().getFilmL().values()){
+            if (f.getpR() != 0.85){
+                System.out.println(f.getpR());
+            }
+        }*/
     }
 }
 
