@@ -677,6 +677,8 @@
 
 package lab4;
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -905,6 +907,13 @@ public class TerminalUI {
                     }else{
                         System.out.println("Try again with a valid option");
                     }
+                    break;
+                case 11:
+                    PageRank.getMyPageRank().calculateAllPr();
+                    for (Actor a : ActorCatalog.getmyActorCatalog().getActorL().values()){
+                        System.out.println();
+                    }
+                    break;
 
 
             }

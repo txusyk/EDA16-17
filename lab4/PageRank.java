@@ -677,6 +677,8 @@
 
 package lab4;
 
+import lab3.*;
+
 import static java.lang.Math.abs;
 
 /**
@@ -746,7 +748,7 @@ public class PageRank {
             ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(v)).setpR(INITIALCALCULATIONVALUE + (DF * result));
             tempPr = abs(ActorCatalog.getmyActorCatalog().getActorL().get(SymbolGraph.getMySymbolGraph().nameOf(v)).getpR() - tempPr);
         }
-        return (tempPr  < 5.0);
+        return (tempPr < 0.00001);
     }
 
     public void calculateAllPr() {
@@ -754,8 +756,14 @@ public class PageRank {
         int i = 0;
         boolean flag = false;
         while(i < Gsize && !flag) {
-            flag =this.calculatePR(i);
+            flag = this.calculatePR(i);
+            i++;
+            System.out.println(i+" of "+Gsize);
+            if (i == Gsize){
+                i = 0;
+            }
         }
+        FileManager.getMyFileManager().exportPRToFile();
     }
 }
 

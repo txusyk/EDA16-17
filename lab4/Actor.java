@@ -685,28 +685,29 @@ public class Actor {
     private String name;
     private String surname;
     private FilmList filmL;
-    private float pR,pRelative;
+    private double pR,pRelative = 0.0;
 
 
     public Actor(String pName, String pSurname) {
         this.name = pName;
         this.surname = pSurname;
         this.filmL = new FilmList();
+        this.pR = 0.85;
     }
 
-    public float getpR() {
+    public double getpR() {
         return pR;
     }
 
-    public void setpR(float pR) {
+    public void setpR(double pR) {
         this.pR = pR;
     }
 
-    public float getpRelative() {
+    public double getpRelative() {
         return pRelative;
     }
 
-    public void setpRelative(float pRelative) {
+    public void setpRelative(double pRelative) {
         this.pRelative = pRelative;
     }
 

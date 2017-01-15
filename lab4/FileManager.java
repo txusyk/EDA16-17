@@ -719,7 +719,7 @@ public class FileManager {
 
         try (InputStream resource = FileManager.class.getResourceAsStream("testAllActors.txt")) {
 
-            int contLines = countLines(new File("/Users/Josu/IdeaProjects/EDA16-17/src/lab1/testAllActors.txt"));
+            int contLines = countLines(new File("/Users/Josu/IdeaProjects/EDA16-17/src/lab4/testAllActors.txt"));
 
             String filmName, actorName, actorSurname;
             String[] auxLine;
@@ -866,6 +866,48 @@ public class FileManager {
         } finally {
             try {
                 if (null != file) {
+                    file.close();
+                }
+                long timeTotal = (System.currentTimeMillis() - timeStart);
+                System.out.println("\t\t --- Elapsed time to export the file --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
+                System.out.println("\n\tFile exported to: " + System.getProperty("user.dir"));
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
+
+    public void exportPRToFile() {
+        FileWriter file = null;
+        PrintWriter pw;
+
+        long timeStart = System.currentTimeMillis();
+
+        try {
+            String directory = System.getProperty("user.dir");//cogemos variable entorno
+            file = new FileWriter(directory + "/PR_list.txt");
+            pw = new PrintWriter(file);
+
+            int i = 1;
+            for (Actor a : ActorCatalog.getmyActorCatalog().getActorL().values()) {
+                pw.println(a.getName() + " " + a.getSurname() + ": " + a.getpR());
+                i++;
+                for (Film f: a.getFilmList().getFilmL().values()){
+                    pw.println(f.getName()+": "+f.getpR());
+                }
+            }
+                int size = (ActorCatalog.getmyActorCatalog().getActorL().size() + FilmCatalog.getMyFilmCatalog().getFilmL().size());
+                int percentage = (i * 100) / (size);
+                if (((i * 100) / size) % 5 == 0) {
+                    if (((i * 100) / size) != percentage) {
+                        System.out.println("\t\t[*] " + percentage + "%");
+                    }
+                }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (file != null) {
                     file.close();
                 }
                 long timeTotal = (System.currentTimeMillis() - timeStart);

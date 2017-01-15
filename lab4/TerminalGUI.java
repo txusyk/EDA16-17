@@ -677,9 +677,9 @@
 
 package lab4;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
+import java.util.concurrent.SynchronousQueue;
 
 /**
  * Created by Josu on 26/09/2016.

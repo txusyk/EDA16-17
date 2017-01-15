@@ -704,7 +704,7 @@ public class ActorList {
         }
     }
 
-    public Actor searchActor(Actor auxActor){
+    public Actor  searchActor(Actor auxActor){
         if (this.exist(auxActor.getName(), auxActor.getSurname())){
             return this.actorList.get(auxActor.getName()+" "+auxActor.getSurname());
         }else{

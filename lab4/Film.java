@@ -687,27 +687,28 @@ public class Film {
     private String name;
     private int earned = 0;
     private ActorList actorList;
-    private float pR, pRelative;
+    private double pR, pRelative = 0.0;
     private ArrayList<Film> friends = new ArrayList<>();
 
     public Film(String pName) {
         this.name = pName;
         this.actorList = new ActorList();
+        this.pR = 0.85;
     }
 
-    public float getpR() {
+    public double getpR() {
         return pR;
     }
 
-    public void setpR(float pR) {
+    public void setpR(double pR) {
         this.pR = pR;
     }
 
-    public float getpRelative() {
+    public double getpRelative() {
         return pRelative;
     }
 
-    public void setpRelative(float pRelative) {
+    public void setpRelative(double pRelative) {
         this.pRelative = pRelative;
     }
 
