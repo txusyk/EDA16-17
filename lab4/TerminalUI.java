@@ -681,6 +681,8 @@ import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.Key;
+import java.util.Random;
 
 /**
  * Created by Josu on 26/09/2016 for the project EDA16-17 in package lab1
@@ -715,7 +717,7 @@ public class TerminalUI {
             System.out.println("\t\t8) Obtain an ordered list of actor (name,surname)");
             System.out.println("\t\t9) Save/Export the new list to a file");
             System.out.println("\t\t10) Launch get connected API that shows connections (if are) between a start film/actor and end one \n");
-
+            System.out.println("\t\t11) Launch Page Rank calculation algorithm (where you will be able to choose between all the list or your own made one)");
             System.out.println("\t\t0) Exit");
 
 
@@ -723,28 +725,20 @@ public class TerminalUI {
 
             switch (optMenu) {
                 case 0:
-                    System.out.println("\t\t--- Saliendo del programa... ----");
+                    System.out.println("\t\t--- Exiting from EDA-16-17 ----");
                     break;
                 case 1:
                     try {
                         System.out.println("\tSelect one of options below: ");
                         System.out.println("\t\t1) Read only the 'readable' actors/films (after trying to rescue some names from the codification, take only the 'full readables') ");
                         System.out.println("\t\t2) Read the full list of actors/movies (don't care if they're wrong written, after running our conversor");
-                        int optMenu1 = 0;
-                        while (optMenu1 < 1 || optMenu1 > 2) {
-                            optMenu1 = Keyboard.getMyKeyboard().getInt();
-                            if (optMenu1 == 1 || optMenu1 == 2) {
-                                FileManager.getMyFileManager().readFile(optMenu1);
-                            } else {
-                                System.out.println("Invalid option, try again. Select a number between 1-2 range");
-                            }
-                        }
-
+                        FileManager.getMyFileManager().readFile(Keyboard.getMyKeyboard().getOptionFromRange(1,2));
                     } catch (FileNotFoundException e1) {
                         System.out.println("File not found. ¿Are you sure that you're opening the correct file?");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    SymbolGraph.getMySymbolGraph();
                     break;
                 case 2:
                     System.out.println("Enter the name of the actor you want to look for: ");
@@ -818,7 +812,7 @@ public class TerminalUI {
                     break;
                 case 8:
                     System.out.println("Do you want to print (console) the ordered list of actors?");
-                    if (Keyboard.getMyKeyboard().getString().equalsIgnoreCase("y")){
+                    if (Keyboard.getMyKeyboard().getString().equalsIgnoreCase("y")) {
                         ActorCatalog.getmyActorCatalog().printList(ActorCatalog.getmyActorCatalog().quickSortList());
                         break;
                     }
@@ -830,34 +824,34 @@ public class TerminalUI {
                 case 10:
                     System.out.println("Do you want to use your own searches (1) or use predefined names of films and actors(2)");
                     int i = Keyboard.getMyKeyboard().getInt();
-                    if (i == 1){
+                    if (i == 1) {
                         boolean flag = false;
                         String firstF = null, secondF = null;
-                        while (!flag){
+                        while (!flag) {
                             System.out.println("Introduce a valid film name: ");
                             firstF = Keyboard.getMyKeyboard().getString();
                             System.out.println("Introduce a valid film name: ");
                             secondF = Keyboard.getMyKeyboard().getString();
-                            if (FilmCatalog.getMyFilmCatalog().getFilm(firstF) != null && FilmCatalog.getMyFilmCatalog().getFilm(secondF) != null){
+                            if (FilmCatalog.getMyFilmCatalog().getFilm(firstF) != null && FilmCatalog.getMyFilmCatalog().getFilm(secondF) != null) {
                                 flag = true;
-                            }else{
-                                if (FilmCatalog.getMyFilmCatalog().getFilm(firstF) == null){
+                            } else {
+                                if (FilmCatalog.getMyFilmCatalog().getFilm(firstF) == null) {
                                     System.out.println("Insert a valid first film");
                                 }
-                                if (FilmCatalog.getMyFilmCatalog().getFilm(secondF) == null){
+                                if (FilmCatalog.getMyFilmCatalog().getFilm(secondF) == null) {
                                     System.out.println("Insert a valid second film");
                                 }
                             }
                         }
                         long startTime = System.currentTimeMillis();
-                        System.out.println("Film1: "+firstF);
-                        System.out.println("Film2: "+secondF);
+                        System.out.println("Film1: " + firstF);
+                        System.out.println("Film2: " + secondF);
                         DegreesOfSeparation.getMyDegrees().calculateDegrees(firstF, secondF);
                         System.out.println("\n\t " + ((startTime - System.currentTimeMillis()) / 1000) + "s elapsed");
                         System.out.println("**************************************************************");
 
 
-                    }else if (i == 2) {
+                    } else if (i == 2) {
                         System.out.println("Lets try with some films...");
                         long startTime = System.currentTimeMillis();
                         System.out.println("Film1: 24");
@@ -904,18 +898,68 @@ public class TerminalUI {
                         System.out.println("Actor2: Nassim Khavaran");
                         DegreesOfSeparation.getMyDegrees().calculateDegrees("Tony Devon", "Nassim Khavaran");
                         System.out.println("\n\t " + ((startTime - System.currentTimeMillis()) / 1000) + "s elapsed");
-                    }else{
+                    } else {
                         System.out.println("Try again with a valid option");
                     }
                     break;
                 case 11:
-                    PageRank.getMyPageRank().calculateAllPr();
-                    for (Actor a : ActorCatalog.getmyActorCatalog().getActorL().values()){
-                        System.out.println();
+                    System.out.println("1) Calculate all Page Ranks (d= 0.85, till diference <= 0.0001)");
+                    System.out.println("2) Calculate page rank from Filmlist (same conf parameters of the first option)");
+                    int opt = Keyboard.getMyKeyboard().getOptionFromRange(1,2);
+                    switch (opt) {
+                        case 1:
+                            PageRank.getMyPageRank().calculateAllPr();
+                            break;
+                        case 2:
+                            System.out.println("Do you want to use your own list (1) or predefined one (2)");
+                            int optSwitch = Keyboard.getMyKeyboard().getOptionFromRange(1,2);
+                            switch (optSwitch) {
+                                case 1:
+                                    System.out.println("Introduce a valid film name");
+                                    boolean scape = false;
+                                    FilmList fl = new FilmList();
+                                    while (!scape) {
+                                        String s = Keyboard.getMyKeyboard().getString();
+                                        Film f = FilmCatalog.getMyFilmCatalog().getFilm(s);
+                                        if (f != null) {
+                                            if (fl.getFilm(f.getName()) == null) {
+                                                fl.addFilm(f);
+                                                System.out.println("Film successfully added. If you want to terminate the addition process just type 'end' when asking for another film");
+                                            }else{
+                                                System.err.println("Film was previously added");
+                                            }
+                                        } else if (s.equalsIgnoreCase("end")) {
+                                            scape = true;
+                                        }else{
+                                            System.out.println("Film not found. Not added. Try again.");
+                                        }
+                                    }
+                                    if (fl.getSize() > 0){
+                                        PageRank.getMyPageRank().calculateAllPrFromFimList(fl);
+                                    }else{
+                                        System.err.println("Error. You've not added any film to the FilmList. Try again.");
+                                    }
+                                    break;
+                                case 2:
+                                    boolean flag = true;
+                                    while (flag) {
+                                        Object[] actorL = ActorCatalog.getmyActorCatalog().getActorL().values().toArray();
+                                        Random r = new Random();
+                                        Actor a = (Actor) actorL[r.nextInt(actorL.length-1)];
+                                        while (a.getFilmList().getSize() < 3){
+                                            a = (Actor) actorL[r.nextInt(actorL.length-1)];
+                                        }
+                                        System.out.println("Actor selected randomly. Actor: " + a.getName() + " " + a.getSurname());
+                                        PageRank.getMyPageRank().calculateAllPrFromFimList(a.getFilmList());
+                                        System.out.println("----- Operation finished -----");
+                                        System.out.println("\n Do you want to try with another randomly selected actor? (Y / N)");
+                                        flag = Keyboard.getMyKeyboard().catchYesNo();
+                                    }
+                                    break;
+                            }
+                            break;
                     }
                     break;
-
-
             }
         } while (optMenu != 0);
     }

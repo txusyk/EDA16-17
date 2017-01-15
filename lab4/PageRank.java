@@ -677,7 +677,7 @@
 
 package lab4;
 
-import lab3.*;
+import java.util.ArrayList;
 
 import static java.lang.Math.abs;
 
@@ -752,18 +752,52 @@ public class PageRank {
     }
 
     public void calculateAllPr() {
+        System.out.println("\n\t--- Calculating all Page Ranks ---");
         int Gsize = SymbolGraph.getMySymbolGraph().graph().V();
         int i = 0;
+        int percentage = 0;
         boolean flag = false;
-        while(i < Gsize && !flag) {
+        while (i < Gsize && !flag) {
             flag = this.calculatePR(i);
             i++;
-            System.out.println(i+" of "+Gsize);
-            if (i == Gsize){
+            if (((i * 100) / Gsize) % 10 == 0) {
+                if (((i * 100) / Gsize) != percentage) {
+                    percentage = ((i * 100) / Gsize);
+                    System.out.println("\t\t[*] " + percentage + "%" + " percentage completed");
+                }
+            }
+            if (i == Gsize) {
                 i = 0;
             }
         }
         FileManager.getMyFileManager().exportPRToFile();
+    }
+
+    public void calculateAllPrFromFimList(FilmList fl) {
+        int i = 0;
+        boolean flag = false;
+        boolean finished = false;
+        ArrayList<String> calculatedInfo = new ArrayList<>();
+        while (!finished) {
+            for (String filmName : fl.getFilmL().keySet()) {
+                if (!flag) {
+                    flag = this.calculatePR(SymbolGraph.getMySymbolGraph().indexOf(filmName));
+                    String filmS = "Film--> "+filmName+": "+FilmCatalog.getMyFilmCatalog().getFilm(filmName).getpR();
+                    calculatedInfo.add(filmS);
+                    for (Actor a : FilmCatalog.getMyFilmCatalog().getFilm(filmName).getActorList().getActorL().values()){
+                        flag = this.calculatePR(SymbolGraph.getMySymbolGraph().indexOf(a.getName()+" "+a.getSurname()));
+                        String actorS = "\t Actor--> "+a.getName()+" "+a.getSurname()+": "+ActorCatalog.getmyActorCatalog().searchActor(a).getpR();
+                        calculatedInfo.add(actorS);
+                    }
+                }
+                i++;
+            }
+            finished = (!flag && i <= fl.getSize());
+        }
+        FileManager.getMyFileManager().exportPRfromFilmListToFile(calculatedInfo);
+        for (String s : calculatedInfo){
+            System.out.println(s);
+        }
     }
 }
 

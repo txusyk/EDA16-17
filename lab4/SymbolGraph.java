@@ -693,51 +693,63 @@ public class SymbolGraph {
 
 
     private SymbolGraph() {
-        // Paso 1: llenar st
-        st = new HashMap<>();
-        int i = 0;
-        for (String f : FilmCatalog.getMyFilmCatalog().getFilmL().keySet()) {
-            if (!st.containsKey(f)) {
-                st.put(f, i);
-                i++;
-            }
-        }
-        for (String a : ActorCatalog.getmyActorCatalog().getActorL().keySet()) {
-            if (!st.containsKey(a)) {
-                st.put(a, i);
-                i++;
-            }
-        }
-
-        // Paso 2: llenar keys�
-        keys = new String[st.size()];
-        for (String k : st.keySet()) {
-                keys[st.get(k)] = k;
-        }
-
-        // second pass builds the graph by connecting first vertex on each
-        // line to all others
-        graph = new Graph(st.size());
-        for (String index : st.keySet()) {
-            ArrayList<String> a = new ArrayList<>();
-            a.add(index);
-            if (FilmCatalog.getMyFilmCatalog().getFilm(index) != null) {
-                for (String actor : FilmCatalog.getMyFilmCatalog().getFilm(index).getActorList().getActorL().keySet()) {
-                    a.add(actor);
+        System.out.println("\t\t\n -- Start generating graph --- ");
+        if (mySymbolGraph == null){
+            // Paso 1: llenar st
+            st = new HashMap<>();
+            int i = 0;
+            for (String f : FilmCatalog.getMyFilmCatalog().getFilmL().keySet()) {
+                if (!st.containsKey(f)) {
+                    st.put(f, i);
+                    i++;
                 }
-                int v = st.get(a.get(0));
-                for (int j = 1; j < a.size(); j++) {
-                    if (st.get(a.get(j)) != null) {
-                        int w = st.get(a.get(j));
-                        graph.addEdge(v, w);
+            }
+            for (String a : ActorCatalog.getmyActorCatalog().getActorL().keySet()) {
+                if (!st.containsKey(a)) {
+                    st.put(a, i);
+                    i++;
+                }
+            }
+
+            // Paso 2: llenar keys�
+            keys = new String[st.size()];
+            for (String k : st.keySet()) {
+                keys[st.get(k)] = k;
+            }
+
+            // second pass builds the graph by connecting first vertex on each
+            // line to all others
+            graph = new Graph(st.size());
+            int cont = 0;
+            int percentage = 0;
+            for (String index : st.keySet()) {
+                ArrayList<String> a = new ArrayList<>();
+                a.add(index);
+                if (FilmCatalog.getMyFilmCatalog().getFilm(index) != null) {
+                    for (String actor : FilmCatalog.getMyFilmCatalog().getFilm(index).getActorList().getActorL().keySet()) {
+                        a.add(actor);
+                    }
+                    int v = st.get(a.get(0));
+                    for (int j = 1; j < a.size(); j++) {
+                        if (st.get(a.get(j)) != null) {
+                            int w = st.get(a.get(j));
+                            graph.addEdge(v, w);
+                            cont++;
+                            if (((cont * 100) / st.size()/2) % 10 == 0) {
+                                if (((cont * 100) / st.size()/2) != percentage) {
+                                    percentage = ((cont * 100) / st.size()/2);
+                                    System.out.println("\t\t[*] " + percentage + "%" + " percentage completed");
+                                }
+                            }
+                        }
                     }
                 }
             }
-        }
-        System.out.println("Graph succesfully generated. Do you want to save it to a String and print it? (Y/N) (Only for PCs with more than the usual Java heap space");
-        if (Keyboard.getMyKeyboard().getString().equalsIgnoreCase("Y")) {
-            this.graphToString = graph.toString();
-            System.out.println(graphToString);
+            System.out.println("Graph succesfully generated. Do you want to save it to a String and print it? (Y/N) (Only for PCs with more than the usual Java heap space");
+            if (Keyboard.getMyKeyboard().getString().equalsIgnoreCase("Y")) {
+                this.graphToString = graph.toString();
+                System.out.println(graphToString);
+            }
         }
     }
 

@@ -731,8 +731,38 @@ public class Keyboard {
 	 * Recoge por Keyboard un String
 	 */
 	public String getString(){
-		String auxS = scan.nextLine();
-		return auxS;
+		return scan.nextLine();
 	}
+
+	public int getOptionFromRange(int min, int max){
+        int opt = Keyboard.getMyKeyboard().getInt();
+		while (!(opt > min-1) && !(opt< max+1)){
+            System.out.println("You have inserted: "+opt+".Insert a option between "+min+" and "+max);
+            opt = Keyboard.getMyKeyboard().getInt();
+		}
+		return opt;
+	}
+
+    public boolean catchYesNo(){
+        String auxS;
+        auxS = scan.nextLine();
+        boolean flag = false;
+        if (auxS.equalsIgnoreCase("Y")){
+            flag = true;
+        }
+        else if (auxS.equalsIgnoreCase("n")){
+            flag = false;
+        }
+        else{
+            while(!auxS.equalsIgnoreCase("y") && !auxS.equalsIgnoreCase("n")){
+                System.out.println("Invalid character. Introduce Y/N");
+                auxS = scan.nextLine();
+            }
+            if (auxS.equalsIgnoreCase("y")){
+                flag = true;
+            }
+        }
+        return flag;
+    }
 
 }

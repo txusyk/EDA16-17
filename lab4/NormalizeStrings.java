@@ -677,12 +677,53 @@
 
 package lab4;
 
+import java.util.HashMap;
+
 /**
  * Created by Josu on 03/10/2016.
  */
 public class NormalizeStrings extends Thread {
 
     private static NormalizeStrings myNormalizeString;
+    private HashMap<String, String> hash = new HashMap<>();
+
+    private NormalizeStrings() {
+        hash.put("Ã¡", "a");
+        hash.put("Ã©", "e");
+        hash.put("Ã­", "i");
+        hash.put("Ã³", "o");
+        hash.put("Ãº", "u");
+        hash.put("Ã�", "A");
+        hash.put("Ã‰", "E");
+        hash.put("Ã�", "I");
+        hash.put("Ã“", "O");
+        hash.put("Ãš", "U");
+        hash.put("Ã¤", "a");
+        hash.put("Ã«", "e");
+        hash.put("Ã¯", "i");
+        hash.put("Ã¶", "o");
+        hash.put("Ã¼", "u");
+        hash.put("Ã„", "A");
+        hash.put("Ã‹", "E");
+        hash.put("Ã�", "I");
+        hash.put("Ã–", "O");
+        hash.put("Ãœ", "U");
+        hash.put("Ã§", "c");
+        hash.put("Ã ", "a");
+        hash.put("Ã¨", "e");
+        hash.put("Ã¬", "i");
+        hash.put("Ã²", "o");
+        hash.put("Ã¹", "u");
+        hash.put("Ã€", "A");
+        hash.put("Ãˆ", "E");
+        hash.put("ÃŒ", "I");
+        hash.put("Ã’", "O");
+        hash.put("Ã™", "U");
+        hash.put("Ã§", "c");
+        hash.put("Ã‡", "C");
+        hash.put("�", "o");
+        hash.put("�", "o");
+    }
 
     public static NormalizeStrings getMyNormalizeString() {
         if (myNormalizeString == null) {
@@ -692,64 +733,19 @@ public class NormalizeStrings extends Thread {
     }
 
     public void run(String[] pLine) {
-
-        for (int i = 0; i < pLine.length; i++) {
-            if (pLine[i].contains("Ã¡")) {
-                pLine[i].replaceAll("Ã¡", "a");
-            } else if (pLine[i].contains("Ã©")) {
-                pLine[i].replaceAll("Ã©", "e");
-            } else if (pLine[i].contains("Ã­")) {
-                pLine[i].replaceAll("Ã­", "i");
-            } else if (pLine[i].contains("Ã³")) {
-                pLine[i].replaceAll("Ã³", "o");
-            } else if (pLine[i].contains("Ãº")) {
-                pLine[i].replaceAll("Ãº", "u");
-            } else if (pLine[i].contains("Ã�")) {
-                pLine[i].replaceAll("Ã�", "A");
-            } else if (pLine[i].contains("Ã‰")) {
-                pLine[i].replaceAll("Ã‰", "E");
-            } else if (pLine[i].contains("Ã�")) {
-                pLine[i].replaceAll("Ã�", "I");
-            } else if (pLine[i].contains("Ã“")) {
-                pLine[i].replaceAll("Ã“", "O");
-            } else if (pLine[i].contains("Ãš")) {
-                pLine[i].replaceAll("Ãš", "U");
-            } else if (pLine[i].contains("Ã§")) {
-                pLine[i].replaceAll("Ã§", "c");
-            } else if (pLine[i].contains("Ã")) {
-                pLine[i].replaceAll("Ã", "a");
-            } else if (pLine[i].contains("Ã¨")) {
-                pLine[i].replaceAll("Ã¨", "e");
-            } else if (pLine[i].contains("Ã¬")) {
-                pLine[i].replaceAll("Ã¬", "i");
-            } else if (pLine[i].contains("Ã²")) {
-                pLine[i].replaceAll("Ã²", "o");
-            } else if (pLine[i].contains("Ã¹")) {
-                pLine[i].replaceAll("Ã¹", "u");
-            } else if (pLine[i].contains("Ã€")) {
-                pLine[i].replaceAll("Ã€", "A");
-            } else if (pLine[i].contains("Ãˆ")) {
-                pLine[i].replaceAll("Ãˆ", "E");
-            } else if (pLine[i].contains("ÃŒ")) {
-                pLine[i].replaceAll("ÃŒ", "I");
-            } else if (pLine[i].contains("Ã’")) {
-                pLine[i].replaceAll("Ã’", "O");
-            } else if (pLine[i].contains("Ã™")) {
-                pLine[i].replaceAll("Ã™", "U");
-            } else if (pLine[i].contains("Ã‡")) {
-                pLine[i].replaceAll("Ã‡", "C");
-            } else if (pLine[i].contains("�")) {
-                pLine[i].replaceAll("�", "A");
-            } else if (pLine[i].contains("�s")) {
-                pLine[i].replaceAll("�s", "Os");
-            }
+        for (String word : pLine) {
+            for (String key : hash.keySet())
+                if (word.contains(key)) {
+                    word.replaceAll(key, hash.get(key));
+                }
             this.waitXseconds(0.1);
         }
+
     }
 
     private void waitXseconds(double ms) {
         try {
-            Thread.sleep((long)ms * 10);
+            Thread.sleep((long) ms);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }

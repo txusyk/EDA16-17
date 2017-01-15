@@ -679,6 +679,7 @@ package lab4;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -778,7 +779,7 @@ public class FileManager {
                             if (auxActor.getName().charAt(0) > 'A' && auxActor.getName().charAt(0) < 'Z') {
                                 if (ActorCatalog.getmyActorCatalog().searchActor(auxActor) != null) {
                                     ActorCatalog.getmyActorCatalog().searchActor(auxActor).getFilmList().addFilm(auxFilm);
-                                }else{
+                                } else {
                                     auxActor.getFilmList().addFilm(auxFilm);
                                     ActorCatalog.getmyActorCatalog().addActor(auxActor);
                                 }
@@ -788,9 +789,9 @@ public class FileManager {
                             }
                         }
                     } else {
-                        if (ActorCatalog.getmyActorCatalog().searchActor(auxActor) != null){
+                        if (ActorCatalog.getmyActorCatalog().searchActor(auxActor) != null) {
                             ActorCatalog.getmyActorCatalog().searchActor(auxActor).getFilmList().addFilm(auxFilm);
-                        }else{
+                        } else {
                             auxActor.getFilmList().addFilm(auxFilm);
                             ActorCatalog.getmyActorCatalog().addActor(auxActor);
                         }
@@ -821,7 +822,7 @@ public class FileManager {
         System.out.println("\n\t-------------- File read finished --------------\n");
         System.out.println("\t--- Total actor/actresses found: " + ActorCatalog.getmyActorCatalog().getActorL().size() + " ---");
         System.out.println("\t--- Total films found: " + FilmCatalog.getMyFilmCatalog().getSize() + " ---");
-        System.out.printf("\t--- Average actors per film: %.2f",FilmCatalog.getMyFilmCatalog().getAverageActorsPerFilm());
+        System.out.printf("\t--- Average actors per film: %.2f", FilmCatalog.getMyFilmCatalog().getAverageActorsPerFilm());
         System.out.print(" ---\n");
         System.out.printf("\t--- Average films per actor: %.2f", ActorCatalog.getmyActorCatalog().getAverageFilmsPerActor());
         System.out.print(" ---\n\n");
@@ -889,20 +890,21 @@ public class FileManager {
             pw = new PrintWriter(file);
 
             int i = 1;
+            int percentage = 0;
+            int size = (ActorCatalog.getmyActorCatalog().getActorL().size() + FilmCatalog.getMyFilmCatalog().getFilmL().size());
             for (Actor a : ActorCatalog.getmyActorCatalog().getActorL().values()) {
                 pw.println(a.getName() + " " + a.getSurname() + ": " + a.getpR());
                 i++;
-                for (Film f: a.getFilmList().getFilmL().values()){
-                    pw.println(f.getName()+": "+f.getpR());
-                }
-            }
-                int size = (ActorCatalog.getmyActorCatalog().getActorL().size() + FilmCatalog.getMyFilmCatalog().getFilmL().size());
-                int percentage = (i * 100) / (size);
-                if (((i * 100) / size) % 5 == 0) {
-                    if (((i * 100) / size) != percentage) {
-                        System.out.println("\t\t[*] " + percentage + "%");
+                for (Film f : a.getFilmList().getFilmL().values()) {
+                    pw.println(f.getName() + ": " + f.getpR());
+                    if (((i * 100) / size) % 10 == 0) {
+                        if (((i * 100) / size) != percentage) {
+                            percentage = ((i * 100) / size);
+                            System.out.println("\t\t[*] " + percentage + "%" + " percentage completed");
+                        }
                     }
                 }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -911,7 +913,47 @@ public class FileManager {
                     file.close();
                 }
                 long timeTotal = (System.currentTimeMillis() - timeStart);
-                System.out.println("\t\t --- Elapsed time to export the file --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
+                System.out.println("\n\t\t --- Elapsed time to export the file --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms\n");
+                System.out.println("\n\tFile exported to: " + System.getProperty("user.dir"));
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
+
+    public void exportPRfromFilmListToFile(ArrayList<String> info) {
+        FileWriter file = null;
+        PrintWriter pw;
+
+        long timeStart = System.currentTimeMillis();
+
+        try {
+            String directory = System.getProperty("user.dir");//cogemos variable entorno
+            file = new FileWriter(directory + "/PR_list_from_filmList.txt");
+            pw = new PrintWriter(file);
+
+            int i = 1;
+            int size = (info.size());
+            int percentage = 0;
+            for (String s : info) {
+                if (((i * 100) / size) % 10 == 0) {
+                    if (((i * 100) / size) != percentage) {
+                        percentage = ((i * 100) / size);
+                        System.out.println("\t\t[*] " + percentage + "%" + " percentage completed");
+                    }
+                }
+                pw.println(s);
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (file != null) {
+                    file.close();
+                }
+                long timeTotal = (System.currentTimeMillis() - timeStart);
+                System.out.println("\n\nt\t --- Elapsed time to export the file --- : " + (int) timeTotal / 1000 + "sec, " + timeTotal * 1000 + "ms");
                 System.out.println("\n\tFile exported to: " + System.getProperty("user.dir"));
             } catch (Exception e2) {
                 e2.printStackTrace();

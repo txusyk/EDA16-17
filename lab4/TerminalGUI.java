@@ -722,7 +722,7 @@ public class TerminalGUI {
             System.out.println("\t\t8) Obtain an ordered list of actor (name,surname)");
             System.out.println("\t\t9) Save/Export the new list to a file");
 
-            int optMenu = Teclado.getMiTeclado().recogerInt();
+            int optMenu = Keyboard.getMyKeyboard().getInt();
 
             switch (optMenu) {
                 case 1:
@@ -732,7 +732,7 @@ public class TerminalGUI {
                         System.out.println("\t\t2) Read the full list of actors/movies (don't care if they're wrong written, after running our conversor");
                         int optMenu1 = 0;
                         while (optMenu1 < 1 || optMenu1 > 2) {
-                            optMenu1 = Teclado.getMiTeclado().recogerInt();
+                            optMenu1 = Keyboard.getMyKeyboard().getInt();
                             if (optMenu1 == 1) {
                                 FileManager.getMyFileManager().readFile(1);
                             } else if (optMenu1 == 2) {
@@ -750,7 +750,7 @@ public class TerminalGUI {
                     break;
                 case 2:
                     System.out.println("Enter the name of the actor you want to look for: ");
-                    auxS = Teclado.getMiTeclado().recogerString();
+                    auxS = Keyboard.getMyKeyboard().getString();
                     auxActorArray = auxS.split("\\s");
                     auxActorName = auxActorArray[0];
                     auxActorSurname = auxActorArray[1];
@@ -763,7 +763,7 @@ public class TerminalGUI {
                     break;
                 case 3:
                     System.out.println("Enter the name of the actor that you want to add: ");
-                    auxS = Teclado.getMiTeclado().recogerString();
+                    auxS = Keyboard.getMyKeyboard().getString();
                     auxActorArray = auxS.split("\\s");
                     auxActorName = auxActorArray[0];
                     auxActorSurname = auxActorArray[1];
@@ -776,7 +776,7 @@ public class TerminalGUI {
                     break;
                 case 4:
                     System.out.println("Enter the name of the actor whose films you want to know");
-                    auxS = Teclado.getMiTeclado().recogerString();
+                    auxS = Keyboard.getMyKeyboard().getString();
                     auxActorArray = auxS.split("\\s");
                     auxActorName = auxActorArray[0];
                     auxActorSurname = auxActorArray[1];
@@ -788,16 +788,16 @@ public class TerminalGUI {
                     break;
                 case 5:
                     System.out.println("Enter the film whose actors that do you want to know: ");
-                    auxS = Teclado.getMiTeclado().recogerString();
+                    auxS = Keyboard.getMyKeyboard().getString();
                     if (FilmCatalog.getMyFilmCatalog().getFilm(auxS) != null) {
                         FilmCatalog.getMyFilmCatalog().getFilm(auxS).getActorList().printActors();
                     }
                     break;
                 case 6:
                     System.out.println("Enter the film whose amount of earning you want to raise: ");
-                    auxS = Teclado.getMiTeclado().recogerString();
+                    auxS = Keyboard.getMyKeyboard().getString();
                     System.out.println("Enter the amount of money that you want to increase: ");
-                    int auxI = Teclado.getMiTeclado().recogerInt();
+                    int auxI = Keyboard.getMyKeyboard().getInt();
                     if (FilmCatalog.getMyFilmCatalog().exist(auxS)) {
                         FilmCatalog.getMyFilmCatalog().getFilm(auxS).incrementEarned(auxI);
                         System.out.println("Total earned by the film: " + FilmCatalog.getMyFilmCatalog().getFilm(auxS).getEarned());
@@ -807,7 +807,7 @@ public class TerminalGUI {
                     break;
                 case 7:
                     System.out.println("Enter the name of the actor that you want to remove");
-                    auxS = Teclado.getMiTeclado().recogerString();
+                    auxS = Keyboard.getMyKeyboard().getString();
                     auxActorArray = auxS.split("\\s");
                     auxActorName = auxActorArray[0];
                     auxActorSurname = auxActorArray[1];
@@ -820,7 +820,7 @@ public class TerminalGUI {
                     break;
                 case 8:
                     System.out.println("Do you want to print the ordered list? (y/n)");
-                    String ans = Teclado.getMiTeclado().recogerString();
+                    String ans = Keyboard.getMyKeyboard().getString();
                     if(ans=="y"){
                         ActorCatalog.getmyActorCatalog().printList(ActorCatalog.getmyActorCatalog().quickSortList());
                     }
